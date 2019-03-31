@@ -3,10 +3,8 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var requests = {
+exports.default = {
   FAILED: 'failed',
   PENDING: 'pending',
   SUCCESS: 'success'
 };
-
-exports.requests = requests;

@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.module = exports.mixin = undefined;
 
 var _mixin = require('./mixin');
 
@@ -23,8 +22,6 @@ function install(Vue, _ref) {
 }
 
 exports.default = install;
-exports.mixin = _mixin2.default;
-exports.module = _module3.default;
 
 
 if (typeof window !== 'undefined' && window.Vue) {
