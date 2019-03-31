@@ -56,9 +56,11 @@ vm.$r.isPending('fetchAllUsers');
 vm.$r.isDone('fetchAllUsers');
 vm.$r.isFailed('fetchAllUsers');
 
+<v-loader v-if="$r.isPending('fetchAllUsers')" />
+
 ```
 
-#### Get the raw objects of a request
+#### Get the raw request object
 ```javascript
 /**
  * @arg {string} identifier
