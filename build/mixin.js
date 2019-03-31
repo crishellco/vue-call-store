@@ -18,7 +18,17 @@ exports.default = {
   beforeMount: function beforeMount() {
     var _this = this;
 
-    this.$r = this.$requests = {
+    this.$r = {
+      end: function end(identifier) {
+        var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+        _this.$store.commit('requests/end', { identifier: identifier, message: message });
+      },
+      fail: function fail(identifier) {
+        var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+        _this.$store.commit('requests/fail', { identifier: identifier, message: message });
+      },
       get: function get(identifier) {
         var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
@@ -32,6 +42,11 @@ exports.default = {
       },
       isPending: function isPending(identifier) {
         return _lodash2.default.get(_this.$store.state.requests.requests, [identifier, 'status']) === _constants2.default.PENDING;
+      },
+      start: function start(identifier) {
+        var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+        _this.$store.commit('requests/start', { identifier: identifier, message: message });
       }
     };
   }
