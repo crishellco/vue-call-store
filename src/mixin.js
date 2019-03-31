@@ -6,7 +6,7 @@ export default {
   beforeMount() {
     const _this = this;
 
-    this.$r = this.$requests = {
+    this.$r = {
       end(identifier, message = null) {
         _this.$store.commit('requests/end', { identifier, message });
       },
@@ -33,7 +33,7 @@ export default {
 
       start(identifier, message = null) {
         _this.$store.commit('requests/start', { identifier, message });
-      }
-    }
+      },
+    };
   },
 };

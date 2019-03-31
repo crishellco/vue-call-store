@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import constants from '../src/constants'
-import module from '../src/module'
+import constants from '../src/constants';
+import module from '../src/module';
 
 Vue.use(Vuex);
 

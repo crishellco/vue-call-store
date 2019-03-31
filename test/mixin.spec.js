@@ -2,9 +2,9 @@ import { mount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import constants from '../src/constants'
-import mixin from '../src/mixin'
-import module from '../src/module'
+import constants from '../src/constants';
+import mixin from '../src/mixin';
+import module from '../src/module';
 
 Vue.use(Vuex);
 
