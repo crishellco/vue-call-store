@@ -1,206 +1,16 @@
-module.exports =
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+'use strict';
 
-"use strict";
+var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _mixin = __webpack_require__(1);
-
-var _mixin2 = _interopRequireDefault(_mixin);
-
-var _module2 = __webpack_require__(6);
-
-var _module3 = _interopRequireDefault(_module2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function install(Vue, _ref) {
-  var store = _ref.store;
-  Vue.mixin(_mixin2.default);
-  store.registerModule('requests', _module3.default);
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
-exports.default = install;
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(install);
-}
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _lodash = __webpack_require__(2);
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _constants = __webpack_require__(5);
-
-var _constants2 = _interopRequireDefault(_constants);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  beforeMount: function beforeMount() {
-    var _this = this;
-
-    this.$r = {
-      end: function end(identifier) {
-        var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-        _this.$store.commit('requests/end', {
-          identifier: identifier,
-          message: message
-        });
-      },
-      fail: function fail(identifier) {
-        var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-        _this.$store.commit('requests/fail', {
-          identifier: identifier,
-          message: message
-        });
-      },
-      get: function get(identifier) {
-        var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-        return _lodash2.default.get(_this.$store.state.requests.requests, [identifier], defaultValue);
-      },
-      isDone: function isDone(identifier) {
-        return _lodash2.default.get(_this.$store.state.requests.requests, [identifier, 'status']) === _constants2.default.SUCCESS;
-      },
-      isFailed: function isFailed(identifier) {
-        return _lodash2.default.get(_this.$store.state.requests.requests, [identifier, 'status']) === _constants2.default.FAILED;
-      },
-      isPending: function isPending(identifier) {
-        return _lodash2.default.get(_this.$store.state.requests.requests, [identifier, 'status']) === _constants2.default.PENDING;
-      },
-      start: function start(identifier) {
-        var message = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-        _this.$store.commit('requests/start', {
-          identifier: identifier,
-          message: message
-        });
-      }
-    };
-  }
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
- * @license
- * Lodash <https://lodash.com/>
- * Copyright JS Foundation and other contributors <https://js.foundation/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */
-;(function() {
+var lodash = createCommonjsModule(function (module, exports) {
+(function() {
 
   /** Used as a safe reference for `undefined` in pre-ES5 environments. */
-  var undefined;
+  var undefined$1;
 
   /** Used as the semantic version number. */
   var VERSION = '4.17.11';
@@ -604,7 +414,7 @@ exports.default = {
       freeParseInt = parseInt;
 
   /** Detect free variable `global` from Node.js. */
-  var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+  var freeGlobal = typeof commonjsGlobal == 'object' && commonjsGlobal && commonjsGlobal.Object === Object && commonjsGlobal;
 
   /** Detect free variable `self`. */
   var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -613,10 +423,10 @@ exports.default = {
   var root = freeGlobal || freeSelf || Function('return this')();
 
   /** Detect free variable `exports`. */
-  var freeExports =  true && exports && !exports.nodeType && exports;
+  var freeExports = exports && !exports.nodeType && exports;
 
   /** Detect free variable `module`. */
-  var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+  var freeModule = freeExports && 'object' == 'object' && module && !module.nodeType && module;
 
   /** Detect the popular CommonJS extension `module.exports`. */
   var moduleExports = freeModule && freeModule.exports === freeExports;
@@ -1068,7 +878,7 @@ exports.default = {
    */
   function baseProperty(key) {
     return function(object) {
-      return object == null ? undefined : object[key];
+      return object == null ? undefined$1 : object[key];
     };
   }
 
@@ -1081,7 +891,7 @@ exports.default = {
    */
   function basePropertyOf(object) {
     return function(key) {
-      return object == null ? undefined : object[key];
+      return object == null ? undefined$1 : object[key];
     };
   }
 
@@ -1143,8 +953,8 @@ exports.default = {
 
     while (++index < length) {
       var current = iteratee(array[index]);
-      if (current !== undefined) {
-        result = result === undefined ? current : (result + current);
+      if (current !== undefined$1) {
+        result = result === undefined$1 ? current : (result + current);
       }
     }
     return result;
@@ -1317,7 +1127,7 @@ exports.default = {
    * @returns {*} Returns the property value.
    */
   function getValue(object, key) {
-    return object == null ? undefined : object[key];
+    return object == null ? undefined$1 : object[key];
   }
 
   /**
@@ -1651,17 +1461,17 @@ exports.default = {
     );
 
     /** Built-in value references. */
-    var Buffer = moduleExports ? context.Buffer : undefined,
+    var Buffer = moduleExports ? context.Buffer : undefined$1,
         Symbol = context.Symbol,
         Uint8Array = context.Uint8Array,
-        allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined,
+        allocUnsafe = Buffer ? Buffer.allocUnsafe : undefined$1,
         getPrototype = overArg(Object.getPrototypeOf, Object),
         objectCreate = Object.create,
         propertyIsEnumerable = objectProto.propertyIsEnumerable,
         splice = arrayProto.splice,
-        spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined,
-        symIterator = Symbol ? Symbol.iterator : undefined,
-        symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+        spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined$1,
+        symIterator = Symbol ? Symbol.iterator : undefined$1,
+        symToStringTag = Symbol ? Symbol.toStringTag : undefined$1;
 
     var defineProperty = (function() {
       try {
@@ -1680,7 +1490,7 @@ exports.default = {
     var nativeCeil = Math.ceil,
         nativeFloor = Math.floor,
         nativeGetSymbols = Object.getOwnPropertySymbols,
-        nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
+        nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined$1,
         nativeIsFinite = context.isFinite,
         nativeJoin = arrayProto.join,
         nativeKeys = overArg(Object.keys, Object),
@@ -1713,9 +1523,9 @@ exports.default = {
         weakMapCtorString = toSource(WeakMap);
 
     /** Used to convert symbols to primitives and strings. */
-    var symbolProto = Symbol ? Symbol.prototype : undefined,
-        symbolValueOf = symbolProto ? symbolProto.valueOf : undefined,
-        symbolToString = symbolProto ? symbolProto.toString : undefined;
+    var symbolProto = Symbol ? Symbol.prototype : undefined$1,
+        symbolValueOf = symbolProto ? symbolProto.valueOf : undefined$1,
+        symbolToString = symbolProto ? symbolProto.toString : undefined$1;
 
     /*------------------------------------------------------------------------*/
 
@@ -1867,7 +1677,7 @@ exports.default = {
         }
         object.prototype = proto;
         var result = new object;
-        object.prototype = undefined;
+        object.prototype = undefined$1;
         return result;
       };
     }());
@@ -1893,7 +1703,7 @@ exports.default = {
       this.__actions__ = [];
       this.__chain__ = !!chainAll;
       this.__index__ = 0;
-      this.__values__ = undefined;
+      this.__values__ = undefined$1;
     }
 
     /**
@@ -2144,9 +1954,9 @@ exports.default = {
       var data = this.__data__;
       if (nativeCreate) {
         var result = data[key];
-        return result === HASH_UNDEFINED ? undefined : result;
+        return result === HASH_UNDEFINED ? undefined$1 : result;
       }
-      return hasOwnProperty.call(data, key) ? data[key] : undefined;
+      return hasOwnProperty.call(data, key) ? data[key] : undefined$1;
     }
 
     /**
@@ -2160,7 +1970,7 @@ exports.default = {
      */
     function hashHas(key) {
       var data = this.__data__;
-      return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);
+      return nativeCreate ? (data[key] !== undefined$1) : hasOwnProperty.call(data, key);
     }
 
     /**
@@ -2176,7 +1986,7 @@ exports.default = {
     function hashSet(key, value) {
       var data = this.__data__;
       this.size += this.has(key) ? 0 : 1;
-      data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+      data[key] = (nativeCreate && value === undefined$1) ? HASH_UNDEFINED : value;
       return this;
     }
 
@@ -2258,7 +2068,7 @@ exports.default = {
       var data = this.__data__,
           index = assocIndexOf(data, key);
 
-      return index < 0 ? undefined : data[index][1];
+      return index < 0 ? undefined$1 : data[index][1];
     }
 
     /**
@@ -2607,7 +2417,7 @@ exports.default = {
      */
     function arraySample(array) {
       var length = array.length;
-      return length ? array[baseRandom(0, length - 1)] : undefined;
+      return length ? array[baseRandom(0, length - 1)] : undefined$1;
     }
 
     /**
@@ -2643,8 +2453,8 @@ exports.default = {
      * @param {*} value The value to assign.
      */
     function assignMergeValue(object, key, value) {
-      if ((value !== undefined && !eq(object[key], value)) ||
-          (value === undefined && !(key in object))) {
+      if ((value !== undefined$1 && !eq(object[key], value)) ||
+          (value === undefined$1 && !(key in object))) {
         baseAssignValue(object, key, value);
       }
     }
@@ -2662,7 +2472,7 @@ exports.default = {
     function assignValue(object, key, value) {
       var objValue = object[key];
       if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
-          (value === undefined && !(key in object))) {
+          (value === undefined$1 && !(key in object))) {
         baseAssignValue(object, key, value);
       }
     }
@@ -2766,7 +2576,7 @@ exports.default = {
           skip = object == null;
 
       while (++index < length) {
-        result[index] = skip ? undefined : get(object, paths[index]);
+        result[index] = skip ? undefined$1 : get(object, paths[index]);
       }
       return result;
     }
@@ -2782,10 +2592,10 @@ exports.default = {
      */
     function baseClamp(number, lower, upper) {
       if (number === number) {
-        if (upper !== undefined) {
+        if (upper !== undefined$1) {
           number = number <= upper ? number : upper;
         }
-        if (lower !== undefined) {
+        if (lower !== undefined$1) {
           number = number >= lower ? number : lower;
         }
       }
@@ -2817,7 +2627,7 @@ exports.default = {
       if (customizer) {
         result = object ? customizer(value, key, object, stack) : customizer(value);
       }
-      if (result !== undefined) {
+      if (result !== undefined$1) {
         return result;
       }
       if (!isObject(value)) {
@@ -2878,7 +2688,7 @@ exports.default = {
         ? (isFlat ? getAllKeysIn : getAllKeys)
         : (isFlat ? keysIn : keys);
 
-      var props = isArr ? undefined : keysFunc(value);
+      var props = isArr ? undefined$1 : keysFunc(value);
       arrayEach(props || value, function(subValue, key) {
         if (props) {
           key = subValue;
@@ -2923,7 +2733,7 @@ exports.default = {
             predicate = source[key],
             value = object[key];
 
-        if ((value === undefined && !(key in object)) || !predicate(value)) {
+        if ((value === undefined$1 && !(key in object)) || !predicate(value)) {
           return false;
         }
       }
@@ -2944,7 +2754,7 @@ exports.default = {
       if (typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
-      return setTimeout(function() { func.apply(undefined, args); }, wait);
+      return setTimeout(function() { func.apply(undefined$1, args); }, wait);
     }
 
     /**
@@ -3059,7 +2869,7 @@ exports.default = {
         var value = array[index],
             current = iteratee(value);
 
-        if (current != null && (computed === undefined
+        if (current != null && (computed === undefined$1
               ? (current === current && !isSymbol(current))
               : comparator(current, computed)
             )) {
@@ -3087,7 +2897,7 @@ exports.default = {
       if (start < 0) {
         start = -start > length ? 0 : (length + start);
       }
-      end = (end === undefined || end > length) ? length : toInteger(end);
+      end = (end === undefined$1 || end > length) ? length : toInteger(end);
       if (end < 0) {
         end += length;
       }
@@ -3231,7 +3041,7 @@ exports.default = {
       while (object != null && index < length) {
         object = object[toKey(path[index++])];
       }
-      return (index && index == length) ? object : undefined;
+      return (index && index == length) ? object : undefined$1;
     }
 
     /**
@@ -3259,7 +3069,7 @@ exports.default = {
      */
     function baseGetTag(value) {
       if (value == null) {
-        return value === undefined ? undefinedTag : nullTag;
+        return value === undefined$1 ? undefinedTag : nullTag;
       }
       return (symToStringTag && symToStringTag in Object(value))
         ? getRawTag(value)
@@ -3343,7 +3153,7 @@ exports.default = {
         maxLength = nativeMin(array.length, maxLength);
         caches[othIndex] = !comparator && (iteratee || (length >= 120 && array.length >= 120))
           ? new SetCache(othIndex && array)
-          : undefined;
+          : undefined$1;
       }
       array = arrays[0];
 
@@ -3411,7 +3221,7 @@ exports.default = {
       path = castPath(path, object);
       object = parent(object, path);
       var func = object == null ? object : object[toKey(last(path))];
-      return func == null ? undefined : apply(func, object, args);
+      return func == null ? undefined$1 : apply(func, object, args);
     }
 
     /**
@@ -3576,7 +3386,7 @@ exports.default = {
             srcValue = data[1];
 
         if (noCustomizer && data[2]) {
-          if (objValue === undefined && !(key in object)) {
+          if (objValue === undefined$1 && !(key in object)) {
             return false;
           }
         } else {
@@ -3584,7 +3394,7 @@ exports.default = {
           if (customizer) {
             var result = customizer(objValue, srcValue, key, object, source, stack);
           }
-          if (!(result === undefined
+          if (!(result === undefined$1
                 ? baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG, customizer, stack)
                 : result
               )) {
@@ -3773,7 +3583,7 @@ exports.default = {
       }
       return function(object) {
         var objValue = get(object, path);
-        return (objValue === undefined && objValue === srcValue)
+        return (objValue === undefined$1 && objValue === srcValue)
           ? hasIn(object, path)
           : baseIsEqual(srcValue, objValue, COMPARE_PARTIAL_FLAG | COMPARE_UNORDERED_FLAG);
       };
@@ -3802,9 +3612,9 @@ exports.default = {
         else {
           var newValue = customizer
             ? customizer(safeGet(object, key), srcValue, (key + ''), object, source, stack)
-            : undefined;
+            : undefined$1;
 
-          if (newValue === undefined) {
+          if (newValue === undefined$1) {
             newValue = srcValue;
           }
           assignMergeValue(object, key, newValue);
@@ -3838,9 +3648,9 @@ exports.default = {
       }
       var newValue = customizer
         ? customizer(objValue, srcValue, (key + ''), object, source, stack)
-        : undefined;
+        : undefined$1;
 
-      var isCommon = newValue === undefined;
+      var isCommon = newValue === undefined$1;
 
       if (isCommon) {
         var isArr = isArray(srcValue),
@@ -3903,7 +3713,7 @@ exports.default = {
         return;
       }
       n += n < 0 ? length : 0;
-      return isIndex(n, length) ? array[n] : undefined;
+      return isIndex(n, length) ? array[n] : undefined$1;
     }
 
     /**
@@ -4176,8 +3986,8 @@ exports.default = {
 
         if (index != lastIndex) {
           var objValue = nested[key];
-          newValue = customizer ? customizer(objValue, key, nested) : undefined;
-          if (newValue === undefined) {
+          newValue = customizer ? customizer(objValue, key, nested) : undefined$1;
+          if (newValue === undefined$1) {
             newValue = isObject(objValue)
               ? objValue
               : (isIndex(path[index + 1]) ? [] : {});
@@ -4333,12 +4143,12 @@ exports.default = {
           valIsNaN = value !== value,
           valIsNull = value === null,
           valIsSymbol = isSymbol(value),
-          valIsUndefined = value === undefined;
+          valIsUndefined = value === undefined$1;
 
       while (low < high) {
         var mid = nativeFloor((low + high) / 2),
             computed = iteratee(array[mid]),
-            othIsDefined = computed !== undefined,
+            othIsDefined = computed !== undefined$1,
             othIsNull = computed === null,
             othIsReflexive = computed === computed,
             othIsSymbol = isSymbol(computed);
@@ -4613,7 +4423,7 @@ exports.default = {
           result = {};
 
       while (++index < length) {
-        var value = index < valsLength ? values[index] : undefined;
+        var value = index < valsLength ? values[index] : undefined$1;
         assignFunc(result, props[index], value);
       }
       return result;
@@ -4678,7 +4488,7 @@ exports.default = {
      */
     function castSlice(array, start, end) {
       var length = array.length;
-      end = end === undefined ? length : end;
+      end = end === undefined$1 ? length : end;
       return (!start && end >= length) ? array : baseSlice(array, start, end);
     }
 
@@ -4784,12 +4594,12 @@ exports.default = {
      */
     function compareAscending(value, other) {
       if (value !== other) {
-        var valIsDefined = value !== undefined,
+        var valIsDefined = value !== undefined$1,
             valIsNull = value === null,
             valIsReflexive = value === value,
             valIsSymbol = isSymbol(value);
 
-        var othIsDefined = other !== undefined,
+        var othIsDefined = other !== undefined$1,
             othIsNull = other === null,
             othIsReflexive = other === other,
             othIsSymbol = isSymbol(other);
@@ -4966,9 +4776,9 @@ exports.default = {
 
         var newValue = customizer
           ? customizer(object[key], source[key], key, object, source)
-          : undefined;
+          : undefined$1;
 
-        if (newValue === undefined) {
+        if (newValue === undefined$1) {
           newValue = source[key];
         }
         if (isNew) {
@@ -5032,15 +4842,15 @@ exports.default = {
       return baseRest(function(object, sources) {
         var index = -1,
             length = sources.length,
-            customizer = length > 1 ? sources[length - 1] : undefined,
-            guard = length > 2 ? sources[2] : undefined;
+            customizer = length > 1 ? sources[length - 1] : undefined$1,
+            guard = length > 2 ? sources[2] : undefined$1;
 
         customizer = (assigner.length > 3 && typeof customizer == 'function')
           ? (length--, customizer)
-          : undefined;
+          : undefined$1;
 
         if (guard && isIterateeCall(sources[0], sources[1], guard)) {
-          customizer = length < 3 ? undefined : customizer;
+          customizer = length < 3 ? undefined$1 : customizer;
           length = 1;
         }
         object = Object(object);
@@ -5141,7 +4951,7 @@ exports.default = {
 
         var strSymbols = hasUnicode(string)
           ? stringToArray(string)
-          : undefined;
+          : undefined$1;
 
         var chr = strSymbols
           ? strSymbols[0]
@@ -5229,8 +5039,8 @@ exports.default = {
         length -= holders.length;
         if (length < arity) {
           return createRecurry(
-            func, bitmask, createHybrid, wrapper.placeholder, undefined,
-            args, holders, undefined, undefined, arity - length);
+            func, bitmask, createHybrid, wrapper.placeholder, undefined$1,
+            args, holders, undefined$1, undefined$1, arity - length);
         }
         var fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
         return apply(fn, this, args);
@@ -5254,7 +5064,7 @@ exports.default = {
           predicate = function(key) { return iteratee(iterable[key], key, iterable); };
         }
         var index = findIndexFunc(collection, predicate, fromIndex);
-        return index > -1 ? iterable[iteratee ? collection[index] : index] : undefined;
+        return index > -1 ? iterable[iteratee ? collection[index] : index] : undefined$1;
       };
     }
 
@@ -5288,7 +5098,7 @@ exports.default = {
           func = funcs[index];
 
           var funcName = getFuncName(func),
-              data = funcName == 'wrapper' ? getData(func) : undefined;
+              data = funcName == 'wrapper' ? getData(func) : undefined$1;
 
           if (data && isLaziable(data[0]) &&
                 data[1] == (WRAP_ARY_FLAG | WRAP_CURRY_FLAG | WRAP_PARTIAL_FLAG | WRAP_REARG_FLAG) &&
@@ -5344,7 +5154,7 @@ exports.default = {
           isBindKey = bitmask & WRAP_BIND_KEY_FLAG,
           isCurried = bitmask & (WRAP_CURRY_FLAG | WRAP_CURRY_RIGHT_FLAG),
           isFlip = bitmask & WRAP_FLIP_FLAG,
-          Ctor = isBindKey ? undefined : createCtor(func);
+          Ctor = isBindKey ? undefined$1 : createCtor(func);
 
       function wrapper() {
         var length = arguments.length,
@@ -5417,14 +5227,14 @@ exports.default = {
     function createMathOperation(operator, defaultValue) {
       return function(value, other) {
         var result;
-        if (value === undefined && other === undefined) {
+        if (value === undefined$1 && other === undefined$1) {
           return defaultValue;
         }
-        if (value !== undefined) {
+        if (value !== undefined$1) {
           result = value;
         }
-        if (other !== undefined) {
-          if (result === undefined) {
+        if (other !== undefined$1) {
+          if (result === undefined$1) {
             return other;
           }
           if (typeof value == 'string' || typeof other == 'string') {
@@ -5469,7 +5279,7 @@ exports.default = {
      * @returns {string} Returns the padding for `string`.
      */
     function createPadding(length, chars) {
-      chars = chars === undefined ? ' ' : baseToString(chars);
+      chars = chars === undefined$1 ? ' ' : baseToString(chars);
 
       var charsLength = chars.length;
       if (charsLength < 2) {
@@ -5526,17 +5336,17 @@ exports.default = {
     function createRange(fromRight) {
       return function(start, end, step) {
         if (step && typeof step != 'number' && isIterateeCall(start, end, step)) {
-          end = step = undefined;
+          end = step = undefined$1;
         }
         // Ensure the sign of `-0` is preserved.
         start = toFinite(start);
-        if (end === undefined) {
+        if (end === undefined$1) {
           end = start;
           start = 0;
         } else {
           end = toFinite(end);
         }
-        step = step === undefined ? (start < end ? 1 : -1) : toFinite(step);
+        step = step === undefined$1 ? (start < end ? 1 : -1) : toFinite(step);
         return baseRange(start, end, step, fromRight);
       };
     }
@@ -5577,10 +5387,10 @@ exports.default = {
      */
     function createRecurry(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
       var isCurry = bitmask & WRAP_CURRY_FLAG,
-          newHolders = isCurry ? holders : undefined,
-          newHoldersRight = isCurry ? undefined : holders,
-          newPartials = isCurry ? partials : undefined,
-          newPartialsRight = isCurry ? undefined : partials;
+          newHolders = isCurry ? holders : undefined$1,
+          newHoldersRight = isCurry ? undefined$1 : holders,
+          newPartials = isCurry ? partials : undefined$1,
+          newPartialsRight = isCurry ? undefined$1 : partials;
 
       bitmask |= (isCurry ? WRAP_PARTIAL_FLAG : WRAP_PARTIAL_RIGHT_FLAG);
       bitmask &= ~(isCurry ? WRAP_PARTIAL_RIGHT_FLAG : WRAP_PARTIAL_FLAG);
@@ -5593,7 +5403,7 @@ exports.default = {
         newHoldersRight, argPos, ary, arity
       ];
 
-      var result = wrapFunc.apply(undefined, newData);
+      var result = wrapFunc.apply(undefined$1, newData);
       if (isLaziable(func)) {
         setData(result, newData);
       }
@@ -5690,19 +5500,19 @@ exports.default = {
       var length = partials ? partials.length : 0;
       if (!length) {
         bitmask &= ~(WRAP_PARTIAL_FLAG | WRAP_PARTIAL_RIGHT_FLAG);
-        partials = holders = undefined;
+        partials = holders = undefined$1;
       }
-      ary = ary === undefined ? ary : nativeMax(toInteger(ary), 0);
-      arity = arity === undefined ? arity : toInteger(arity);
+      ary = ary === undefined$1 ? ary : nativeMax(toInteger(ary), 0);
+      arity = arity === undefined$1 ? arity : toInteger(arity);
       length -= holders ? holders.length : 0;
 
       if (bitmask & WRAP_PARTIAL_RIGHT_FLAG) {
         var partialsRight = partials,
             holdersRight = holders;
 
-        partials = holders = undefined;
+        partials = holders = undefined$1;
       }
-      var data = isBindKey ? undefined : getData(func);
+      var data = isBindKey ? undefined$1 : getData(func);
 
       var newData = [
         func, bitmask, thisArg, partials, holders, partialsRight, holdersRight,
@@ -5717,7 +5527,7 @@ exports.default = {
       thisArg = newData[2];
       partials = newData[3];
       holders = newData[4];
-      arity = newData[9] = newData[9] === undefined
+      arity = newData[9] = newData[9] === undefined$1
         ? (isBindKey ? 0 : func.length)
         : nativeMax(newData[9] - length, 0);
 
@@ -5731,7 +5541,7 @@ exports.default = {
       } else if ((bitmask == WRAP_PARTIAL_FLAG || bitmask == (WRAP_BIND_FLAG | WRAP_PARTIAL_FLAG)) && !holders.length) {
         result = createPartial(func, bitmask, thisArg, partials);
       } else {
-        result = createHybrid.apply(undefined, newData);
+        result = createHybrid.apply(undefined$1, newData);
       }
       var setter = data ? baseSetData : setData;
       return setWrapToString(setter(result, newData), func, bitmask);
@@ -5750,7 +5560,7 @@ exports.default = {
      * @returns {*} Returns the value to assign.
      */
     function customDefaultsAssignIn(objValue, srcValue, key, object) {
-      if (objValue === undefined ||
+      if (objValue === undefined$1 ||
           (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
         return srcValue;
       }
@@ -5775,7 +5585,7 @@ exports.default = {
       if (isObject(objValue) && isObject(srcValue)) {
         // Recursively merge objects and arrays (susceptible to call stack limits).
         stack.set(srcValue, objValue);
-        baseMerge(objValue, srcValue, undefined, customDefaultsMerge, stack);
+        baseMerge(objValue, srcValue, undefined$1, customDefaultsMerge, stack);
         stack['delete'](srcValue);
       }
       return objValue;
@@ -5791,7 +5601,7 @@ exports.default = {
      * @returns {*} Returns the uncloned value or `undefined` to defer cloning to `_.cloneDeep`.
      */
     function customOmitClone(value) {
-      return isPlainObject(value) ? undefined : value;
+      return isPlainObject(value) ? undefined$1 : value;
     }
 
     /**
@@ -5822,7 +5632,7 @@ exports.default = {
       }
       var index = -1,
           result = true,
-          seen = (bitmask & COMPARE_UNORDERED_FLAG) ? new SetCache : undefined;
+          seen = (bitmask & COMPARE_UNORDERED_FLAG) ? new SetCache : undefined$1;
 
       stack.set(array, other);
       stack.set(other, array);
@@ -5837,7 +5647,7 @@ exports.default = {
             ? customizer(othValue, arrValue, index, other, array, stack)
             : customizer(arrValue, othValue, index, array, other, stack);
         }
-        if (compared !== undefined) {
+        if (compared !== undefined$1) {
           if (compared) {
             continue;
           }
@@ -6001,7 +5811,7 @@ exports.default = {
             : customizer(objValue, othValue, key, object, other, stack);
         }
         // Recursively compare objects (susceptible to call stack limits).
-        if (!(compared === undefined
+        if (!(compared === undefined$1
               ? (objValue === othValue || equalFunc(objValue, othValue, bitmask, customizer, stack))
               : compared
             )) {
@@ -6035,7 +5845,7 @@ exports.default = {
      * @returns {Function} Returns the new function.
      */
     function flatRest(func) {
-      return setToString(overRest(func, undefined, flatten), func + '');
+      return setToString(overRest(func, undefined$1, flatten), func + '');
     }
 
     /**
@@ -6168,7 +5978,7 @@ exports.default = {
      */
     function getNative(object, key) {
       var value = getValue(object, key);
-      return baseIsNative(value) ? value : undefined;
+      return baseIsNative(value) ? value : undefined$1;
     }
 
     /**
@@ -6183,7 +5993,7 @@ exports.default = {
           tag = value[symToStringTag];
 
       try {
-        value[symToStringTag] = undefined;
+        value[symToStringTag] = undefined$1;
         var unmasked = true;
       } catch (e) {}
 
@@ -6248,7 +6058,7 @@ exports.default = {
         (WeakMap && getTag(new WeakMap) != weakMapTag)) {
       getTag = function(value) {
         var result = baseGetTag(value),
-            Ctor = result == objectTag ? value.constructor : undefined,
+            Ctor = result == objectTag ? value.constructor : undefined$1,
             ctorString = Ctor ? toSource(Ctor) : '';
 
         if (ctorString) {
@@ -6606,7 +6416,7 @@ exports.default = {
           return false;
         }
         return object[key] === srcValue &&
-          (srcValue !== undefined || (key in Object(object)));
+          (srcValue !== undefined$1 || (key in Object(object)));
       };
     }
 
@@ -6741,7 +6551,7 @@ exports.default = {
      * @returns {Function} Returns the new function.
      */
     function overRest(func, start, transform) {
-      start = nativeMax(start === undefined ? (func.length - 1) : start, 0);
+      start = nativeMax(start === undefined$1 ? (func.length - 1) : start, 0);
       return function() {
         var args = arguments,
             index = -1,
@@ -6790,7 +6600,7 @@ exports.default = {
 
       while (length--) {
         var index = indexes[length];
-        array[length] = isIndex(index, arrLength) ? oldArray[index] : undefined;
+        array[length] = isIndex(index, arrLength) ? oldArray[index] : undefined$1;
       }
       return array;
     }
@@ -6889,7 +6699,7 @@ exports.default = {
         } else {
           count = 0;
         }
-        return func.apply(undefined, arguments);
+        return func.apply(undefined$1, arguments);
       };
     }
 
@@ -6906,7 +6716,7 @@ exports.default = {
           length = array.length,
           lastIndex = length - 1;
 
-      size = size === undefined ? length : size;
+      size = size === undefined$1 ? length : size;
       while (++index < size) {
         var rand = baseRandom(index, lastIndex),
             value = array[rand];
@@ -7030,7 +6840,7 @@ exports.default = {
      * // => [['a', 'b', 'c'], ['d']]
      */
     function chunk(array, size, guard) {
-      if ((guard ? isIterateeCall(array, size, guard) : size === undefined)) {
+      if ((guard ? isIterateeCall(array, size, guard) : size === undefined$1)) {
         size = 1;
       } else {
         size = nativeMax(toInteger(size), 0);
@@ -7172,7 +6982,7 @@ exports.default = {
     var differenceBy = baseRest(function(array, values) {
       var iteratee = last(values);
       if (isArrayLikeObject(iteratee)) {
-        iteratee = undefined;
+        iteratee = undefined$1;
       }
       return isArrayLikeObject(array)
         ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), getIteratee(iteratee, 2))
@@ -7205,10 +7015,10 @@ exports.default = {
     var differenceWith = baseRest(function(array, values) {
       var comparator = last(values);
       if (isArrayLikeObject(comparator)) {
-        comparator = undefined;
+        comparator = undefined$1;
       }
       return isArrayLikeObject(array)
-        ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), undefined, comparator)
+        ? baseDifference(array, baseFlatten(values, 1, isArrayLikeObject, true), undefined$1, comparator)
         : [];
     });
 
@@ -7242,7 +7052,7 @@ exports.default = {
       if (!length) {
         return [];
       }
-      n = (guard || n === undefined) ? 1 : toInteger(n);
+      n = (guard || n === undefined$1) ? 1 : toInteger(n);
       return baseSlice(array, n < 0 ? 0 : n, length);
     }
 
@@ -7276,7 +7086,7 @@ exports.default = {
       if (!length) {
         return [];
       }
-      n = (guard || n === undefined) ? 1 : toInteger(n);
+      n = (guard || n === undefined$1) ? 1 : toInteger(n);
       n = length - n;
       return baseSlice(array, 0, n < 0 ? 0 : n);
     }
@@ -7492,7 +7302,7 @@ exports.default = {
         return -1;
       }
       var index = length - 1;
-      if (fromIndex !== undefined) {
+      if (fromIndex !== undefined$1) {
         index = toInteger(fromIndex);
         index = fromIndex < 0
           ? nativeMax(length + index, 0)
@@ -7564,7 +7374,7 @@ exports.default = {
       if (!length) {
         return [];
       }
-      depth = depth === undefined ? 1 : toInteger(depth);
+      depth = depth === undefined$1 ? 1 : toInteger(depth);
       return baseFlatten(array, depth);
     }
 
@@ -7614,7 +7424,7 @@ exports.default = {
      * // => undefined
      */
     function head(array) {
-      return (array && array.length) ? array[0] : undefined;
+      return (array && array.length) ? array[0] : undefined$1;
     }
 
     /**
@@ -7723,7 +7533,7 @@ exports.default = {
           mapped = arrayMap(arrays, castArrayLikeObject);
 
       if (iteratee === last(mapped)) {
-        iteratee = undefined;
+        iteratee = undefined$1;
       } else {
         mapped.pop();
       }
@@ -7757,12 +7567,12 @@ exports.default = {
       var comparator = last(arrays),
           mapped = arrayMap(arrays, castArrayLikeObject);
 
-      comparator = typeof comparator == 'function' ? comparator : undefined;
+      comparator = typeof comparator == 'function' ? comparator : undefined$1;
       if (comparator) {
         mapped.pop();
       }
       return (mapped.length && mapped[0] === arrays[0])
-        ? baseIntersection(mapped, undefined, comparator)
+        ? baseIntersection(mapped, undefined$1, comparator)
         : [];
     });
 
@@ -7801,7 +7611,7 @@ exports.default = {
      */
     function last(array) {
       var length = array == null ? 0 : array.length;
-      return length ? array[length - 1] : undefined;
+      return length ? array[length - 1] : undefined$1;
     }
 
     /**
@@ -7831,7 +7641,7 @@ exports.default = {
         return -1;
       }
       var index = length;
-      if (fromIndex !== undefined) {
+      if (fromIndex !== undefined$1) {
         index = toInteger(fromIndex);
         index = index < 0 ? nativeMax(length + index, 0) : nativeMin(index, length - 1);
       }
@@ -7862,7 +7672,7 @@ exports.default = {
      * // => 'c';
      */
     function nth(array, n) {
-      return (array && array.length) ? baseNth(array, toInteger(n)) : undefined;
+      return (array && array.length) ? baseNth(array, toInteger(n)) : undefined$1;
     }
 
     /**
@@ -7970,7 +7780,7 @@ exports.default = {
      */
     function pullAllWith(array, values, comparator) {
       return (array && array.length && values && values.length)
-        ? basePullAll(array, values, undefined, comparator)
+        ? basePullAll(array, values, undefined$1, comparator)
         : array;
     }
 
@@ -8112,7 +7922,7 @@ exports.default = {
       }
       else {
         start = start == null ? 0 : toInteger(start);
-        end = end === undefined ? length : toInteger(end);
+        end = end === undefined$1 ? length : toInteger(end);
       }
       return baseSlice(array, start, end);
     }
@@ -8363,7 +8173,7 @@ exports.default = {
       if (!(array && array.length)) {
         return [];
       }
-      n = (guard || n === undefined) ? 1 : toInteger(n);
+      n = (guard || n === undefined$1) ? 1 : toInteger(n);
       return baseSlice(array, 0, n < 0 ? 0 : n);
     }
 
@@ -8397,7 +8207,7 @@ exports.default = {
       if (!length) {
         return [];
       }
-      n = (guard || n === undefined) ? 1 : toInteger(n);
+      n = (guard || n === undefined$1) ? 1 : toInteger(n);
       n = length - n;
       return baseSlice(array, n < 0 ? 0 : n, length);
     }
@@ -8530,7 +8340,7 @@ exports.default = {
     var unionBy = baseRest(function(arrays) {
       var iteratee = last(arrays);
       if (isArrayLikeObject(iteratee)) {
-        iteratee = undefined;
+        iteratee = undefined$1;
       }
       return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true), getIteratee(iteratee, 2));
     });
@@ -8558,8 +8368,8 @@ exports.default = {
      */
     var unionWith = baseRest(function(arrays) {
       var comparator = last(arrays);
-      comparator = typeof comparator == 'function' ? comparator : undefined;
-      return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true), undefined, comparator);
+      comparator = typeof comparator == 'function' ? comparator : undefined$1;
+      return baseUniq(baseFlatten(arrays, 1, isArrayLikeObject, true), undefined$1, comparator);
     });
 
     /**
@@ -8632,8 +8442,8 @@ exports.default = {
      * // => [{ 'x': 1, 'y': 2 }, { 'x': 2, 'y': 1 }]
      */
     function uniqWith(array, comparator) {
-      comparator = typeof comparator == 'function' ? comparator : undefined;
-      return (array && array.length) ? baseUniq(array, undefined, comparator) : [];
+      comparator = typeof comparator == 'function' ? comparator : undefined$1;
+      return (array && array.length) ? baseUniq(array, undefined$1, comparator) : [];
     }
 
     /**
@@ -8701,7 +8511,7 @@ exports.default = {
         return result;
       }
       return arrayMap(result, function(group) {
-        return apply(iteratee, undefined, group);
+        return apply(iteratee, undefined$1, group);
       });
     }
 
@@ -8779,7 +8589,7 @@ exports.default = {
     var xorBy = baseRest(function(arrays) {
       var iteratee = last(arrays);
       if (isArrayLikeObject(iteratee)) {
-        iteratee = undefined;
+        iteratee = undefined$1;
       }
       return baseXor(arrayFilter(arrays, isArrayLikeObject), getIteratee(iteratee, 2));
     });
@@ -8807,8 +8617,8 @@ exports.default = {
      */
     var xorWith = baseRest(function(arrays) {
       var comparator = last(arrays);
-      comparator = typeof comparator == 'function' ? comparator : undefined;
-      return baseXor(arrayFilter(arrays, isArrayLikeObject), undefined, comparator);
+      comparator = typeof comparator == 'function' ? comparator : undefined$1;
+      return baseXor(arrayFilter(arrays, isArrayLikeObject), undefined$1, comparator);
     });
 
     /**
@@ -8890,9 +8700,9 @@ exports.default = {
      */
     var zipWith = baseRest(function(arrays) {
       var length = arrays.length,
-          iteratee = length > 1 ? arrays[length - 1] : undefined;
+          iteratee = length > 1 ? arrays[length - 1] : undefined$1;
 
-      iteratee = typeof iteratee == 'function' ? (arrays.pop(), iteratee) : undefined;
+      iteratee = typeof iteratee == 'function' ? (arrays.pop(), iteratee) : undefined$1;
       return unzipWith(arrays, iteratee);
     });
 
@@ -9018,11 +8828,11 @@ exports.default = {
       value.__actions__.push({
         'func': thru,
         'args': [interceptor],
-        'thisArg': undefined
+        'thisArg': undefined$1
       });
       return new LodashWrapper(value, this.__chain__).thru(function(array) {
         if (length && !array.length) {
-          array.push(undefined);
+          array.push(undefined$1);
         }
         return array;
       });
@@ -9112,11 +8922,11 @@ exports.default = {
      * // => { 'done': true, 'value': undefined }
      */
     function wrapperNext() {
-      if (this.__values__ === undefined) {
+      if (this.__values__ === undefined$1) {
         this.__values__ = toArray(this.value());
       }
       var done = this.__index__ >= this.__values__.length,
-          value = done ? undefined : this.__values__[this.__index__++];
+          value = done ? undefined$1 : this.__values__[this.__index__++];
 
       return { 'done': done, 'value': value };
     }
@@ -9174,7 +8984,7 @@ exports.default = {
       while (parent instanceof baseLodash) {
         var clone = wrapperClone(parent);
         clone.__index__ = 0;
-        clone.__values__ = undefined;
+        clone.__values__ = undefined$1;
         if (result) {
           previous.__wrapped__ = clone;
         } else {
@@ -9218,7 +9028,7 @@ exports.default = {
         wrapped.__actions__.push({
           'func': thru,
           'args': [reverse],
-          'thisArg': undefined
+          'thisArg': undefined$1
         });
         return new LodashWrapper(wrapped, this.__chain__);
       }
@@ -9319,7 +9129,7 @@ exports.default = {
     function every(collection, predicate, guard) {
       var func = isArray(collection) ? arrayEvery : baseEvery;
       if (guard && isIterateeCall(collection, predicate, guard)) {
-        predicate = undefined;
+        predicate = undefined$1;
       }
       return func(collection, getIteratee(predicate, 3));
     }
@@ -9496,7 +9306,7 @@ exports.default = {
      * // => [[1, 1], [2, 2]]
      */
     function flatMapDepth(collection, iteratee, depth) {
-      depth = depth === undefined ? 1 : toInteger(depth);
+      depth = depth === undefined$1 ? 1 : toInteger(depth);
       return baseFlatten(map(collection, iteratee), depth);
     }
 
@@ -9783,7 +9593,7 @@ exports.default = {
       if (!isArray(iteratees)) {
         iteratees = iteratees == null ? [] : [iteratees];
       }
-      orders = guard ? undefined : orders;
+      orders = guard ? undefined$1 : orders;
       if (!isArray(orders)) {
         orders = orders == null ? [] : [orders];
       }
@@ -9982,7 +9792,7 @@ exports.default = {
      * // => [2, 3, 1]
      */
     function sampleSize(collection, n, guard) {
-      if ((guard ? isIterateeCall(collection, n, guard) : n === undefined)) {
+      if ((guard ? isIterateeCall(collection, n, guard) : n === undefined$1)) {
         n = 1;
       } else {
         n = toInteger(n);
@@ -10085,7 +9895,7 @@ exports.default = {
     function some(collection, predicate, guard) {
       var func = isArray(collection) ? arraySome : baseSome;
       if (guard && isIterateeCall(collection, predicate, guard)) {
-        predicate = undefined;
+        predicate = undefined$1;
       }
       return func(collection, getIteratee(predicate, 3));
     }
@@ -10210,9 +10020,9 @@ exports.default = {
      * // => [6, 8, 10]
      */
     function ary(func, n, guard) {
-      n = guard ? undefined : n;
+      n = guard ? undefined$1 : n;
       n = (func && n == null) ? func.length : n;
-      return createWrap(func, WRAP_ARY_FLAG, undefined, undefined, undefined, undefined, n);
+      return createWrap(func, WRAP_ARY_FLAG, undefined$1, undefined$1, undefined$1, undefined$1, n);
     }
 
     /**
@@ -10243,7 +10053,7 @@ exports.default = {
           result = func.apply(this, arguments);
         }
         if (n <= 1) {
-          func = undefined;
+          func = undefined$1;
         }
         return result;
       };
@@ -10389,8 +10199,8 @@ exports.default = {
      * // => [1, 2, 3]
      */
     function curry(func, arity, guard) {
-      arity = guard ? undefined : arity;
-      var result = createWrap(func, WRAP_CURRY_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
+      arity = guard ? undefined$1 : arity;
+      var result = createWrap(func, WRAP_CURRY_FLAG, undefined$1, undefined$1, undefined$1, undefined$1, undefined$1, arity);
       result.placeholder = curry.placeholder;
       return result;
     }
@@ -10434,8 +10244,8 @@ exports.default = {
      * // => [1, 2, 3]
      */
     function curryRight(func, arity, guard) {
-      arity = guard ? undefined : arity;
-      var result = createWrap(func, WRAP_CURRY_RIGHT_FLAG, undefined, undefined, undefined, undefined, undefined, arity);
+      arity = guard ? undefined$1 : arity;
+      var result = createWrap(func, WRAP_CURRY_RIGHT_FLAG, undefined$1, undefined$1, undefined$1, undefined$1, undefined$1, arity);
       result.placeholder = curryRight.placeholder;
       return result;
     }
@@ -10521,7 +10331,7 @@ exports.default = {
         var args = lastArgs,
             thisArg = lastThis;
 
-        lastArgs = lastThis = undefined;
+        lastArgs = lastThis = undefined$1;
         lastInvokeTime = time;
         result = func.apply(thisArg, args);
         return result;
@@ -10553,7 +10363,7 @@ exports.default = {
         // Either this is the first call, activity has stopped and we're at the
         // trailing edge, the system time has gone backwards and we're treating
         // it as the trailing edge, or we've hit the `maxWait` limit.
-        return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+        return (lastCallTime === undefined$1 || (timeSinceLastCall >= wait) ||
           (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
       }
 
@@ -10567,27 +10377,27 @@ exports.default = {
       }
 
       function trailingEdge(time) {
-        timerId = undefined;
+        timerId = undefined$1;
 
         // Only invoke if we have `lastArgs` which means `func` has been
         // debounced at least once.
         if (trailing && lastArgs) {
           return invokeFunc(time);
         }
-        lastArgs = lastThis = undefined;
+        lastArgs = lastThis = undefined$1;
         return result;
       }
 
       function cancel() {
-        if (timerId !== undefined) {
+        if (timerId !== undefined$1) {
           clearTimeout(timerId);
         }
         lastInvokeTime = 0;
-        lastArgs = lastCallTime = lastThis = timerId = undefined;
+        lastArgs = lastCallTime = lastThis = timerId = undefined$1;
       }
 
       function flush() {
-        return timerId === undefined ? result : trailingEdge(now());
+        return timerId === undefined$1 ? result : trailingEdge(now());
       }
 
       function debounced() {
@@ -10599,7 +10409,7 @@ exports.default = {
         lastCallTime = time;
 
         if (isInvoking) {
-          if (timerId === undefined) {
+          if (timerId === undefined$1) {
             return leadingEdge(lastCallTime);
           }
           if (maxing) {
@@ -10608,7 +10418,7 @@ exports.default = {
             return invokeFunc(lastCallTime);
           }
         }
-        if (timerId === undefined) {
+        if (timerId === undefined$1) {
           timerId = setTimeout(timerExpired, wait);
         }
         return result;
@@ -10893,7 +10703,7 @@ exports.default = {
      */
     var partial = baseRest(function(func, partials) {
       var holders = replaceHolders(partials, getHolder(partial));
-      return createWrap(func, WRAP_PARTIAL_FLAG, undefined, partials, holders);
+      return createWrap(func, WRAP_PARTIAL_FLAG, undefined$1, partials, holders);
     });
 
     /**
@@ -10930,7 +10740,7 @@ exports.default = {
      */
     var partialRight = baseRest(function(func, partials) {
       var holders = replaceHolders(partials, getHolder(partialRight));
-      return createWrap(func, WRAP_PARTIAL_RIGHT_FLAG, undefined, partials, holders);
+      return createWrap(func, WRAP_PARTIAL_RIGHT_FLAG, undefined$1, partials, holders);
     });
 
     /**
@@ -10956,7 +10766,7 @@ exports.default = {
      * // => ['a', 'b', 'c']
      */
     var rearg = flatRest(function(func, indexes) {
-      return createWrap(func, WRAP_REARG_FLAG, undefined, undefined, undefined, indexes);
+      return createWrap(func, WRAP_REARG_FLAG, undefined$1, undefined$1, undefined$1, indexes);
     });
 
     /**
@@ -10988,7 +10798,7 @@ exports.default = {
       if (typeof func != 'function') {
         throw new TypeError(FUNC_ERROR_TEXT);
       }
-      start = start === undefined ? start : toInteger(start);
+      start = start === undefined$1 ? start : toInteger(start);
       return baseRest(func, start);
     }
 
@@ -11254,7 +11064,7 @@ exports.default = {
      * // => 0
      */
     function cloneWith(value, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == 'function' ? customizer : undefined$1;
       return baseClone(value, CLONE_SYMBOLS_FLAG, customizer);
     }
 
@@ -11309,7 +11119,7 @@ exports.default = {
      * // => 20
      */
     function cloneDeepWith(value, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == 'function' ? customizer : undefined$1;
       return baseClone(value, CLONE_DEEP_FLAG | CLONE_SYMBOLS_FLAG, customizer);
     }
 
@@ -11757,9 +11567,9 @@ exports.default = {
      * // => true
      */
     function isEqualWith(value, other, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
-      var result = customizer ? customizer(value, other) : undefined;
-      return result === undefined ? baseIsEqual(value, other, undefined, customizer) : !!result;
+      customizer = typeof customizer == 'function' ? customizer : undefined$1;
+      var result = customizer ? customizer(value, other) : undefined$1;
+      return result === undefined$1 ? baseIsEqual(value, other, undefined$1, customizer) : !!result;
     }
 
     /**
@@ -12049,7 +11859,7 @@ exports.default = {
      * // => true
      */
     function isMatchWith(object, source, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == 'function' ? customizer : undefined$1;
       return baseIsMatch(object, source, getMatchData(source), customizer);
     }
 
@@ -12388,7 +12198,7 @@ exports.default = {
      * // => false
      */
     function isUndefined(value) {
-      return value === undefined;
+      return value === undefined$1;
     }
 
     /**
@@ -12980,7 +12790,7 @@ exports.default = {
 
       var index = -1;
       var length = sources.length;
-      var guard = length > 2 ? sources[2] : undefined;
+      var guard = length > 2 ? sources[2] : undefined$1;
 
       if (guard && isIterateeCall(sources[0], sources[1], guard)) {
         length = 1;
@@ -12996,7 +12806,7 @@ exports.default = {
           var key = props[propsIndex];
           var value = object[key];
 
-          if (value === undefined ||
+          if (value === undefined$1 ||
               (eq(value, objectProto[key]) && !hasOwnProperty.call(object, key))) {
             object[key] = source[key];
           }
@@ -13026,8 +12836,8 @@ exports.default = {
      * // => { 'a': { 'b': 2, 'c': 3 } }
      */
     var defaultsDeep = baseRest(function(args) {
-      args.push(undefined, customDefaultsMerge);
-      return apply(mergeWith, undefined, args);
+      args.push(undefined$1, customDefaultsMerge);
+      return apply(mergeWith, undefined$1, args);
     });
 
     /**
@@ -13316,8 +13126,8 @@ exports.default = {
      * // => 'default'
      */
     function get(object, path, defaultValue) {
-      var result = object == null ? undefined : baseGet(object, path);
-      return result === undefined ? defaultValue : result;
+      var result = object == null ? undefined$1 : baseGet(object, path);
+      return result === undefined$1 ? defaultValue : result;
     }
 
     /**
@@ -13821,11 +13631,11 @@ exports.default = {
       // Ensure the loop is entered when path is empty.
       if (!length) {
         length = 1;
-        object = undefined;
+        object = undefined$1;
       }
       while (++index < length) {
-        var value = object == null ? undefined : object[toKey(path[index])];
-        if (value === undefined) {
+        var value = object == null ? undefined$1 : object[toKey(path[index])];
+        if (value === undefined$1) {
           index = length;
           value = defaultValue;
         }
@@ -13891,7 +13701,7 @@ exports.default = {
      * // => { '0': { '1': 'a' } }
      */
     function setWith(object, path, value, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == 'function' ? customizer : undefined$1;
       return object == null ? object : baseSet(object, path, value, customizer);
     }
 
@@ -14087,7 +13897,7 @@ exports.default = {
      * // => { '0': { '1': 'a' } }
      */
     function updateWith(object, path, updater, customizer) {
-      customizer = typeof customizer == 'function' ? customizer : undefined;
+      customizer = typeof customizer == 'function' ? customizer : undefined$1;
       return object == null ? object : baseUpdate(object, path, castFunction(updater), customizer);
     }
 
@@ -14171,15 +13981,15 @@ exports.default = {
      * // => 5
      */
     function clamp(number, lower, upper) {
-      if (upper === undefined) {
+      if (upper === undefined$1) {
         upper = lower;
-        lower = undefined;
+        lower = undefined$1;
       }
-      if (upper !== undefined) {
+      if (upper !== undefined$1) {
         upper = toNumber(upper);
         upper = upper === upper ? upper : 0;
       }
-      if (lower !== undefined) {
+      if (lower !== undefined$1) {
         lower = toNumber(lower);
         lower = lower === lower ? lower : 0;
       }
@@ -14226,7 +14036,7 @@ exports.default = {
      */
     function inRange(number, start, end) {
       start = toFinite(start);
-      if (end === undefined) {
+      if (end === undefined$1) {
         end = start;
         start = 0;
       } else {
@@ -14269,25 +14079,25 @@ exports.default = {
      */
     function random(lower, upper, floating) {
       if (floating && typeof floating != 'boolean' && isIterateeCall(lower, upper, floating)) {
-        upper = floating = undefined;
+        upper = floating = undefined$1;
       }
-      if (floating === undefined) {
+      if (floating === undefined$1) {
         if (typeof upper == 'boolean') {
           floating = upper;
-          upper = undefined;
+          upper = undefined$1;
         }
         else if (typeof lower == 'boolean') {
           floating = lower;
-          lower = undefined;
+          lower = undefined$1;
         }
       }
-      if (lower === undefined && upper === undefined) {
+      if (lower === undefined$1 && upper === undefined$1) {
         lower = 0;
         upper = 1;
       }
       else {
         lower = toFinite(lower);
-        if (upper === undefined) {
+        if (upper === undefined$1) {
           upper = lower;
           lower = 0;
         } else {
@@ -14403,7 +14213,7 @@ exports.default = {
       target = baseToString(target);
 
       var length = string.length;
-      position = position === undefined
+      position = position === undefined$1
         ? length
         : baseClamp(toInteger(position), 0, length);
 
@@ -14698,7 +14508,7 @@ exports.default = {
      * // => ''
      */
     function repeat(string, n, guard) {
-      if ((guard ? isIterateeCall(string, n, guard) : n === undefined)) {
+      if ((guard ? isIterateeCall(string, n, guard) : n === undefined$1)) {
         n = 1;
       } else {
         n = toInteger(n);
@@ -14778,9 +14588,9 @@ exports.default = {
      */
     function split(string, separator, limit) {
       if (limit && typeof limit != 'number' && isIterateeCall(string, separator, limit)) {
-        separator = limit = undefined;
+        separator = limit = undefined$1;
       }
-      limit = limit === undefined ? MAX_ARRAY_LENGTH : limit >>> 0;
+      limit = limit === undefined$1 ? MAX_ARRAY_LENGTH : limit >>> 0;
       if (!limit) {
         return [];
       }
@@ -14966,7 +14776,7 @@ exports.default = {
       var settings = lodash.templateSettings;
 
       if (guard && isIterateeCall(string, options, guard)) {
-        options = undefined;
+        options = undefined$1;
       }
       string = toString(string);
       options = assignInWith({}, options, settings, customDefaultsAssignIn);
@@ -15055,7 +14865,7 @@ exports.default = {
 
       var result = attempt(function() {
         return Function(importsKeys, sourceURL + 'return ' + source)
-          .apply(undefined, importsValues);
+          .apply(undefined$1, importsValues);
       });
 
       // Provide the compiled function's source by its `toString` method or
@@ -15141,7 +14951,7 @@ exports.default = {
      */
     function trim(string, chars, guard) {
       string = toString(string);
-      if (string && (guard || chars === undefined)) {
+      if (string && (guard || chars === undefined$1)) {
         return string.replace(reTrim, '');
       }
       if (!string || !(chars = baseToString(chars))) {
@@ -15176,7 +14986,7 @@ exports.default = {
      */
     function trimEnd(string, chars, guard) {
       string = toString(string);
-      if (string && (guard || chars === undefined)) {
+      if (string && (guard || chars === undefined$1)) {
         return string.replace(reTrimEnd, '');
       }
       if (!string || !(chars = baseToString(chars))) {
@@ -15209,7 +15019,7 @@ exports.default = {
      */
     function trimStart(string, chars, guard) {
       string = toString(string);
-      if (string && (guard || chars === undefined)) {
+      if (string && (guard || chars === undefined$1)) {
         return string.replace(reTrimStart, '');
       }
       if (!string || !(chars = baseToString(chars))) {
@@ -15285,7 +15095,7 @@ exports.default = {
         ? castSlice(strSymbols, 0, end).join('')
         : string.slice(0, end);
 
-      if (separator === undefined) {
+      if (separator === undefined$1) {
         return result + omission;
       }
       if (strSymbols) {
@@ -15303,7 +15113,7 @@ exports.default = {
           while ((match = separator.exec(substring))) {
             var newEnd = match.index;
           }
-          result = result.slice(0, newEnd === undefined ? end : newEnd);
+          result = result.slice(0, newEnd === undefined$1 ? end : newEnd);
         }
       } else if (string.indexOf(baseToString(separator), end) != end) {
         var index = result.lastIndexOf(separator);
@@ -15404,9 +15214,9 @@ exports.default = {
      */
     function words(string, pattern, guard) {
       string = toString(string);
-      pattern = guard ? undefined : pattern;
+      pattern = guard ? undefined$1 : pattern;
 
-      if (pattern === undefined) {
+      if (pattern === undefined$1) {
         return hasUnicodeWord(string) ? unicodeWords(string) : asciiWords(string);
       }
       return string.match(pattern) || [];
@@ -15438,7 +15248,7 @@ exports.default = {
      */
     var attempt = baseRest(function(func, args) {
       try {
-        return apply(func, undefined, args);
+        return apply(func, undefined$1, args);
       } catch (e) {
         return isError(e) ? e : new Error(e);
       }
@@ -16096,7 +15906,7 @@ exports.default = {
      */
     function propertyOf(object) {
       return function(path) {
-        return object == null ? undefined : baseGet(object, path);
+        return object == null ? undefined$1 : baseGet(object, path);
       };
     }
 
@@ -16466,7 +16276,7 @@ exports.default = {
     function max(array) {
       return (array && array.length)
         ? baseExtremum(array, identity, baseGt)
-        : undefined;
+        : undefined$1;
     }
 
     /**
@@ -16495,7 +16305,7 @@ exports.default = {
     function maxBy(array, iteratee) {
       return (array && array.length)
         ? baseExtremum(array, getIteratee(iteratee, 2), baseGt)
-        : undefined;
+        : undefined$1;
     }
 
     /**
@@ -16564,7 +16374,7 @@ exports.default = {
     function min(array) {
       return (array && array.length)
         ? baseExtremum(array, identity, baseLt)
-        : undefined;
+        : undefined$1;
     }
 
     /**
@@ -16593,7 +16403,7 @@ exports.default = {
     function minBy(array, iteratee) {
       return (array && array.length)
         ? baseExtremum(array, getIteratee(iteratee, 2), baseLt)
-        : undefined;
+        : undefined$1;
     }
 
     /**
@@ -17055,7 +16865,7 @@ exports.default = {
     // Add `LazyWrapper` methods for `_.drop` and `_.take` variants.
     arrayEach(['drop', 'take'], function(methodName, index) {
       LazyWrapper.prototype[methodName] = function(n) {
-        n = n === undefined ? 1 : nativeMax(toInteger(n), 0);
+        n = n === undefined$1 ? 1 : nativeMax(toInteger(n), 0);
 
         var result = (this.__filtered__ && !index)
           ? new LazyWrapper(this)
@@ -17148,7 +16958,7 @@ exports.default = {
       } else if (start) {
         result = result.drop(start);
       }
-      if (end !== undefined) {
+      if (end !== undefined$1) {
         end = toInteger(end);
         result = end < 0 ? result.dropRight(-end) : result.take(end - start);
       }
@@ -17197,7 +17007,7 @@ exports.default = {
         if (!retUnwrapped && useLazy) {
           value = onlyLazy ? value : new LazyWrapper(this);
           var result = func.apply(value, args);
-          result.__actions__.push({ 'func': thru, 'args': [interceptor], 'thisArg': undefined });
+          result.__actions__.push({ 'func': thru, 'args': [interceptor], 'thisArg': undefined$1 });
           return new LodashWrapper(result, chainAll);
         }
         if (isUnwrapped && onlyLazy) {
@@ -17237,9 +17047,9 @@ exports.default = {
       }
     });
 
-    realNames[createHybrid(undefined, WRAP_BIND_KEY_FLAG).name] = [{
+    realNames[createHybrid(undefined$1, WRAP_BIND_KEY_FLAG).name] = [{
       'name': 'wrapper',
-      'func': undefined
+      'func': undefined$1
     }];
 
     // Add methods to `LazyWrapper`.
@@ -17271,152 +17081,62 @@ exports.default = {
   var _ = runInContext();
 
   // Some AMD build optimizers, like r.js, check for condition patterns like:
-  if (true) {
-    // Expose Lodash on the global object to prevent errors when Lodash is
-    // loaded by a script tag in the presence of an AMD loader.
-    // See http://requirejs.org/docs/errors.html#mismatch for more details.
-    // Use `_.noConflict` to remove Lodash from the global object.
-    root._ = _;
-
-    // Define as an anonymous module so, through path mapping, it can be
-    // referenced as the "underscore" module.
-    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-      return _;
-    }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  if (freeModule) {
+    // Export for Node.js.
+    (freeModule.exports = _)._ = _;
+    // Export for CommonJS support.
+    freeExports._ = _;
   }
-  // Check for `exports` after `define` in case a build optimizer adds it.
-  else {}
-}.call(this));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3), __webpack_require__(4)(module)))
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+  else {
+    // Export to the global object.
+    root._ = _;
+  }
+}.call(commonjsGlobal));
 });
-exports.default = {
+
+var constants = {
   FAILED: 'failed',
   PENDING: 'pending',
-  SUCCESS: 'success'
+  SUCCESS: 'success',
 };
 
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+var mixin = {
+  beforeMount() {
+    const _this = this;
 
-"use strict";
+    this.$r = {
+      end(identifier, message = null) {
+        _this.$store.commit('requests/end', { identifier, message });
+      },
 
+      fail(identifier, message = null) {
+        _this.$store.commit('requests/fail', { identifier, message });
+      },
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+      get(identifier, defaultValue = null) {
+        return lodash.get(_this.$store.state.requests.requests, [identifier], defaultValue);
+      },
 
-var _vue = __webpack_require__(7);
+      isDone(identifier) {
+        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.SUCCESS;
+      },
 
-var _vue2 = _interopRequireDefault(_vue);
+      isFailed(identifier) {
+        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
+      },
 
-var _constants = __webpack_require__(5);
+      isPending(identifier) {
+        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
+      },
 
-var _constants2 = _interopRequireDefault(_constants);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function updateRequest(state, _ref, status) {
-  var identifier = _ref.identifier,
-      message = _ref.message;
-
-  _vue2.default.set(state.requests, identifier, {
-    status: status,
-    message: message
-  });
-}
-
-exports.default = {
-  namespaced: true,
-  mutations: {
-    end: function end(state, payload) {
-      updateRequest(state, payload, _constants2.default.SUCCESS);
-    },
-    fail: function fail(state, payload) {
-      updateRequest(state, payload, _constants2.default.FAILED);
-    },
-    start: function start(state, payload) {
-      updateRequest(state, payload, _constants2.default.PENDING);
-    }
+      start(identifier, message = null) {
+        _this.$store.commit('requests/start', { identifier, message });
+      },
+    };
   },
-  state: {
-    requests: {}
-  }
 };
 
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
+/*!
  * Vue.js v2.6.10
  * (c) 2014-2019 Evan You
  * Released under the MIT License.
@@ -17798,12 +17518,12 @@ var config = ({
   /**
    * Show production mode tip message on boot?
    */
-  productionTip: "none" !== 'production',
+  productionTip: process.env.NODE_ENV !== 'production',
 
   /**
    * Whether to enable devtools
    */
-  devtools: "none" !== 'production',
+  devtools: process.env.NODE_ENV !== 'production',
 
   /**
    * Whether to record perf
@@ -18021,7 +17741,7 @@ var tip = noop;
 var generateComponentTrace = (noop); // work around flow check
 var formatComponentName = (noop);
 
-if (true) {
+if (process.env.NODE_ENV !== 'production') {
   var hasConsole = typeof console !== 'undefined';
   var classifyRE = /(?:^|[-_])(\w)/g;
   var classify = function (str) { return str
@@ -18138,7 +17858,7 @@ Dep.prototype.depend = function depend () {
 Dep.prototype.notify = function notify () {
   // stabilize the subscriber list first
   var subs = this.subs.slice();
-  if ( true && !config.async) {
+  if (process.env.NODE_ENV !== 'production' && !config.async) {
     // subs aren't sorted in scheduler if not running async
     // we need to sort them now to make sure they fire in correct
     // order
@@ -18459,7 +18179,7 @@ function defineReactive$$1 (
         return
       }
       /* eslint-enable no-self-compare */
-      if ( true && customSetter) {
+      if (process.env.NODE_ENV !== 'production' && customSetter) {
         customSetter();
       }
       // #7981: for accessor properties without setter
@@ -18481,7 +18201,7 @@ function defineReactive$$1 (
  * already exist.
  */
 function set (target, key, val) {
-  if ( true &&
+  if (process.env.NODE_ENV !== 'production' &&
     (isUndef(target) || isPrimitive(target))
   ) {
     warn(("Cannot set reactive property on undefined, null, or primitive value: " + ((target))));
@@ -18497,7 +18217,7 @@ function set (target, key, val) {
   }
   var ob = (target).__ob__;
   if (target._isVue || (ob && ob.vmCount)) {
-     true && warn(
+    process.env.NODE_ENV !== 'production' && warn(
       'Avoid adding reactive properties to a Vue instance or its root $data ' +
       'at runtime - declare it upfront in the data option.'
     );
@@ -18516,7 +18236,7 @@ function set (target, key, val) {
  * Delete a property and trigger change if necessary.
  */
 function del (target, key) {
-  if ( true &&
+  if (process.env.NODE_ENV !== 'production' &&
     (isUndef(target) || isPrimitive(target))
   ) {
     warn(("Cannot delete reactive property on undefined, null, or primitive value: " + ((target))));
@@ -18527,7 +18247,7 @@ function del (target, key) {
   }
   var ob = (target).__ob__;
   if (target._isVue || (ob && ob.vmCount)) {
-     true && warn(
+    process.env.NODE_ENV !== 'production' && warn(
       'Avoid deleting properties on a Vue instance or its root $data ' +
       '- just set it to null.'
     );
@@ -18569,7 +18289,7 @@ var strats = config.optionMergeStrategies;
 /**
  * Options with restrictions
  */
-if (true) {
+if (process.env.NODE_ENV !== 'production') {
   strats.el = strats.propsData = function (parent, child, vm, key) {
     if (!vm) {
       warn(
@@ -18663,7 +18383,7 @@ strats.data = function (
 ) {
   if (!vm) {
     if (childVal && typeof childVal !== 'function') {
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         'The "data" option should be a function ' +
         'that returns a per-instance value in component ' +
         'definitions.',
@@ -18726,7 +18446,7 @@ function mergeAssets (
 ) {
   var res = Object.create(parentVal || null);
   if (childVal) {
-     true && assertObjectType(key, childVal, vm);
+    process.env.NODE_ENV !== 'production' && assertObjectType(key, childVal, vm);
     return extend(res, childVal)
   } else {
     return res
@@ -18754,7 +18474,7 @@ strats.watch = function (
   if (childVal === nativeWatch) { childVal = undefined; }
   /* istanbul ignore if */
   if (!childVal) { return Object.create(parentVal || null) }
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     assertObjectType(key, childVal, vm);
   }
   if (!parentVal) { return childVal }
@@ -18785,7 +18505,7 @@ strats.computed = function (
   vm,
   key
 ) {
-  if (childVal && "none" !== 'production') {
+  if (childVal && process.env.NODE_ENV !== 'production') {
     assertObjectType(key, childVal, vm);
   }
   if (!parentVal) { return childVal }
@@ -18845,7 +18565,7 @@ function normalizeProps (options, vm) {
       if (typeof val === 'string') {
         name = camelize(val);
         res[name] = { type: null };
-      } else if (true) {
+      } else if (process.env.NODE_ENV !== 'production') {
         warn('props must be strings when using array syntax.');
       }
     }
@@ -18857,7 +18577,7 @@ function normalizeProps (options, vm) {
         ? val
         : { type: val };
     }
-  } else if (true) {
+  } else if (process.env.NODE_ENV !== 'production') {
     warn(
       "Invalid value for option \"props\": expected an Array or an Object, " +
       "but got " + (toRawType(props)) + ".",
@@ -18885,7 +18605,7 @@ function normalizeInject (options, vm) {
         ? extend({ from: key }, val)
         : { from: val };
     }
-  } else if (true) {
+  } else if (process.env.NODE_ENV !== 'production') {
     warn(
       "Invalid value for option \"inject\": expected an Array or an Object, " +
       "but got " + (toRawType(inject)) + ".",
@@ -18928,7 +18648,7 @@ function mergeOptions (
   child,
   vm
 ) {
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     checkComponents(child);
   }
 
@@ -18996,7 +18716,7 @@ function resolveAsset (
   if (hasOwn(assets, PascalCaseId)) { return assets[PascalCaseId] }
   // fallback to prototype chain
   var res = assets[id] || assets[camelizedId] || assets[PascalCaseId];
-  if ( true && warnMissing && !res) {
+  if (process.env.NODE_ENV !== 'production' && warnMissing && !res) {
     warn(
       'Failed to resolve ' + type.slice(0, -1) + ': ' + id,
       options
@@ -19043,7 +18763,9 @@ function validateProp (
     toggleObserving(prevShouldObserve);
   }
   if (
-    true
+    process.env.NODE_ENV !== 'production' &&
+    // skip validation for weex recycle-list child component props
+    !(false)
   ) {
     assertProp(prop, key, value, vm, absent);
   }
@@ -19060,7 +18782,7 @@ function getPropDefaultValue (vm, prop, key) {
   }
   var def = prop.default;
   // warn against non-factory defaults for Object & Array
-  if ( true && isObject(def)) {
+  if (process.env.NODE_ENV !== 'production' && isObject(def)) {
     warn(
       'Invalid default value for prop "' + key + '": ' +
       'Props with type Object/Array must use a factory function ' +
@@ -19296,7 +19018,7 @@ function globalHandleError (err, vm, info) {
 }
 
 function logError (err, vm, info) {
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
   }
   /* istanbul ignore else */
@@ -19419,7 +19141,7 @@ function nextTick (cb, ctx) {
 
 var initProxy;
 
-if (true) {
+if (process.env.NODE_ENV !== 'production') {
   var allowedGlobals = makeMap(
     'Infinity,undefined,NaN,isFinite,isNaN,' +
     'parseFloat,parseInt,decodeURI,decodeURIComponent,encodeURI,encodeURIComponent,' +
@@ -19543,7 +19265,7 @@ function _traverse (val, seen) {
 var mark;
 var measure;
 
-if (true) {
+if (process.env.NODE_ENV !== 'production') {
   var perf = inBrowser && window.performance;
   /* istanbul ignore if */
   if (
@@ -19613,7 +19335,7 @@ function updateListeners (
     old = oldOn[name];
     event = normalizeEvent(name);
     if (isUndef(cur)) {
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         "Invalid handler for event \"" + (event.name) + "\": got " + String(cur),
         vm
       );
@@ -19693,7 +19415,7 @@ function extractPropsFromVNodeData (
   if (isDef(attrs) || isDef(props)) {
     for (var key in propOptions) {
       var altKey = hyphenate(key);
-      if (true) {
+      if (process.env.NODE_ENV !== 'production') {
         var keyInLowerCase = key.toLowerCase();
         if (
           key !== keyInLowerCase &&
@@ -19845,7 +19567,7 @@ function initInjections (vm) {
     toggleObserving(false);
     Object.keys(result).forEach(function (key) {
       /* istanbul ignore else */
-      if (true) {
+      if (process.env.NODE_ENV !== 'production') {
         defineReactive$$1(vm, key, result[key], function () {
           warn(
             "Avoid mutating an injected value directly since the changes will be " +
@@ -19854,7 +19576,9 @@ function initInjections (vm) {
             vm
           );
         });
-      } else {}
+      } else {
+        defineReactive$$1(vm, key, result[key]);
+      }
     });
     toggleObserving(true);
   }
@@ -19887,7 +19611,7 @@ function resolveInject (inject, vm) {
           result[key] = typeof provideDefault === 'function'
             ? provideDefault.call(vm)
             : provideDefault;
-        } else if (true) {
+        } else if (process.env.NODE_ENV !== 'production') {
           warn(("Injection \"" + key + "\" not found"), vm);
         }
       }
@@ -20089,7 +19813,7 @@ function renderSlot (
   if (scopedSlotFn) { // scoped slot
     props = props || {};
     if (bindObject) {
-      if ( true && !isObject(bindObject)) {
+      if (process.env.NODE_ENV !== 'production' && !isObject(bindObject)) {
         warn(
           'slot v-bind without argument expects an Object',
           this
@@ -20165,7 +19889,7 @@ function bindObjectProps (
 ) {
   if (value) {
     if (!isObject(value)) {
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         'v-bind without argument expects an Object or Array value',
         this
       );
@@ -20273,7 +19997,7 @@ function markStaticNode (node, key, isOnce) {
 function bindObjectListeners (data, value) {
   if (value) {
     if (!isPlainObject(value)) {
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         'v-on without argument expects an Object value',
         this
       );
@@ -20324,7 +20048,7 @@ function bindDynamicKeys (baseObj, values) {
     var key = values[i];
     if (typeof key === 'string' && key) {
       baseObj[values[i]] = values[i + 1];
-    } else if ( true && key !== '' && key !== null) {
+    } else if (process.env.NODE_ENV !== 'production' && key !== '' && key !== null) {
       // null is a speical value for explicitly removing a binding
       warn(
         ("Invalid value for dynamic directive argument (expected string or null): " + key),
@@ -20490,7 +20214,7 @@ function cloneAndMarkFunctionalResult (vnode, data, contextVm, options, renderCo
   var clone = cloneVNode(vnode);
   clone.fnContext = contextVm;
   clone.fnOptions = options;
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     (clone.devtoolsMeta = clone.devtoolsMeta || {}).renderContext = renderContext;
   }
   if (data.slot) {
@@ -20601,7 +20325,7 @@ function createComponent (
   // if at this stage it's not a constructor or an async component factory,
   // reject.
   if (typeof Ctor !== 'function') {
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       warn(("Invalid Component definition: " + (String(Ctor))), context);
     }
     return
@@ -20775,7 +20499,7 @@ function _createElement (
   normalizationType
 ) {
   if (isDef(data) && isDef((data).__ob__)) {
-     true && warn(
+    process.env.NODE_ENV !== 'production' && warn(
       "Avoid using observed data object as vnode data: " + (JSON.stringify(data)) + "\n" +
       'Always create fresh vnode data objects in each render!',
       context
@@ -20791,7 +20515,7 @@ function _createElement (
     return createEmptyVNode()
   }
   // warn against non-primitive key
-  if ( true &&
+  if (process.env.NODE_ENV !== 'production' &&
     isDef(data) && isDef(data.key) && !isPrimitive(data.key)
   ) {
     {
@@ -20906,14 +20630,17 @@ function initRender (vm) {
   var parentData = parentVnode && parentVnode.data;
 
   /* istanbul ignore else */
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
       !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
     }, true);
     defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, function () {
       !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
     }, true);
-  } else {}
+  } else {
+    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true);
+    defineReactive$$1(vm, '$listeners', options._parentListeners || emptyObject, null, true);
+  }
 }
 
 var currentRenderingInstance = null;
@@ -20956,7 +20683,7 @@ function renderMixin (Vue) {
       // return error render result,
       // or previous vnode to prevent render error causing blank component
       /* istanbul ignore else */
-      if ( true && vm.$options.renderError) {
+      if (process.env.NODE_ENV !== 'production' && vm.$options.renderError) {
         try {
           vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
         } catch (e) {
@@ -20975,7 +20702,7 @@ function renderMixin (Vue) {
     }
     // return empty vnode in case the render function errored out
     if (!(vnode instanceof VNode)) {
-      if ( true && Array.isArray(vnode)) {
+      if (process.env.NODE_ENV !== 'production' && Array.isArray(vnode)) {
         warn(
           'Multiple root nodes returned from render function. Render function ' +
           'should return a single root node.',
@@ -21078,7 +20805,7 @@ function resolveAsyncComponent (
     });
 
     var reject = once(function (reason) {
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         "Failed to resolve async component: " + (String(factory)) +
         (reason ? ("\nReason: " + reason) : '')
       );
@@ -21123,9 +20850,9 @@ function resolveAsyncComponent (
             timerTimeout = null;
             if (isUndef(factory.resolved)) {
               reject(
-                 true
+                process.env.NODE_ENV !== 'production'
                   ? ("timeout (" + (res.timeout) + "ms)")
-                  : undefined
+                  : null
               );
             }
           }, res.timeout);
@@ -21272,7 +20999,7 @@ function eventsMixin (Vue) {
 
   Vue.prototype.$emit = function (event) {
     var vm = this;
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       var lowerCaseEvent = event.toLowerCase();
       if (lowerCaseEvent !== event && vm._events[lowerCaseEvent]) {
         tip(
@@ -21427,7 +21154,7 @@ function mountComponent (
   vm.$el = el;
   if (!vm.$options.render) {
     vm.$options.render = createEmptyVNode;
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       /* istanbul ignore if */
       if ((vm.$options.template && vm.$options.template.charAt(0) !== '#') ||
         vm.$options.el || el) {
@@ -21449,7 +21176,7 @@ function mountComponent (
 
   var updateComponent;
   /* istanbul ignore if */
-  if ( true && config.performance && mark) {
+  if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
     updateComponent = function () {
       var name = vm._name;
       var id = vm._uid;
@@ -21500,7 +21227,7 @@ function updateChildComponent (
   parentVnode,
   renderChildren
 ) {
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     isUpdatingChildComponent = true;
   }
 
@@ -21568,7 +21295,7 @@ function updateChildComponent (
     vm.$forceUpdate();
   }
 
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     isUpdatingChildComponent = false;
   }
 }
@@ -21648,7 +21375,7 @@ var index = 0;
 function resetSchedulerState () {
   index = queue.length = activatedChildren.length = 0;
   has = {};
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     circular = {};
   }
   waiting = flushing = false;
@@ -21714,7 +21441,7 @@ function flushSchedulerQueue () {
     has[id] = null;
     watcher.run();
     // in dev build, check and stop circular updates.
-    if ( true && has[id] != null) {
+    if (process.env.NODE_ENV !== 'production' && has[id] != null) {
       circular[id] = (circular[id] || 0) + 1;
       if (circular[id] > MAX_UPDATE_COUNT) {
         warn(
@@ -21800,7 +21527,7 @@ function queueWatcher (watcher) {
     if (!waiting) {
       waiting = true;
 
-      if ( true && !config.async) {
+      if (process.env.NODE_ENV !== 'production' && !config.async) {
         flushSchedulerQueue();
         return
       }
@@ -21850,9 +21577,9 @@ var Watcher = function Watcher (
   this.newDeps = [];
   this.depIds = new _Set();
   this.newDepIds = new _Set();
-  this.expression =  true
+  this.expression = process.env.NODE_ENV !== 'production'
     ? expOrFn.toString()
-    : undefined;
+    : '';
   // parse expression for getter
   if (typeof expOrFn === 'function') {
     this.getter = expOrFn;
@@ -21860,7 +21587,7 @@ var Watcher = function Watcher (
     this.getter = parsePath(expOrFn);
     if (!this.getter) {
       this.getter = noop;
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         "Failed watching path: \"" + expOrFn + "\" " +
         'Watcher only accepts simple dot-delimited paths. ' +
         'For full control, use a function instead.',
@@ -22069,7 +21796,7 @@ function initProps (vm, propsOptions) {
     keys.push(key);
     var value = validateProp(key, propsOptions, propsData, vm);
     /* istanbul ignore else */
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       var hyphenatedKey = hyphenate(key);
       if (isReservedAttribute(hyphenatedKey) ||
           config.isReservedAttr(hyphenatedKey)) {
@@ -22089,7 +21816,9 @@ function initProps (vm, propsOptions) {
           );
         }
       });
-    } else {}
+    } else {
+      defineReactive$$1(props, key, value);
+    }
     // static props are already proxied on the component's prototype
     // during Vue.extend(). We only need to proxy props defined at
     // instantiation here.
@@ -22109,7 +21838,7 @@ function initData (vm) {
     : data || {};
   if (!isPlainObject(data)) {
     data = {};
-     true && warn(
+    process.env.NODE_ENV !== 'production' && warn(
       'data functions should return an object:\n' +
       'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function',
       vm
@@ -22122,7 +21851,7 @@ function initData (vm) {
   var i = keys.length;
   while (i--) {
     var key = keys[i];
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       if (methods && hasOwn(methods, key)) {
         warn(
           ("Method \"" + key + "\" has already been defined as a data property."),
@@ -22131,7 +21860,7 @@ function initData (vm) {
       }
     }
     if (props && hasOwn(props, key)) {
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         "The data property \"" + key + "\" is already declared as a prop. " +
         "Use prop default value instead.",
         vm
@@ -22168,7 +21897,7 @@ function initComputed (vm, computed) {
   for (var key in computed) {
     var userDef = computed[key];
     var getter = typeof userDef === 'function' ? userDef : userDef.get;
-    if ( true && getter == null) {
+    if (process.env.NODE_ENV !== 'production' && getter == null) {
       warn(
         ("Getter is missing for computed property \"" + key + "\"."),
         vm
@@ -22190,7 +21919,7 @@ function initComputed (vm, computed) {
     // at instantiation here.
     if (!(key in vm)) {
       defineComputed(vm, key, userDef);
-    } else if (true) {
+    } else if (process.env.NODE_ENV !== 'production') {
       if (key in vm.$data) {
         warn(("The computed property \"" + key + "\" is already defined in data."), vm);
       } else if (vm.$options.props && key in vm.$options.props) {
@@ -22219,7 +21948,7 @@ function defineComputed (
       : noop;
     sharedPropertyDefinition.set = userDef.set || noop;
   }
-  if ( true &&
+  if (process.env.NODE_ENV !== 'production' &&
       sharedPropertyDefinition.set === noop) {
     sharedPropertyDefinition.set = function () {
       warn(
@@ -22255,7 +21984,7 @@ function createGetterInvoker(fn) {
 function initMethods (vm, methods) {
   var props = vm.$options.props;
   for (var key in methods) {
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       if (typeof methods[key] !== 'function') {
         warn(
           "Method \"" + key + "\" has type \"" + (typeof methods[key]) + "\" in the component definition. " +
@@ -22317,7 +22046,7 @@ function stateMixin (Vue) {
   dataDef.get = function () { return this._data };
   var propsDef = {};
   propsDef.get = function () { return this._props };
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     dataDef.set = function () {
       warn(
         'Avoid replacing instance root $data. ' +
@@ -22372,7 +22101,7 @@ function initMixin (Vue) {
 
     var startTag, endTag;
     /* istanbul ignore if */
-    if ( true && config.performance && mark) {
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       startTag = "vue-perf-start:" + (vm._uid);
       endTag = "vue-perf-end:" + (vm._uid);
       mark(startTag);
@@ -22394,9 +22123,11 @@ function initMixin (Vue) {
       );
     }
     /* istanbul ignore else */
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       initProxy(vm);
-    } else {}
+    } else {
+      vm._renderProxy = vm;
+    }
     // expose real self
     vm._self = vm;
     initLifecycle(vm);
@@ -22409,7 +22140,7 @@ function initMixin (Vue) {
     callHook(vm, 'created');
 
     /* istanbul ignore if */
-    if ( true && config.performance && mark) {
+    if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       vm._name = formatComponentName(vm, false);
       mark(endTag);
       measure(("vue " + (vm._name) + " init"), startTag, endTag);
@@ -22478,7 +22209,7 @@ function resolveModifiedOptions (Ctor) {
 }
 
 function Vue (options) {
-  if ( true &&
+  if (process.env.NODE_ENV !== 'production' &&
     !(this instanceof Vue)
   ) {
     warn('Vue is a constructor and should be called with the `new` keyword');
@@ -22547,7 +22278,7 @@ function initExtend (Vue) {
     }
 
     var name = extendOptions.name || Super.options.name;
-    if ( true && name) {
+    if (process.env.NODE_ENV !== 'production' && name) {
       validateComponentName(name);
     }
 
@@ -22630,7 +22361,7 @@ function initAssetRegisters (Vue) {
         return this.options[type + 's'][id]
       } else {
         /* istanbul ignore if */
-        if ( true && type === 'component') {
+        if (process.env.NODE_ENV !== 'production' && type === 'component') {
           validateComponentName(id);
         }
         if (type === 'component' && isPlainObject(definition)) {
@@ -22787,7 +22518,7 @@ function initGlobalAPI (Vue) {
   // config
   var configDef = {};
   configDef.get = function () { return config; };
-  if (true) {
+  if (process.env.NODE_ENV !== 'production') {
     configDef.set = function () {
       warn(
         'Do not replace the Vue.config object, set individual fields instead.'
@@ -23069,7 +22800,7 @@ function query (el) {
   if (typeof el === 'string') {
     var selected = document.querySelector(el);
     if (!selected) {
-       true && warn(
+      process.env.NODE_ENV !== 'production' && warn(
         'Cannot find element: ' + el
       );
       return document.createElement('div')
@@ -23331,7 +23062,7 @@ function createPatchFunction (backend) {
     var children = vnode.children;
     var tag = vnode.tag;
     if (isDef(tag)) {
-      if (true) {
+      if (process.env.NODE_ENV !== 'production') {
         if (data && data.pre) {
           creatingElmInVPre++;
         }
@@ -23359,7 +23090,7 @@ function createPatchFunction (backend) {
         insert(parentElm, vnode.elm, refElm);
       }
 
-      if ( true && data && data.pre) {
+      if (process.env.NODE_ENV !== 'production' && data && data.pre) {
         creatingElmInVPre--;
       }
     } else if (isTrue(vnode.isComment)) {
@@ -23447,7 +23178,7 @@ function createPatchFunction (backend) {
 
   function createChildren (vnode, children, insertedVnodeQueue) {
     if (Array.isArray(children)) {
-      if (true) {
+      if (process.env.NODE_ENV !== 'production') {
         checkDuplicateKeys(children);
       }
       for (var i = 0; i < children.length; ++i) {
@@ -23581,7 +23312,7 @@ function createPatchFunction (backend) {
     // during leaving transitions
     var canMove = !removeOnly;
 
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       checkDuplicateKeys(newCh);
     }
 
@@ -23719,7 +23450,7 @@ function createPatchFunction (backend) {
       if (isDef(oldCh) && isDef(ch)) {
         if (oldCh !== ch) { updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly); }
       } else if (isDef(ch)) {
-        if (true) {
+        if (process.env.NODE_ENV !== 'production') {
           checkDuplicateKeys(ch);
         }
         if (isDef(oldVnode.text)) { nodeOps.setTextContent(elm, ''); }
@@ -23770,7 +23501,7 @@ function createPatchFunction (backend) {
       return true
     }
     // assert node match
-    if (true) {
+    if (process.env.NODE_ENV !== 'production') {
       if (!assertNodeMatch(elm, vnode, inVPre)) {
         return false
       }
@@ -23793,7 +23524,7 @@ function createPatchFunction (backend) {
           if (isDef(i = data) && isDef(i = i.domProps) && isDef(i = i.innerHTML)) {
             if (i !== elm.innerHTML) {
               /* istanbul ignore if */
-              if ( true &&
+              if (process.env.NODE_ENV !== 'production' &&
                 typeof console !== 'undefined' &&
                 !hydrationBailed
               ) {
@@ -23819,7 +23550,7 @@ function createPatchFunction (backend) {
             // longer than the virtual children list.
             if (!childrenMatch || childNode) {
               /* istanbul ignore if */
-              if ( true &&
+              if (process.env.NODE_ENV !== 'production' &&
                 typeof console !== 'undefined' &&
                 !hydrationBailed
               ) {
@@ -23894,7 +23625,7 @@ function createPatchFunction (backend) {
             if (hydrate(oldVnode, vnode, insertedVnodeQueue)) {
               invokeInsertHook(vnode, insertedVnodeQueue, true);
               return oldVnode
-            } else if (true) {
+            } else if (process.env.NODE_ENV !== 'production') {
               warn(
                 'The client-side rendered virtual DOM tree is not matching ' +
                 'server-rendered content. This is likely caused by incorrect ' +
@@ -24967,7 +24698,7 @@ function enter (vnode, toggleDisplay) {
       : duration
   );
 
-  if ( true && explicitEnterDuration != null) {
+  if (process.env.NODE_ENV !== 'production' && explicitEnterDuration != null) {
     checkDuration(explicitEnterDuration, 'enter', vnode);
   }
 
@@ -25075,7 +24806,7 @@ function leave (vnode, rm) {
       : duration
   );
 
-  if ( true && isDef(explicitLeaveDuration)) {
+  if (process.env.NODE_ENV !== 'production' && isDef(explicitLeaveDuration)) {
     checkDuration(explicitLeaveDuration, 'leave', vnode);
   }
 
@@ -25302,7 +25033,7 @@ function actuallySetSelected (el, binding, vm) {
   var value = binding.value;
   var isMultiple = el.multiple;
   if (isMultiple && !Array.isArray(value)) {
-     true && warn(
+    process.env.NODE_ENV !== 'production' && warn(
       "<select multiple v-model=\"" + (binding.expression) + "\"> " +
       "expects an Array value for its binding, but got " + (Object.prototype.toString.call(value).slice(8, -1)),
       vm
@@ -25519,7 +25250,7 @@ var Transition = {
     }
 
     // warn multiple elements
-    if ( true && children.length > 1) {
+    if (process.env.NODE_ENV !== 'production' && children.length > 1) {
       warn(
         '<transition> can only be used on a single element. Use ' +
         '<transition-group> for lists.',
@@ -25530,7 +25261,7 @@ var Transition = {
     var mode = this.mode;
 
     // warn invalid mode
-    if ( true &&
+    if (process.env.NODE_ENV !== 'production' &&
       mode && mode !== 'in-out' && mode !== 'out-in'
     ) {
       warn(
@@ -25663,7 +25394,7 @@ var TransitionGroup = {
           children.push(c);
           map[c.key] = c
           ;(c.data || (c.data = {})).transition = transitionData;
-        } else if (true) {
+        } else if (process.env.NODE_ENV !== 'production') {
           var opts = c.componentOptions;
           var name = opts ? (opts.Ctor.options.name || opts.tag || '') : c.tag;
           warn(("<transition-group> children must be keyed: <" + name + ">"));
@@ -25824,7 +25555,8 @@ if (inBrowser) {
       if (devtools) {
         devtools.emit('init', Vue);
       } else if (
-        true
+        process.env.NODE_ENV !== 'production' &&
+        process.env.NODE_ENV !== 'test'
       ) {
         console[console.info ? 'info' : 'log'](
           'Download the Vue Devtools extension for a better development experience:\n' +
@@ -25832,7 +25564,8 @@ if (inBrowser) {
         );
       }
     }
-    if ( true &&
+    if (process.env.NODE_ENV !== 'production' &&
+      process.env.NODE_ENV !== 'test' &&
       config.productionTip !== false &&
       typeof console !== 'undefined'
     ) {
@@ -25845,464 +25578,39 @@ if (inBrowser) {
   }, 0);
 }
 
-/*  */
-
-/* harmony default export */ __webpack_exports__["default"] = (Vue);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3), __webpack_require__(8).setImmediate))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
-            (typeof self !== "undefined" && self) ||
-            window;
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(scope, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(9);
-// On some exotic environments, it's not clear which object `setimmediate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3)))
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
-    "use strict";
-
-    if (global.setImmediate) {
-        return;
-    }
-
-    var nextHandle = 1; // Spec says greater than zero
-    var tasksByHandle = {};
-    var currentlyRunningATask = false;
-    var doc = global.document;
-    var registerImmediate;
-
-    function setImmediate(callback) {
-      // Callback can either be a function or a string
-      if (typeof callback !== "function") {
-        callback = new Function("" + callback);
-      }
-      // Copy function arguments
-      var args = new Array(arguments.length - 1);
-      for (var i = 0; i < args.length; i++) {
-          args[i] = arguments[i + 1];
-      }
-      // Store and register the task
-      var task = { callback: callback, args: args };
-      tasksByHandle[nextHandle] = task;
-      registerImmediate(nextHandle);
-      return nextHandle++;
-    }
-
-    function clearImmediate(handle) {
-        delete tasksByHandle[handle];
-    }
-
-    function run(task) {
-        var callback = task.callback;
-        var args = task.args;
-        switch (args.length) {
-        case 0:
-            callback();
-            break;
-        case 1:
-            callback(args[0]);
-            break;
-        case 2:
-            callback(args[0], args[1]);
-            break;
-        case 3:
-            callback(args[0], args[1], args[2]);
-            break;
-        default:
-            callback.apply(undefined, args);
-            break;
-        }
-    }
-
-    function runIfPresent(handle) {
-        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
-        // So if we're currently running a task, we'll need to delay this invocation.
-        if (currentlyRunningATask) {
-            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
-            // "too much recursion" error.
-            setTimeout(runIfPresent, 0, handle);
-        } else {
-            var task = tasksByHandle[handle];
-            if (task) {
-                currentlyRunningATask = true;
-                try {
-                    run(task);
-                } finally {
-                    clearImmediate(handle);
-                    currentlyRunningATask = false;
-                }
-            }
-        }
-    }
-
-    function installNextTickImplementation() {
-        registerImmediate = function(handle) {
-            process.nextTick(function () { runIfPresent(handle); });
-        };
-    }
-
-    function canUsePostMessage() {
-        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
-        // where `global.postMessage` means something completely different and can't be used for this purpose.
-        if (global.postMessage && !global.importScripts) {
-            var postMessageIsAsynchronous = true;
-            var oldOnMessage = global.onmessage;
-            global.onmessage = function() {
-                postMessageIsAsynchronous = false;
-            };
-            global.postMessage("", "*");
-            global.onmessage = oldOnMessage;
-            return postMessageIsAsynchronous;
-        }
-    }
-
-    function installPostMessageImplementation() {
-        // Installs an event handler on `global` for the `message` event: see
-        // * https://developer.mozilla.org/en/DOM/window.postMessage
-        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
-
-        var messagePrefix = "setImmediate$" + Math.random() + "$";
-        var onGlobalMessage = function(event) {
-            if (event.source === global &&
-                typeof event.data === "string" &&
-                event.data.indexOf(messagePrefix) === 0) {
-                runIfPresent(+event.data.slice(messagePrefix.length));
-            }
-        };
-
-        if (global.addEventListener) {
-            global.addEventListener("message", onGlobalMessage, false);
-        } else {
-            global.attachEvent("onmessage", onGlobalMessage);
-        }
-
-        registerImmediate = function(handle) {
-            global.postMessage(messagePrefix + handle, "*");
-        };
-    }
-
-    function installMessageChannelImplementation() {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = function(event) {
-            var handle = event.data;
-            runIfPresent(handle);
-        };
-
-        registerImmediate = function(handle) {
-            channel.port2.postMessage(handle);
-        };
-    }
-
-    function installReadyStateChangeImplementation() {
-        var html = doc.documentElement;
-        registerImmediate = function(handle) {
-            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-            var script = doc.createElement("script");
-            script.onreadystatechange = function () {
-                runIfPresent(handle);
-                script.onreadystatechange = null;
-                html.removeChild(script);
-                script = null;
-            };
-            html.appendChild(script);
-        };
-    }
-
-    function installSetTimeoutImplementation() {
-        registerImmediate = function(handle) {
-            setTimeout(runIfPresent, 0, handle);
-        };
-    }
-
-    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
-    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
-    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
-
-    // Don't get fooled by e.g. browserify environments.
-    if ({}.toString.call(global.process) === "[object process]") {
-        // For Node.js before 0.9
-        installNextTickImplementation();
-
-    } else if (canUsePostMessage()) {
-        // For non-IE10 modern browsers
-        installPostMessageImplementation();
-
-    } else if (global.MessageChannel) {
-        // For web workers, where supported
-        installMessageChannelImplementation();
-
-    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
-        // For IE 6–8
-        installReadyStateChangeImplementation();
-
-    } else {
-        // For older browsers
-        installSetTimeoutImplementation();
-    }
-
-    attachTo.setImmediate = setImmediate;
-    attachTo.clearImmediate = clearImmediate;
-}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(3), __webpack_require__(10)))
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
+function updateRequest(state, { identifier, message }, status) {
+  Vue.set(state.requests, identifier, { status, message });
 }
 
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
+var module$1 = {
+  namespaced: true,
 
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
+  mutations: {
+    end(state, payload) {
+      updateRequest(state, payload, constants.SUCCESS);
+    },
+
+    fail(state, payload) {
+      updateRequest(state, payload, constants.FAILED);
+    },
+
+    start(state, payload) {
+      updateRequest(state, payload, constants.PENDING);
+    },
+  },
+
+  state: {
+    requests: {},
+  },
+};
+
+function install(Vue, { store }) {
+  Vue.mixin(mixin);
+  store.registerModule('requests', module$1);
 }
 
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(install);
 }
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
 
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ })
-/******/ ]);
+module.exports = install;
