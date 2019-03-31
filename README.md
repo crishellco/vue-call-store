@@ -22,7 +22,14 @@ import Vuex from 'vuex';
 import VueRequestStore from 'vue-request-store';
 
 Vue.use(Vuex);
-Vue.use(VueRequestStore);
+
+const store = new Vuex.Store({
+    actions: {},
+    mutations: {},
+    state: {},
+});
+
+Vue.use(VueRequestStore, { store });
 ```
 
 ## Usage
