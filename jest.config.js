@@ -3,6 +3,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.{js,vue}',
     '!src/index.js',
+    '!src/constants.js',
   ],
   moduleFileExtensions: [
     'js',

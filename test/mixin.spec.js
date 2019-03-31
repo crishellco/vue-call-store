@@ -27,25 +27,25 @@ describe('mixin.js', () => {
     wrapper = mount(component, { store });
   });
 
-  it('should return the proper state of the request', () => {
-    const identifier = 'identifier';
-    const message = 'message';
-
-    store.commit('requests/start', { identifier, message }, { root: true });
-    expect(wrapper.vm.$r.isPending(identifier)).toBe(true);
-
-    store.commit('requests/end', { identifier, message }, { root: true });
-    expect(wrapper.vm.$r.isDone(identifier)).toBe(true);
-
-    store.commit('requests/fail', { identifier, message }, { root: true });
-    expect(wrapper.vm.$r.isFailed(identifier)).toBe(true);
-  });
-
   it('should return the correct request', () => {
     const identifier = 'identifier';
     const message = 'message';
 
-    store.commit('requests/start', { identifier, message }, { root: true });
+    store.commit('requests/start', { identifier, message });
     expect(wrapper.vm.$r.get(identifier)).toEqual({ message, status: constants.PENDING });
+  });
+
+  it('should update requests and return correct statuses', () => {
+    const identifier = 'identifier';
+    const message = 'message';
+
+    wrapper.vm.$r.start(identifier, message);
+    expect(wrapper.vm.$r.isPending(identifier)).toBe(true);
+
+    wrapper.vm.$r.end(identifier, message);
+    expect(wrapper.vm.$r.isDone(identifier)).toBe(true);
+
+    wrapper.vm.$r.fail(identifier, message);
+    expect(wrapper.vm.$r.isFailed(identifier)).toBe(true);
   });
 });
