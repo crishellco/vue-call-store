@@ -1,5 +1,5 @@
 {
-  "name": "vue-request-status",
+  "name": "vue-request-store",
   "version": "0.1.0",
   "description": "A Vuex module and Vue mixin to track the status of all API requests",
   "main": "build/index.js",
