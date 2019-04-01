@@ -1,7 +1,7 @@
 # Vue Request Store
 [![Codeship Status for crishellco/vue-request-store](https://app.codeship.com/projects/6fc2e700-35f9-0137-5a4a-56926ea83142/status?branch=master)](https://app.codeship.com/projects/332904)
 
-A plugin to simplify tracking API request statuses.
+A Vue & Vuex plugin to simplify tracking API request statuses.
 
 Vue Request Store provides a Vuex module and component methods to make it easy to update API request statuses and keep track of them.
 
