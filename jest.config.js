@@ -5,6 +5,11 @@ module.exports = {
     '!src/index.js',
     '!src/constants.js',
   ],
+  coverageReporters: [
+    'json-summary',
+    'text',
+    'lcov'
+  ],
   moduleFileExtensions: [
     'js',
     'jsx',

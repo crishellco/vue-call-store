@@ -37,15 +37,14 @@ describe('mixin.js', () => {
 
   it('should update requests and return correct statuses', () => {
     const identifier = 'identifier';
-    const message = 'message';
 
-    wrapper.vm.$r.start(identifier, message);
+    wrapper.vm.$r.start(identifier);
     expect(wrapper.vm.$r.isPending(identifier)).toBe(true);
 
-    wrapper.vm.$r.end(identifier, message);
+    wrapper.vm.$r.end(identifier);
     expect(wrapper.vm.$r.isDone(identifier)).toBe(true);
 
-    wrapper.vm.$r.fail(identifier, message);
+    wrapper.vm.$r.fail(identifier);
     expect(wrapper.vm.$r.isFailed(identifier)).toBe(true);
   });
 });

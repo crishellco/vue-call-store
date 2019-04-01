@@ -1,5 +1,9 @@
 # Vue Request Store
 [![Codeship Status for crishellco/vue-request-store](https://app.codeship.com/projects/6fc2e700-35f9-0137-5a4a-56926ea83142/status?branch=master)](https://app.codeship.com/projects/332904)
+![](badges/badge-branches.svg)
+![](badges/badge-functionss.svg)
+![](badges/badge-lines.svg)
+![](badges/badge-statements.svg)
 
 A Vue & Vuex plugin to simplify tracking API request statuses.
 
