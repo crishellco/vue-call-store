@@ -1,22 +1,21 @@
-import Vue from 'vue';
+import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import constants from '../src/constants';
-import module from '../src/module';
+import VueRequestStore from '../src';
 
-Vue.use(Vuex);
+const identifier = 'identifier';
+let localVue;
+let store;
+
+beforeEach(() => {
+  localVue = createLocalVue();
+  localVue.use(Vuex);
+  store = new Vuex.Store();
+  localVue.use(VueRequestStore, { store });
+});
 
 describe('module.js', () => {
-  let store;
-
-  beforeEach(() => {
-    store = new Vuex.Store({
-      modules: {
-        requests: module,
-      },
-    });
-  });
-
   it('should start, end, and fail requests', () => {
     const identifier = 'identifier';
     const message = 'message';
