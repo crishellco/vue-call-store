@@ -14,7 +14,7 @@ beforeAll(() => {
   localVue = createLocalVue();
   localVue.use(Vuex);
   store = new Vuex.Store();
-  localVue.use(VueRequestStore, { options: { minDuration: 500 }, store });
+  localVue.use(VueRequestStore, { store });
 });
 
 beforeEach(() => {

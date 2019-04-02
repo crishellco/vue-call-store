@@ -5,6 +5,7 @@ import Vue from 'vue';
 import constants from './constants';
 
 const defaultOptions = { minDuration: 0 };
+const timeouts = {};
 let options;
 
 function addMeta(oldRequest, request) {
@@ -35,7 +36,15 @@ function updateRequest(state, { identifier, message }, status) {
   const request = addMeta(oldRequest, { status, message });
   const timeout = calculateTimeout(request);
 
-  Vue.set(state.requests, identifier, request);
+  clearTimeout(timeouts[identifier]);
+
+  if (!timeout) {
+    Vue.set(state.requests, identifier, request);
+  } else {
+    timeouts[identifier] = setTimeout(() => {
+      Vue.set(state.requests, identifier, request);
+    }, timeout);
+  }
 }
 
 export default (opts = {}) => {
