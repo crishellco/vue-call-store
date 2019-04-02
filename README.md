@@ -76,8 +76,8 @@ vm.$requests.get('fetchAllUsers');
 // Format
 {
     _duration: 200, // milliseconds
-    _started: moment("2019-04-02T15:19:05.000"), // or null
-    _stopped: moment("2019-04-02T15:19:05.200"), // or null
+    _started: moment('2019-04-02T15:19:05.000'), // or null
+    _stopped: moment('2019-04-02T15:19:05.200'), // or null
     message: 'message',
     status: 'success',
 }
