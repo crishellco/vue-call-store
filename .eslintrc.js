@@ -10,6 +10,7 @@ module.exports = {
     describe: true,
     expect: true,
     it: true,
+    jest: true,
     SharedArrayBuffer: 'readonly',
   },
   parserOptions: {

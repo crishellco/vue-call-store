@@ -26,7 +26,13 @@ beforeEach(() => {
 describe('mixin.js', () => {
   it('should return the correct request', () => {
     store.commit('requests/start', { identifier, message });
-    expect(wrapper.vm.$r.get(identifier)).toEqual({ message, status: constants.PENDING });
+    const request = wrapper.vm.$r.get(identifier);
+
+    expect(request).toHaveProperty('message', message);
+    expect(request).toHaveProperty('status', constants.PENDING);
+    expect(request).toHaveProperty('_started');
+    expect(request).toHaveProperty('_stopped');
+    expect(request).toHaveProperty('_duration');
   });
 
   it('should update requests and return correct statuses', () => {

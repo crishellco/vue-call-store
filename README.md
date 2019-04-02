@@ -72,6 +72,15 @@ vm.$requests.isFailed('fetchAllUsers');
  * @returns {object|null}
  */
 vm.$requests.get('fetchAllUsers');
+
+// Format
+{
+    _duration: 200, // milliseconds
+    _started: moment("2019-04-02T15:19:05.000"), // or null
+    _stopped: moment("2019-04-02T15:19:05.200"), // or null
+    message: 'message',
+    status: 'success',
+}
 ```
 
 #### Available mutations
@@ -79,6 +88,7 @@ vm.$requests.get('fetchAllUsers');
 vm.$store.commit('requests/start', { identifier, message });
 vm.$store.commit('requests/end', { identifier, message });
 vm.$store.commit('requests/fail', { identifier, message });
+vm.$store.commit('requests/reset'); // Removes all request objects
 ```
 
 ## Lint
