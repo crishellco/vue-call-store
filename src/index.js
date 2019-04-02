@@ -1,9 +1,9 @@
 import mixin from './mixin';
 import module from './module';
 
-function install(Vue, { store }) {
+function install(Vue, { options, store }) {
   Vue.mixin(mixin);
-  store.registerModule('requests', module);
+  store.registerModule('requests', module(options));
 }
 
 export default install;

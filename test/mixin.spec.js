@@ -14,13 +14,16 @@ const component = {
   template: '<div>Hello World</div>',
 };
 
-beforeEach(() => {
+beforeAll(() => {
   localVue = createLocalVue();
   localVue.use(Vuex);
   store = new Vuex.Store();
   localVue.use(VueRequestStore, { store });
-
   wrapper = mount(component, { localVue, store });
+});
+
+beforeEach(() => {
+  store.commit('requests/reset', { root: true });
 });
 
 describe('mixin.js', () => {

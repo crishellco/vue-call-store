@@ -10,12 +10,14 @@ const message = 'message';
 let localVue;
 let store;
 
-beforeEach(() => {
+beforeAll(() => {
   localVue = createLocalVue();
   localVue.use(Vuex);
   store = new Vuex.Store();
-  localVue.use(VueRequestStore, { store });
+  localVue.use(VueRequestStore, { options: { minDuration: 500 }, store });
+});
 
+beforeEach(() => {
   store.commit('requests/reset', { root: true });
 });
 
@@ -77,6 +79,15 @@ describe('module.js', () => {
       _stopped: stopped,
       message,
       status: constants.FAILED,
+    });
+
+    store.commit('requests/start', { identifier, message }, { root: true });
+    expect(store.state.requests.requests[identifier]).toEqual({
+      _duration: null,
+      _started: stopped,
+      _stopped: null,
+      message,
+      status: constants.PENDING,
     });
   });
 });
