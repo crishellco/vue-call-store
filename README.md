@@ -44,9 +44,9 @@ Vue.use(VueRequestStore, { store });
  * @arg {string} identifier
  * @arg {*} [message]
  */
-vm.$r.start('fetchAllUsers');
-vm.$r.end('fetchAllUsers');
-vm.$r.fail('fetchAllUsers', error);
+vm.$requests.start('fetchAllUsers');
+vm.$requests.end('fetchAllUsers');
+vm.$requests.fail('fetchAllUsers', error);
 
 ```
 
@@ -56,11 +56,11 @@ vm.$r.fail('fetchAllUsers', error);
  * @arg {string} identifier
  * @returns {boolean}
  */
-vm.$r.isPending('fetchAllUsers');
-vm.$r.isDone('fetchAllUsers');
-vm.$r.isFailed('fetchAllUsers');
+vm.$requests.isPending('fetchAllUsers');
+vm.$requests.isDone('fetchAllUsers');
+vm.$requests.isFailed('fetchAllUsers');
 
-<v-loader v-if="$r.isPending('fetchAllUsers')" />
+<v-loader v-if="$requests.isPending('fetchAllUsers')" />
 
 ```
 
@@ -71,7 +71,7 @@ vm.$r.isFailed('fetchAllUsers');
  * @arg {*} [defaultValue = null]
  * @returns {object|null}
  */
-vm.$r.get('fetchAllUsers');
+vm.$requests.get('fetchAllUsers');
 ```
 
 #### Available mutations

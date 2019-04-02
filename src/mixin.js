@@ -6,7 +6,8 @@ export default {
   beforeMount() {
     const _this = this;
 
-    this.$r = {
+    // eslint-disable-next-line no-multi-assign
+    this.$r = this.$requests = {
       end(identifier, message = null) {
         _this.$store.commit('requests/end', { identifier, message });
       },
