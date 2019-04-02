@@ -5,12 +5,13 @@ import constants from '../src/constants';
 import VueRequestStore from '../src';
 
 const identifier = 'identifier';
+const message = 'message';
 let localVue;
 let store;
 let wrapper;
 
 const component = {
-  template: `<div>Hello World</div>`,
+  template: '<div>Hello World</div>',
 };
 
 beforeEach(() => {
@@ -24,16 +25,11 @@ beforeEach(() => {
 
 describe('mixin.js', () => {
   it('should return the correct request', () => {
-    const identifier = 'identifier';
-    const message = 'message';
-
     store.commit('requests/start', { identifier, message });
     expect(wrapper.vm.$r.get(identifier)).toEqual({ message, status: constants.PENDING });
   });
 
   it('should update requests and return correct statuses', () => {
-    const identifier = 'identifier';
-
     wrapper.vm.$r.start(identifier);
     expect(wrapper.vm.$r.isPending(identifier)).toBe(true);
 
