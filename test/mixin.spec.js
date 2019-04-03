@@ -11,7 +11,13 @@ let store;
 let wrapper;
 
 const component = {
-  template: '<div>Hello World</div>',
+  template: `
+    <div>
+      <div v-if="$requests.isDone('${identifier}')" class="done">Hello World</div>
+      <div v-if="$requests.isFailed('${identifier}')" class="failed">Hello World</div>
+      <div v-if="$requests.isPending('${identifier}')" class="pending">Hello World</div>
+    </div>
+  `,
 };
 
 beforeEach(() => {
@@ -44,5 +50,22 @@ describe('mixin.js', () => {
 
     wrapper.vm.$r.fail(identifier);
     expect(wrapper.vm.$r.isFailed(identifier)).toBe(true);
+  });
+
+  it('should update components', () => {
+    wrapper.vm.$r.start(identifier);
+    expect(wrapper.contains('.done')).toBe(false);
+    expect(wrapper.contains('.failed')).toBe(false);
+    expect(wrapper.contains('.pending')).toBe(true);
+
+    wrapper.vm.$r.end(identifier);
+    expect(wrapper.contains('.done')).toBe(true);
+    expect(wrapper.contains('.failed')).toBe(false);
+    expect(wrapper.contains('.pending')).toBe(false);
+
+    wrapper.vm.$r.fail(identifier);
+    expect(wrapper.contains('.done')).toBe(false);
+    expect(wrapper.contains('.failed')).toBe(true);
+    expect(wrapper.contains('.pending')).toBe(false);
   });
 });
