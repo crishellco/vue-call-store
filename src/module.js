@@ -4,10 +4,6 @@ import Vue from 'vue';
 
 import constants from './constants';
 
-function duration({ _started, _stopped }) {
-  return _stopped ? moment.duration(_stopped.diff(_started)).as('ms') : null;
-}
-
 function addMeta(oldRequest, request) {
   const pending = request.status === constants.PENDING;
 
@@ -17,6 +13,10 @@ function addMeta(oldRequest, request) {
   });
 
   return _.set(request, '_duration', duration(request));
+}
+
+function duration({ _started, _stopped }) {
+  return _stopped ? moment.duration(_stopped.diff(_started)).as('ms') : null;
 }
 
 function updateRequest(state, { identifier, message }, status) {
