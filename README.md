@@ -85,9 +85,9 @@ vm.$requests.get('fetchAllUsers');
 
 #### Available mutations
 ```javascript
-vm.$store.commit('requests/start', { identifier, message });
-vm.$store.commit('requests/end', { identifier, message });
-vm.$store.commit('requests/fail', { identifier, message });
+vm.$store.dispatch('requests/start', { identifier, message });
+vm.$store.dispatch('requests/end', { identifier, message });
+vm.$store.dispatch('requests/fail', { identifier, message });
 vm.$store.commit('requests/reset'); // Removes all request objects
 ```
 

@@ -10,84 +10,124 @@ const message = 'message';
 let localVue;
 let store;
 
-beforeAll(() => {
-  localVue = createLocalVue();
-  localVue.use(Vuex);
-  store = new Vuex.Store();
-  localVue.use(VueRequestStore, { store });
-});
-
-beforeEach(() => {
-  store.commit('requests/reset', { root: true });
-});
-
 describe('module.js', () => {
-  it('should start, end, and fail requests', () => {
-    store.commit('requests/start', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
-    expect(store.state.requests.requests[identifier].message).toBe(message);
-
-    store.commit('requests/end', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier].status).toBe(constants.SUCCESS);
-
-    store.commit('requests/fail', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier].status).toBe(constants.FAILED);
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(Vuex);
+    store = new Vuex.Store();
   });
 
-  it('should add meta data', () => {
-    const started = moment(); const
-      stopped = started.clone();
-    stopped.add(200, 'ms');
-
-    Date.now = jest.fn()
-      .mockReturnValueOnce(started)
-      .mockReturnValue(stopped);
-
-    store.commit('requests/start', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
-      _duration: null,
-      _started: started,
-      _stopped: null,
-      message,
-      status: constants.PENDING,
+  describe('with min duration', () => {
+    beforeEach(() => {
+      localVue.use(VueRequestStore, { options: { minDuration: 500 }, store });
+      store.commit('requests/reset', { root: true });
     });
 
-    store.commit('requests/end', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
-      _duration: 200,
-      _started: started,
-      _stopped: stopped,
-      message,
-      status: constants.SUCCESS,
+    it('should delay ending a request', (done) => {
+      store.dispatch('requests/start', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
+
+      store.dispatch('requests/end', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
+
+      setTimeout(() => {
+        expect(store.state.requests.requests[identifier].status).toBe(constants.SUCCESS);
+        done();
+      }, 1000);
     });
 
-    store.commit('requests/fail', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
-      _duration: 200,
-      _started: started,
-      _stopped: stopped,
-      message,
-      status: constants.FAILED,
+    it('should delay failing a request', (done) => {
+      store.dispatch('requests/start', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
+
+      store.dispatch('requests/fail', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
+
+      setTimeout(() => {
+        expect(store.state.requests.requests[identifier].status).toBe(constants.FAILED);
+        done();
+      }, 1000);
+    });
+  });
+
+  describe('without min duration', () => {
+    beforeEach(() => {
+      localVue.use(VueRequestStore, { store });
+      store.commit('requests/reset', { root: true });
     });
 
-    store.commit('requests/reset', { root: true });
+    it('should start, end, and fail requests', () => {
+      store.dispatch('requests/start', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
+      expect(store.state.requests.requests[identifier].message).toBe(message);
 
-    store.commit('requests/fail', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
-      _duration: 0,
-      _started: stopped,
-      _stopped: stopped,
-      message,
-      status: constants.FAILED,
+      store.dispatch('requests/end', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier].status).toBe(constants.SUCCESS);
+
+      store.dispatch('requests/fail', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier].status).toBe(constants.FAILED);
     });
 
-    store.commit('requests/start', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
-      _duration: null,
-      _started: stopped,
-      _stopped: null,
-      message,
-      status: constants.PENDING,
+    it('should add meta data', () => {
+      const started = moment(); const
+        stopped = started.clone();
+      stopped.add(200, 'ms');
+
+      Date.now = jest.fn()
+        .mockReturnValueOnce(started)
+        .mockReturnValue(stopped);
+
+      store.dispatch('requests/start', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier]).toEqual({
+        _duration: null,
+        _started: started,
+        _stopped: null,
+        identifier,
+        message,
+        status: constants.PENDING,
+      });
+
+      store.dispatch('requests/end', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier]).toEqual({
+        _duration: 200,
+        _started: started,
+        _stopped: stopped,
+        identifier,
+        message,
+        status: constants.SUCCESS,
+      });
+
+      store.dispatch('requests/fail', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier]).toEqual({
+        _duration: 200,
+        _started: started,
+        _stopped: stopped,
+        identifier,
+        message,
+        status: constants.FAILED,
+      });
+
+      store.commit('requests/reset', { root: true });
+
+      store.dispatch('requests/fail', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier]).toEqual({
+        _duration: 0,
+        _started: stopped,
+        _stopped: stopped,
+        identifier,
+        message,
+        status: constants.FAILED,
+      });
+
+      store.dispatch('requests/start', { identifier, message }, { root: true });
+      expect(store.state.requests.requests[identifier]).toEqual({
+        _duration: null,
+        _started: stopped,
+        _stopped: null,
+        identifier,
+        message,
+        status: constants.PENDING,
+      });
     });
   });
 });

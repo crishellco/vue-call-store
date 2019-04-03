@@ -3,38 +3,33 @@ import _ from 'lodash';
 import constants from './constants';
 
 export default {
-  beforeMount() {
-    const _this = this;
+  methods: {
+    $endRequest(identifier, message = null) {
+      this.$store.dispatch('requests/end', { identifier, message });
+    },
 
-    // eslint-disable-next-line no-multi-assign
-    this.$r = this.$requests = {
-      end(identifier, message = null) {
-        _this.$store.commit('requests/end', { identifier, message });
-      },
+    $failRequest(identifier, message = null) {
+      this.$store.dispatch('requests/fail', { identifier, message });
+    },
 
-      fail(identifier, message = null) {
-        _this.$store.commit('requests/fail', { identifier, message });
-      },
+    $getRequest(identifier, defaultValue = null) {
+      return _.get(this.$store.state.requests.requests, identifier, defaultValue);
+    },
 
-      get(identifier, defaultValue = null) {
-        return _.get(_this.$store.state.requests.requests, [identifier], defaultValue);
-      },
+    $isDone(identifier) {
+      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.SUCCESS;
+    },
 
-      isDone(identifier) {
-        return _.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.SUCCESS;
-      },
+    $isFailed(identifier) {
+      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
+    },
 
-      isFailed(identifier) {
-        return _.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
-      },
+    $isPending(identifier) {
+      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
+    },
 
-      isPending(identifier) {
-        return _.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
-      },
-
-      start(identifier, message = null) {
-        _this.$store.commit('requests/start', { identifier, message });
-      },
-    };
+    $startRequest(identifier, message = null) {
+      this.$store.dispatch('requests/start', { identifier, message });
+    },
   },
 };

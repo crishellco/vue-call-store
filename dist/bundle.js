@@ -17105,39 +17105,34 @@ var constants = {
 };
 
 var mixin = {
-  beforeMount() {
-    const _this = this;
+  methods: {
+    $endRequest(identifier, message = null) {
+      this.$store.dispatch('requests/end', { identifier, message });
+    },
 
-    // eslint-disable-next-line no-multi-assign
-    this.$r = this.$requests = {
-      end(identifier, message = null) {
-        _this.$store.commit('requests/end', { identifier, message });
-      },
+    $failRequest(identifier, message = null) {
+      this.$store.dispatch('requests/fail', { identifier, message });
+    },
 
-      fail(identifier, message = null) {
-        _this.$store.commit('requests/fail', { identifier, message });
-      },
+    $getRequest(identifier, defaultValue = null) {
+      return lodash.get(this.$store.state.requests.requests, identifier, defaultValue);
+    },
 
-      get(identifier, defaultValue = null) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier], defaultValue);
-      },
+    $isDone(identifier) {
+      return lodash.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.SUCCESS;
+    },
 
-      isDone(identifier) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.SUCCESS;
-      },
+    $isFailed(identifier) {
+      return lodash.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
+    },
 
-      isFailed(identifier) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
-      },
+    $isPending(identifier) {
+      return lodash.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
+    },
 
-      isPending(identifier) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
-      },
-
-      start(identifier, message = null) {
-        _this.$store.commit('requests/start', { identifier, message });
-      },
-    };
+    $startRequest(identifier, message = null) {
+      this.$store.dispatch('requests/start', { identifier, message });
+    },
   },
 };
 
@@ -30183,56 +30178,98 @@ if (inBrowser) {
   }, 0);
 }
 
-function duration({ _started, _stopped }) {
-  return _stopped ? moment.duration(_stopped.diff(_started)).as('ms') : null;
-}
+const defaultOptions = { minDuration: 0 };
+const timeouts = {};
+let options;
 
 function addMeta(oldRequest, request) {
   const pending = request.status === constants.PENDING;
 
   request = lodash.merge(oldRequest, request, {
     _started: oldRequest._started || moment(),
-    _stopped: !pending ? moment() : oldRequest._stopped || null,
+    _stopped: !pending ? moment() : null,
   });
 
-  return lodash.set(request, '_duration', duration(request));
+  return lodash.set(request, '_duration', calculateDuration(request));
 }
 
-function updateRequest(state, { identifier, message }, status) {
-  const oldRequest = lodash.get(state.requests, identifier, {});
+function buildRequest(state, { identifier, message }, status) {
+  const oldRequest = Object.assign({}, lodash.get(state.requests, identifier, {}));
 
-  Vue.set(state.requests, identifier, addMeta(oldRequest, { status, message }));
+  return addMeta(oldRequest, { identifier, status, message });
 }
 
-var module$1 = {
-  namespaced: true,
+function calculateDuration({ _started, _stopped }) {
+  return _stopped ? moment.duration(_stopped.diff(_started)).as('ms') : null;
+}
 
-  mutations: {
-    end(state, payload) {
-      updateRequest(state, payload, constants.SUCCESS);
+function calculateTimeout({ _duration, status }) {
+  if (status === constants.PENDING) return 0;
+
+  const diff = options.minDuration - _duration;
+
+  return diff > 0 ? diff : 0;
+}
+
+var module$1 = (opts = {}) => {
+  options = lodash.defaults(opts, defaultOptions);
+
+  return {
+    namespaced: true,
+
+    actions: {
+      end({ dispatch, state }, payload) {
+        const request = buildRequest(state, payload, constants.SUCCESS);
+
+        dispatch('requests/update', request, { root: true });
+      },
+
+      fail({ dispatch, state }, payload) {
+        const request = buildRequest(state, payload, constants.FAILED);
+
+        dispatch('requests/update', request, { root: true });
+      },
+
+      start({ dispatch, state }, payload) {
+        const request = buildRequest(state, payload, constants.PENDING);
+
+        dispatch('requests/update', request, { root: true });
+      },
+
+      update({ commit }, request) {
+        const { identifier } = request;
+        const timeout = calculateTimeout(request);
+        clearTimeout(timeouts[identifier]);
+
+        if (!timeout) {
+          commit('requests/update', request, { root: true });
+        } else {
+          timeouts[identifier] = setTimeout(() => {
+            commit('requests/update', request, { root: true });
+          }, timeout);
+        }
+      },
     },
 
-    fail(state, payload) {
-      updateRequest(state, payload, constants.FAILED);
+    mutations: {
+      reset(state) {
+        state.requests = {};
+      },
+
+      update(state, request) {
+        Vue.set(state.requests, request.identifier, request);
+      },
     },
 
-    reset(state) {
-      state.requests = {};
+    state: {
+      requests: {},
     },
-
-    start(state, payload) {
-      updateRequest(state, payload, constants.PENDING);
-    },
-  },
-
-  state: {
-    requests: {},
-  },
+  };
 };
 
-function install(Vue, { store }) {
+function install(Vue, { options, store }) {
   Vue.mixin(mixin);
-  store.registerModule('requests', module$1);
+  store.registerModule('requests', module$1(options));
 }
 
 if (typeof window !== 'undefined' && window.Vue) {

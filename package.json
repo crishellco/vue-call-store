@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node_modules/.bin/rollup -c",
     "lint": "eslint --ext .js,.vue .",
-    "test": "jest --coverage && jest-coverage-badges output badges"
+    "test": "jest --coverage --runInBand && jest-coverage-badges output badges"
   },
   "repository": {
     "type": "git",

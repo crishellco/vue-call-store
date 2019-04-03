@@ -28,8 +28,8 @@ beforeEach(() => {
 
 describe('mixin.js', () => {
   it('should return the correct request', () => {
-    store.commit('requests/start', { identifier, message });
-    const request = wrapper.vm.$r.get(identifier);
+    store.dispatch('requests/start', { identifier, message });
+    const request = wrapper.vm.$getRequest(identifier);
 
     expect(request).toHaveProperty('message', message);
     expect(request).toHaveProperty('status', constants.PENDING);
@@ -39,13 +39,13 @@ describe('mixin.js', () => {
   });
 
   it('should update requests and return correct statuses', () => {
-    wrapper.vm.$r.start(identifier);
-    expect(wrapper.vm.$r.isPending(identifier)).toBe(true);
+    wrapper.vm.$startRequest(identifier);
+    expect(wrapper.vm.$isPending(identifier)).toBe(true);
 
-    wrapper.vm.$r.end(identifier);
-    expect(wrapper.vm.$r.isDone(identifier)).toBe(true);
+    wrapper.vm.$endRequest(identifier);
+    expect(wrapper.vm.$isDone(identifier)).toBe(true);
 
-    wrapper.vm.$r.fail(identifier);
-    expect(wrapper.vm.$r.isFailed(identifier)).toBe(true);
+    wrapper.vm.$failRequest(identifier);
+    expect(wrapper.vm.$isFailed(identifier)).toBe(true);
   });
 });

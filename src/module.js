@@ -19,6 +19,12 @@ function addMeta(oldRequest, request) {
   return _.set(request, '_duration', calculateDuration(request));
 }
 
+function buildRequest(state, { identifier, message }, status) {
+  const oldRequest = Object.assign({}, _.get(state.requests, identifier, {}));
+
+  return addMeta(oldRequest, { identifier, status, message });
+}
+
 function calculateDuration({ _started, _stopped }) {
   return _stopped ? moment.duration(_stopped.diff(_started)).as('ms') : null;
 }
@@ -31,43 +37,53 @@ function calculateTimeout({ _duration, status }) {
   return diff > 0 ? diff : 0;
 }
 
-function updateRequest(state, { identifier, message }, status) {
-  const oldRequest = _.get(state.requests, identifier, {});
-  const request = addMeta(oldRequest, { status, message });
-  const timeout = calculateTimeout(request);
-
-  clearTimeout(timeouts[identifier]);
-
-  if (!timeout) {
-    Vue.set(state.requests, identifier, request);
-  } else {
-    timeouts[identifier] = setTimeout(() => {
-      Vue.set(state.requests, identifier, request);
-    }, timeout);
-  }
-}
-
 export default (opts = {}) => {
   options = _.defaults(opts, defaultOptions);
 
   return {
     namespaced: true,
 
+    actions: {
+      end({ dispatch, state }, payload) {
+        const request = buildRequest(state, payload, constants.SUCCESS);
+
+        dispatch('requests/update', request, { root: true });
+      },
+
+      fail({ dispatch, state }, payload) {
+        const request = buildRequest(state, payload, constants.FAILED);
+
+        dispatch('requests/update', request, { root: true });
+      },
+
+      start({ dispatch, state }, payload) {
+        const request = buildRequest(state, payload, constants.PENDING);
+
+        dispatch('requests/update', request, { root: true });
+      },
+
+      update({ commit }, request) {
+        const { identifier } = request;
+        const timeout = calculateTimeout(request);
+        clearTimeout(timeouts[identifier]);
+
+        if (!timeout) {
+          commit('requests/update', request, { root: true });
+        } else {
+          timeouts[identifier] = setTimeout(() => {
+            commit('requests/update', request, { root: true });
+          }, timeout);
+        }
+      },
+    },
+
     mutations: {
-      end(state, payload) {
-        updateRequest(state, payload, constants.SUCCESS);
-      },
-
-      fail(state, payload) {
-        updateRequest(state, payload, constants.FAILED);
-      },
-
       reset(state) {
         state.requests = {};
       },
 
-      start(state, payload) {
-        updateRequest(state, payload, constants.PENDING);
+      update(state, request) {
+        Vue.set(state.requests, request.identifier, request);
       },
     },
 
