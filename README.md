@@ -27,11 +27,7 @@ import VueRequestStore from 'vue-request-store';
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
-    actions: {},
-    mutations: {},
-    state: {},
-});
+const store = new Vuex.Store({});
 
 Vue.use(VueRequestStore, { store });
 ```
@@ -44,9 +40,28 @@ Vue.use(VueRequestStore, { store });
  * @arg {string} identifier
  * @arg {*} [message]
  */
-vm.$requests.start('fetchAllUsers');
-vm.$requests.end('fetchAllUsers');
-vm.$requests.fail('fetchAllUsers', error);
+vm.$startRequest('fetchUsers');
+vm.$endRequest('fetchUsers');
+vm.$failRequest('fetchUsers', error);
+
+// Example usage in a Vuex action
+new Vuex.Store({
+  actions: {
+    fetchUsers({ commit }) {
+      this._vm.$startRequest('fetchUsers');
+
+      axios
+        .get('/api/users')
+        .then(({data} => {
+          commit('users/set', data);
+          this._vm.$endRequest('fetchUsers');
+        })
+        .catch(({response}) => {
+          this._vm.$failRequest('fetchUsers', response.data.errors);
+        });
+    },
+  },
+});
 
 ```
 
@@ -56,11 +71,17 @@ vm.$requests.fail('fetchAllUsers', error);
  * @arg {string} identifier
  * @returns {boolean}
  */
-vm.$requests.isPending('fetchAllUsers');
-vm.$requests.isDone('fetchAllUsers');
-vm.$requests.isFailed('fetchAllUsers');
+const isPending = vm.$requestIsPending('fetchUsers');
+const isDone = vm.$requestIsDone('fetchUsers');
+const hasFailed = vm.$requestHasFailed('fetchUsers');
 
-<v-loader v-if="$requests.isPending('fetchAllUsers')" />
+// Example usage in a template
+<template>
+  <loading-indicator v-if="$requestIsPending('fetchUsers')" />
+  <div v-else class="content">
+    ...
+  </div>
+</template>
 
 ```
 
@@ -71,15 +92,15 @@ vm.$requests.isFailed('fetchAllUsers');
  * @arg {*} [defaultValue = null]
  * @returns {object|null}
  */
-vm.$requests.get('fetchAllUsers');
+const request = vm.$getRequest('fetchUsers');
 
 // Format
 {
-    _duration: 200, // milliseconds
-    _started: moment('2019-04-02T15:19:05.000'), // or null
-    _stopped: moment('2019-04-02T15:19:05.200'), // or null
-    message: 'message',
-    status: 'success',
+  _duration: 200, // milliseconds
+  _started: moment('2019-04-02T15:19:05.000'), // or null
+  _stopped: moment('2019-04-02T15:19:05.200'), // or null
+  message: 'message',
+  status: 'success',
 }
 ```
 
@@ -99,6 +120,11 @@ yarn lint
 ## Test
 ```bash
 yarn test
+```
+
+## Build
+```bash
+yarn build
 ```
 
 ## How to Contribute

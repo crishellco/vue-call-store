@@ -20,13 +20,19 @@ beforeEach(() => {
 });
 
 describe('module.js', () => {
+  it('should correctly return data from getters', () => {
+    store.state.requests.requests = 'requests!';
+
+    expect(store.getters['requests/requests']).toBe('requests!');
+  });
+
   it('should start, end, and fail requests', () => {
     store.commit('requests/start', { identifier, message }, { root: true });
     expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
     expect(store.state.requests.requests[identifier].message).toBe(message);
 
     store.commit('requests/end', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier].status).toBe(constants.SUCCESS);
+    expect(store.state.requests.requests[identifier].status).toBe(constants.DONE);
 
     store.commit('requests/fail', { identifier, message }, { root: true });
     expect(store.state.requests.requests[identifier].status).toBe(constants.FAILED);
@@ -56,7 +62,7 @@ describe('module.js', () => {
       _started: started,
       _stopped: stopped,
       message,
-      status: constants.SUCCESS,
+      status: constants.DONE,
     });
 
     store.commit('requests/fail', { identifier, message }, { root: true });

@@ -3,38 +3,33 @@ import _ from 'lodash';
 import constants from './constants';
 
 export default {
-  beforeMount() {
-    const _this = this;
+  methods: {
+    $endRequest(identifier, message = null) {
+      this.$store.commit('requests/end', { identifier, message }, { root: true });
+    },
 
-    // eslint-disable-next-line no-multi-assign
-    this.$r = this.$requests = {
-      end(identifier, message = null) {
-        _this.$store.commit('requests/end', { identifier, message });
-      },
+    $failRequest(identifier, message = null) {
+      this.$store.commit('requests/fail', { identifier, message }, { root: true });
+    },
 
-      fail(identifier, message = null) {
-        _this.$store.commit('requests/fail', { identifier, message });
-      },
+    $getRequest(identifier, defaultValue = null) {
+      return _.get(this.$store.state.requests.requests, [identifier], defaultValue);
+    },
 
-      get(identifier, defaultValue = null) {
-        return _.get(_this.$store.state.requests.requests, [identifier], defaultValue);
-      },
+    $requestHasFailed(identifier) {
+      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
+    },
 
-      isDone(identifier) {
-        return _.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.SUCCESS;
-      },
+    $requestIsDone(identifier) {
+      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.DONE;
+    },
 
-      isFailed(identifier) {
-        return _.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
-      },
+    $requestIsPending(identifier) {
+      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
+    },
 
-      isPending(identifier) {
-        return _.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
-      },
-
-      start(identifier, message = null) {
-        _this.$store.commit('requests/start', { identifier, message });
-      },
-    };
+    $startRequest(identifier, message = null) {
+      this.$store.commit('requests/start', { identifier, message }, { root: true });
+    },
   },
 };

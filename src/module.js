@@ -28,9 +28,13 @@ function updateRequest(state, { identifier, message }, status) {
 export default {
   namespaced: true,
 
+  getters: {
+    requests: state => state.requests,
+  },
+
   mutations: {
     end(state, payload) {
-      updateRequest(state, payload, constants.SUCCESS);
+      updateRequest(state, payload, constants.DONE);
     },
 
     fail(state, payload) {

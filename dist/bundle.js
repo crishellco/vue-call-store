@@ -17099,45 +17099,40 @@ var lodash = createCommonjsModule(function (module, exports) {
 });
 
 var constants = {
+  DONE: 'done',
   FAILED: 'failed',
   PENDING: 'pending',
-  SUCCESS: 'success',
 };
 
 var mixin = {
-  beforeMount() {
-    const _this = this;
+  methods: {
+    $endRequest(identifier, message = null) {
+      this.$store.commit('requests/end', { identifier, message }, { root: true });
+    },
 
-    // eslint-disable-next-line no-multi-assign
-    this.$r = this.$requests = {
-      end(identifier, message = null) {
-        _this.$store.commit('requests/end', { identifier, message });
-      },
+    $failRequest(identifier, message = null) {
+      this.$store.commit('requests/fail', { identifier, message }, { root: true });
+    },
 
-      fail(identifier, message = null) {
-        _this.$store.commit('requests/fail', { identifier, message });
-      },
+    $getRequest(identifier, defaultValue = null) {
+      return lodash.get(this.$store.state.requests.requests, [identifier], defaultValue);
+    },
 
-      get(identifier, defaultValue = null) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier], defaultValue);
-      },
+    $requestHasFailed(identifier) {
+      return lodash.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
+    },
 
-      isDone(identifier) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.SUCCESS;
-      },
+    $requestIsDone(identifier) {
+      return lodash.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.DONE;
+    },
 
-      isFailed(identifier) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
-      },
+    $requestIsPending(identifier) {
+      return lodash.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
+    },
 
-      isPending(identifier) {
-        return lodash.get(_this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
-      },
-
-      start(identifier, message = null) {
-        _this.$store.commit('requests/start', { identifier, message });
-      },
-    };
+    $startRequest(identifier, message = null) {
+      this.$store.commit('requests/start', { identifier, message }, { root: true });
+    },
   },
 };
 
@@ -30207,9 +30202,13 @@ function updateRequest(state, { identifier, message }, status) {
 var module$1 = {
   namespaced: true,
 
+  getters: {
+    requests: state => state.requests,
+  },
+
   mutations: {
     end(state, payload) {
-      updateRequest(state, payload, constants.SUCCESS);
+      updateRequest(state, payload, constants.DONE);
     },
 
     fail(state, payload) {
