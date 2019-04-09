@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import moment from 'moment';
-import Vue from 'vue';
 
 import constants from './constants';
 
@@ -21,8 +20,9 @@ function duration({ _started, _stopped }) {
 
 function updateRequest(state, { identifier, message }, status) {
   const oldRequest = _.get(state.requests, identifier, {});
+  const newRequest = _.set({}, identifier, addMeta(oldRequest, { status, message }));
 
-  Vue.set(state.requests, identifier, addMeta(oldRequest, { status, message }));
+  state.requests = Object.assign({}, state.requests, newRequest);
 }
 
 export default {
