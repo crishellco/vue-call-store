@@ -22,7 +22,7 @@ function updateRequest(state, { identifier, message }, status) {
   const oldRequest = _.get(state.requests, identifier, {});
   const newRequest = _.set({}, identifier, addMeta(oldRequest, { status, message }));
 
-  state.requests = Object.assign({}, state.requests, newRequest);
+  return Object.assign({}, state.requests, newRequest);
 }
 
 export default {
@@ -34,11 +34,11 @@ export default {
 
   mutations: {
     end(state, payload) {
-      updateRequest(state, payload, constants.DONE);
+      state.requests = updateRequest(state, payload, constants.DONE);
     },
 
     fail(state, payload) {
-      updateRequest(state, payload, constants.FAILED);
+      state.requests = updateRequest(state, payload, constants.FAILED);
     },
 
     reset(state) {
@@ -46,7 +46,7 @@ export default {
     },
 
     start(state, payload) {
-      updateRequest(state, payload, constants.PENDING);
+      state.requests = updateRequest(state, payload, constants.PENDING);
     },
   },
 

@@ -21755,7 +21755,7 @@ function updateRequest(state, { identifier, message }, status) {
   const oldRequest = lodash.get(state.requests, identifier, {});
   const newRequest = lodash.set({}, identifier, addMeta(oldRequest, { status, message }));
 
-  state.requests = Object.assign({}, state.requests, newRequest);
+  return Object.assign({}, state.requests, newRequest);
 }
 
 var module$1 = {
@@ -21767,11 +21767,11 @@ var module$1 = {
 
   mutations: {
     end(state, payload) {
-      updateRequest(state, payload, constants.DONE);
+      state.requests = updateRequest(state, payload, constants.DONE);
     },
 
     fail(state, payload) {
-      updateRequest(state, payload, constants.FAILED);
+      state.requests = updateRequest(state, payload, constants.FAILED);
     },
 
     reset(state) {
@@ -21779,7 +21779,7 @@ var module$1 = {
     },
 
     start(state, payload) {
-      updateRequest(state, payload, constants.PENDING);
+      state.requests = updateRequest(state, payload, constants.PENDING);
     },
   },
 
