@@ -21790,7 +21790,7 @@ var module$1 = {
 
 function install(Vue, { store }) {
   Vue.mixin(mixin);
-  store.registerModule('requests', module$1);
+  store.registerModule('requests', module$1, { preserveState: false });
 }
 
 if (typeof window !== 'undefined' && window.Vue) {

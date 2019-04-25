@@ -3,7 +3,7 @@ import module from './module';
 
 function install(Vue, { store }) {
   Vue.mixin(mixin);
-  store.registerModule('requests', module);
+  store.registerModule('requests', module, { preserveState: false });
 }
 
 export default install;
