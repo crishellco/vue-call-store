@@ -5,6 +5,8 @@
 ![](badges/badge-lines.svg)
 ![](badges/badge-statements.svg)
 
+
+
 A Vue & Vuex plugin to simplify tracking API request statuses.
 
 Vue Request Store provides a Vuex module and component methods to make it easy to update API request statuses and keep track of them.
