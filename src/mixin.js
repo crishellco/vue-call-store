@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import get from 'lodash.get';
 
 import constants from './constants';
 
@@ -13,23 +13,23 @@ export default {
     },
 
     $getRequest(identifier, defaultValue = null) {
-      return _.get(this.$store.state.requests.requests, [identifier], defaultValue);
+      return get(this.$store.state.requests.requests, [identifier], defaultValue);
     },
 
     $requestHasFailed(identifier) {
-      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
+      return get(this.$store.state.requests.requests, [identifier, 'status']) === constants.FAILED;
     },
 
     $requestIsDone(identifier) {
-      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.DONE;
+      return get(this.$store.state.requests.requests, [identifier, 'status']) === constants.DONE;
     },
 
     $requestIsPending(identifier) {
-      return _.get(this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
+      return get(this.$store.state.requests.requests, [identifier, 'status']) === constants.PENDING;
     },
 
     $startRequest(identifier, message = null) {
       this.$store.commit('requests/start', { identifier, message }, { root: true });
-    },
-  },
+    }
+  }
 };

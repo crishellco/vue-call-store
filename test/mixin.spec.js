@@ -17,7 +17,7 @@ const component = {
       <div v-if="$requestHasFailed('${identifier}')" class="failed">Hello World</div>
       <div v-if="$requestIsPending('${identifier}')" class="pending">Hello World</div>
     </div>
-  `,
+  `
 };
 
 beforeEach(() => {
@@ -52,18 +52,27 @@ describe('mixin.js', () => {
     expect(wrapper.vm.$requestHasFailed(identifier)).toBe(true);
   });
 
-  it('should update components', () => {
+  it('should update components', async () => {
     wrapper.vm.$startRequest(identifier);
+
+    await wrapper.vm.$forceUpdate();
+
     expect(wrapper.contains('.done')).toBe(false);
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(true);
 
     wrapper.vm.$endRequest(identifier);
+
+    await wrapper.vm.$forceUpdate();
+
     expect(wrapper.contains('.done')).toBe(true);
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(false);
 
     wrapper.vm.$failRequest(identifier);
+
+    await wrapper.vm.$forceUpdate();
+
     expect(wrapper.contains('.done')).toBe(false);
     expect(wrapper.contains('.failed')).toBe(true);
     expect(wrapper.contains('.pending')).toBe(false);

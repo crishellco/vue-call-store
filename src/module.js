@@ -1,17 +1,19 @@
-import _ from 'lodash';
+import get from 'lodash.get';
+import merge from 'lodash.merge';
 import moment from 'moment';
+import set from 'lodash.set';
 
 import constants from './constants';
 
 function addMeta(oldRequest, request) {
   const pending = request.status === constants.PENDING;
 
-  request = _.merge(oldRequest, request, {
+  request = merge(oldRequest, request, {
     _started: oldRequest._started || moment(),
-    _stopped: !pending ? moment() : oldRequest._stopped || null,
+    _stopped: !pending ? moment() : oldRequest._stopped || null
   });
 
-  return _.set(request, '_duration', duration(request));
+  return set(request, '_duration', duration(request));
 }
 
 function duration({ _started, _stopped }) {
@@ -19,8 +21,8 @@ function duration({ _started, _stopped }) {
 }
 
 function updateRequest(state, { identifier, message }, status) {
-  const oldRequest = _.get(state.requests, identifier, {});
-  const newRequest = _.set({}, identifier, addMeta(oldRequest, { status, message }));
+  const oldRequest = get(state.requests, identifier, {});
+  const newRequest = set({}, identifier, addMeta(oldRequest, { status, message }));
 
   return Object.assign({}, state.requests, newRequest);
 }
@@ -29,7 +31,7 @@ export default {
   namespaced: true,
 
   getters: {
-    requests: state => state.requests,
+    requests: state => state.requests
   },
 
   mutations: {
@@ -47,10 +49,10 @@ export default {
 
     start(state, payload) {
       state.requests = updateRequest(state, payload, constants.PENDING);
-    },
+    }
   },
 
   state: {
-    requests: {},
-  },
+    requests: {}
+  }
 };
