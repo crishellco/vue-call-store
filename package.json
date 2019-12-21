@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/crishellco/vue-request-store/issues"
   },
-  "homepage": "https://github.com/crishellco/vue-request-store#readme",
+  "homepage": "https://crishellco.github.io/vue-request-store/",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
