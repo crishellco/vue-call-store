@@ -1,10 +1,10 @@
-import directiveFactory from './directive';
+import directive from './directive';
 import mixin from './mixin';
 import module from './module';
 
 function install(Vue, { store }) {
   Vue.mixin(mixin);
-  Vue.directive('request', directiveFactory());
+  Vue.directive('request', directive);
   store.registerModule('requests', module, { preserveState: false });
 }
 
