@@ -1,4 +1,5 @@
 # Vue Request Store
+
 [![Codeship Status for crishellco/vue-request-store](https://app.codeship.com/projects/6fc2e700-35f9-0137-5a4a-56926ea83142/status?branch=master)](https://app.codeship.com/projects/332904)
 ![](badges/badge-branches.svg)
 ![](badges/badge-functionss.svg)
@@ -35,6 +36,7 @@ Vue.use(VueRequestStore, { store });
 ## Usage
 
 #### Update the status of a request
+
 ```javascript
 /**
  * @arg {string} identifier
@@ -66,6 +68,7 @@ new Vuex.Store({
 ```
 
 #### Check the status of a request
+
 ```javascript
 /**
  * @arg {string} identifier
@@ -77,15 +80,18 @@ const hasFailed = vm.$requestHasFailed('fetchUsers');
 
 // Example usage in a template
 <template>
-  <loading-indicator v-if="$requestIsPending('fetchUsers')" />
-  <div v-else class="content">
+  <loading-indicator v-request:pending="'fetchUsers'" />
+  <div v-request:done="'fetchUsers'" class="content">
     ...
   </div>
-</template>
-
+  <div v-request:failed="'fetchUsers'" class="content">
+    Oops! Something went wrong.
+  </div>
+</template>;
 ```
 
 #### Get the raw request object
+
 ```javascript
 /**
  * @arg {string} identifier
@@ -105,6 +111,7 @@ const request = vm.$getRequest('fetchUsers');
 ```
 
 #### Available mutations
+
 ```javascript
 vm.$store.commit('requests/start', { identifier, message });
 vm.$store.commit('requests/end', { identifier, message });
@@ -113,16 +120,19 @@ vm.$store.commit('requests/reset'); // Removes all request objects
 ```
 
 ## Lint
+
 ```bash
 yarn lint
 ```
 
 ## Test
+
 ```bash
 yarn test
 ```
 
 ## Build
+
 ```bash
 yarn build
 ```
