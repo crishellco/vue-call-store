@@ -1,22 +1,34 @@
-const directive = (el, { arg, value }, { context }) => {
-  let show = false;
-
+function shouldShow(context, arg, value) {
   switch (arg) {
     case 'pending':
-      show = context.$requestIsPending(value);
-      break;
+      return context.$requestIsPending(value);
     case 'done':
-      show = context.$requestIsDone(value);
-      break;
+      return context.$requestIsDone(value);
     case 'failed':
-      show = context.$requestHasFailed(value);
-      break;
+      return context.$requestHasFailed(value);
   }
+}
 
-  if (show) {
-    el.style.visibility = 'inherit';
+const directive = (el, { arg, value }, vnode) => {
+  const { context } = vnode;
+
+  if (!shouldShow(context, arg, value)) {
+    const comment = document.createComment(' ');
+    Object.defineProperty(comment, 'setAttribute', {
+      value: () => undefined
+    });
+    vnode.elm = comment;
+    vnode.text = ' ';
+    vnode.isComment = true;
+    vnode.context = undefined;
+    vnode.tag = undefined;
+    vnode.data.directives = undefined;
+
+    if (vnode.componentInstance) {
+      vnode.componentInstance.$el = comment;
+    }
   } else {
-    el.style.visibility = 'hidden';
+    vnode.key++;
   }
 };
 

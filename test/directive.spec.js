@@ -1,11 +1,9 @@
 import { createLocalVue, mount } from '@vue/test-utils';
-import Vuex from 'vuex';
 
 import VueRequestStore from '../src';
 
 const identifier = 'identifier';
 let localVue;
-let store;
 let wrapper;
 
 const component = {
@@ -22,7 +20,6 @@ beforeEach(() => {
   localVue = createLocalVue();
   localVue.use(VueRequestStore);
   wrapper = mount(component, { localVue });
-  store = wrapper.vm.$store;
 });
 
 describe('directive.js', () => {
@@ -31,24 +28,24 @@ describe('directive.js', () => {
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.find('.done').isVisible()).toBe(false);
-    expect(wrapper.find('.failed').isVisible()).toBe(false);
-    expect(wrapper.find('.pending').isVisible()).toBe(true);
+    expect(wrapper.find('.done').exists()).toBe(false);
+    expect(wrapper.find('.failed').exists()).toBe(false);
+    expect(wrapper.find('.pending').exists()).toBe(true);
 
     wrapper.vm.$endRequest(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.find('.done').isVisible()).toBe(true);
-    expect(wrapper.find('.failed').isVisible()).toBe(false);
-    expect(wrapper.find('.pending').isVisible()).toBe(false);
+    expect(wrapper.find('.done').exists()).toBe(true);
+    expect(wrapper.find('.failed').exists()).toBe(false);
+    expect(wrapper.find('.pending').exists()).toBe(false);
 
     wrapper.vm.$failRequest(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.find('.done').isVisible()).toBe(false);
-    expect(wrapper.find('.failed').isVisible()).toBe(true);
-    expect(wrapper.find('.pending').isVisible()).toBe(false);
+    expect(wrapper.find('.done').exists()).toBe(false);
+    expect(wrapper.find('.failed').exists()).toBe(true);
+    expect(wrapper.find('.pending').exists()).toBe(false);
   });
 });

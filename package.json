@@ -1,6 +1,6 @@
 {
   "name": "vue-request-store",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": "Chris Mitchell (@crishellco)",
   "description": "A Vuex module and Vue mixin to track the status of all API requests",
   "main": "dist/index.js",
@@ -10,8 +10,8 @@
   ],
   "scripts": {
     "test": "jest && jest-coverage-badges output badges",
-    "lint": "eslint --ext .js,.vue src/",
-    "lint:fix": "eslint --ext .js,.vue src/ --fix",
+    "lint": "eslint --ext .js,.vue .",
+    "lint:fix": "yarn lint --fix",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js"
   },
   "repository": {
