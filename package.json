@@ -1,6 +1,6 @@
 {
   "name": "vue-request-store",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "author": "Chris Mitchell (@crishellco)",
   "description": "A Vuex module and Vue mixin to track the status of all API requests",
   "main": "dist/index.js",
@@ -47,7 +47,9 @@
     "jest-coverage-badges": "^1.1.2",
     "lodash": "^4.17.15",
     "lodash.get": "^4.4.2",
+    "lodash.intersection": "^4.4.0",
     "lodash.merge": "^4.6.2",
+    "lodash.reduce": "^4.6.0",
     "lodash.set": "^4.3.2",
     "moment": "^2.24.0",
     "poi": "^12.7.1",

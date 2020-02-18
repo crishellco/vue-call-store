@@ -1,6 +1,7 @@
 import get from 'lodash.get';
 import merge from 'lodash.merge';
 import moment from 'moment';
+import reduce from 'lodash.reduce';
 import set from 'lodash.set';
 
 import constants from './constants';
@@ -31,6 +32,48 @@ export default {
   namespaced: true,
 
   getters: {
+    done(state) {
+      return reduce(
+        state.requests,
+        (result, request, identifier) => {
+          if (request.status === constants.DONE) {
+            result.push(identifier);
+          }
+
+          return result;
+        },
+        []
+      );
+    },
+
+    failed(state) {
+      return reduce(
+        state.requests,
+        (result, request, identifier) => {
+          if (request.status === constants.FAILED) {
+            result.push(identifier);
+          }
+
+          return result;
+        },
+        []
+      );
+    },
+
+    pending(state) {
+      return reduce(
+        state.requests,
+        (result, request, identifier) => {
+          if (request.status === constants.PENDING) {
+            result.push(identifier);
+          }
+
+          return result;
+        },
+        []
+      );
+    },
+
     requests: state => state.requests
   },
 

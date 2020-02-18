@@ -10,7 +10,21 @@ A Vue & Vuex plugin to simplify tracking API request statuses.
 
 Vue Request Store provides a Vuex module and component methods to make it easy to update API request statuses and keep track of them.
 
-_This plugin requires that your project use Vuex_
+- [Install](#install)
+- [Examples](#examples)
+  - [Update the status of a request](#update-the-status-of-a-request)
+  - [Check the status of a request in a component](#check-the-status-of-a-request-in-a-component)
+  - [Conditionally render with directives](#conditionally-render-with-directives)
+  - [Conditionally render with components](#conditionally-render-with-components)
+  - [Multiple identifer logic](#multiple-identifer-logic)
+  - [Get the raw request object](#get-the-raw-request-object)
+  - [Available mutations](#available-mutations)
+- [Api](#api)
+- [Development](#development)
+  - [Lint](#lint)
+  - [Test](#test) \* [Build](#build)
+- [How to contribute](#how-to-contribute) \* [Pull requests](#pull-requests)
+- [License](#license)
 
 ## Install
 
@@ -26,14 +40,22 @@ npm i -D vuex
 import Vuex from 'vuex';
 import VueRequestStore from 'vue-request-store';
 
+/**
+ * If Vuex isn't installed,
+ * it will be installed.
+ */
 Vue.use(Vuex);
 
 const store = new Vuex.Store({});
 
+/**
+ * If a store isn't passed,
+ * one will be created.
+ */
 Vue.use(VueRequestStore, { store });
 ```
 
-## Usage
+## Examples
 
 #### Update the status of a request
 
@@ -42,24 +64,26 @@ Vue.use(VueRequestStore, { store });
  * @arg {string} identifier
  * @arg {*} [message]
  */
-vm.$startRequest('fetchUsers');
-vm.$endRequest('fetchUsers');
-vm.$failRequest('fetchUsers', error);
+vm.$requests.start('fetchUsers');
+vm.$requests.end('fetchUsers');
+vm.$requests.fail('fetchUsers', error);
 
 // Example usage in a Vuex action
 new Vuex.Store({
   actions: {
     fetchUsers({ commit }) {
-      this._vm.$startRequest('fetchUsers');
+      const identifier = 'fetchUsers';
+
+      commit('requests/start', { identifier });
 
       axios
         .get('/api/users')
         .then(({data} => {
           commit('users/set', data);
-          this._vm.$endRequest('fetchUsers');
+          commit('requests/end', { identifier });
         })
         .catch(({response}) => {
-          this._vm.$failRequest('fetchUsers', response.data.errors);
+          commit('requests/fail', { identifier, message: response.data.errors });
         });
     },
   },
@@ -67,28 +91,72 @@ new Vuex.Store({
 
 ```
 
-#### Check the status of a request
+#### Check the status of a request in a component
 
 ```javascript
 /**
- * @arg {string} identifier
+ * @arg {string | array} identifier
  * @returns {boolean}
  */
-const isPending = vm.$requestIsPending('fetchUsers');
-const isDone = vm.$requestIsDone('fetchUsers');
-const hasFailed = vm.$requestHasFailed('fetchUsers');
 
-// Example usage in a template
+const isPending = vm.$requests.isPending('fetchUsers');
+const isDone = vm.$requests.isDone('fetchUsers');
+const hasFailed = vm.$requests.hasFailed(['fetchUsers', 'second']);
+```
+
+#### Conditionally render with directives
+
+Directives accept string or array of identifiers.
+
+```javascript
 <template>
   <loading-indicator v-request:pending="'fetchUsers'" />
+
   <div v-request:done="'fetchUsers'" class="content">
-    ...
+    <ul>
+      <li v-for="user in users" :key="user.id">{{ user.name }}</li>
+    </ul>
   </div>
-  <div v-request:failed="'fetchUsers'" class="content">
-    Oops! Something went wrong.
+
+  <div v-request:failed="['fetchUsers', 'second']" class="content">
+    Oops! Unable to fetch users.
   </div>
-</template>;
 ```
+
+#### Conditionally render with components
+
+Components' `identifier` props accept string or array of identifiers
+
+```javascript
+  <v-request-pending identifier="fetchUsers">
+    <loading-indicator />
+  </v-request-pending>
+
+  <v-request-failed identifier="fetchUsers">
+    <div class="content">
+      <ul>
+        <li v-for="user in users" :key="user.id">{{ user.name }}</li>
+      </ul>
+    </div>
+  </v-request-failed>
+
+  <v-request-failed :identifier="['fetchUsers', 'second']">
+    <div class="content">
+      Oops! Unable to fetch users.
+    </div>
+  </v-request-failed>
+</template>
+```
+
+#### Multiple identifer logic
+
+| State   | Method                                    | to be `true`                     |
+| ------- | ----------------------------------------- | -------------------------------- |
+| pending | `$requestIsPending | $requests.isPending` | at least one of many is pendsing |
+| done    | `$requestIsDone | $requests.isDone`       | all are done                     |
+| failed  | `$requestHasFailed | $requests.hasFailed` | has least one has failed         |
+
+_[See Source](src/mixin.js)_
 
 #### Get the raw request object
 
@@ -98,7 +166,8 @@ const hasFailed = vm.$requestHasFailed('fetchUsers');
  * @arg {*} [defaultValue = null]
  * @returns {object|null}
  */
-const request = vm.$getRequest('fetchUsers');
+const notFoundValue = { status: 'done' };
+const request = vm.$requests.get('fetchUsers', notFoundValue);
 
 // Format
 {
@@ -106,11 +175,13 @@ const request = vm.$getRequest('fetchUsers');
   _started: moment('2019-04-02T15:19:05.000'), // or null
   _stopped: moment('2019-04-02T15:19:05.200'), // or null
   message: 'message',
-  status: 'success',
+  status: 'done',
 }
 ```
 
 #### Available mutations
+
+_these mutations are useful in Vuex actions_
 
 ```javascript
 vm.$store.commit('requests/start', { identifier, message });
@@ -119,27 +190,107 @@ vm.$store.commit('requests/fail', { identifier, message });
 vm.$store.commit('requests/reset'); // Removes all request objects
 ```
 
-## Lint
+## Api
+
+#### vm.\$requests.end(identifier[, message])
+
+#### vm.\$endRequest(identifier[, message])
+
+Ends a request.
+
+- Arguments
+  - `{string} identifier`
+  - `{*} message` optional
+- Returns `{void}`
+
+#### vm.\$requests.fail(identifier[, message])
+
+#### vm.\$failRequest(identifier[, message])
+
+Fails a request.
+
+- Arguments
+  - `{string} identifier`
+  - `{*} message` optional
+- Returns `{void}`
+
+#### vm.\$requests.start(identifier[, message])
+
+#### vm.\$startRequest(identifier[, message])
+
+Starts a request.
+
+- Arguments
+  - `{string} identifier`
+  - `{*} message` optional
+- Returns `{void}`
+
+#### vm.\$requests.request(identifier[, defaultValue])
+
+#### vm.\$getRequest(identifier[, defaultValue])
+
+#### vm.\$requests.get(identifier[, defaultValue])
+
+Gets raw request.
+
+- Arguments
+  - `{string} identifier`
+  - `{*} defaultValue (default: null)` optional
+- Returns `{object}`
+
+#### vm.\$requests.hasFailed(identifier)
+
+#### vm.\$requestHasFailed(identifier)
+
+Gets if one or at least one of many requests has failed.
+
+- Arguments
+  - `{string | array} identifier`
+- Returns `{boolean}`
+
+#### vm.\$requests.isDone(identifier)
+
+#### vm.\$requestIsDone(identifier)
+
+Gets if one or all requests are done.
+
+- Arguments
+  - `{string} identifier`
+- Returns `{boolean}`
+
+#### vm.\$requests.isPending(identifier)
+
+#### vm.\$requestIsPending(identifier)
+
+Gets if one or at least one of many requests is pending.
+
+- Arguments
+  - `{string} identifier`
+- Returns `{boolean}`
+
+## Development
+
+#### Lint
 
 ```bash
 yarn lint
 ```
 
-## Test
+#### Test
 
 ```bash
 yarn test
 ```
 
-## Build
+#### Build
 
 ```bash
 yarn build
 ```
 
-## How to Contribute
+## How to contribute
 
-### Pull Requests
+#### Pull requests
 
 1. Fork the repository
 2. Create a new branch for each feature or improvement

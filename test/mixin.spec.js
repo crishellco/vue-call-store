@@ -1,5 +1,4 @@
 import { createLocalVue, mount } from '@vue/test-utils';
-import Vuex from 'vuex';
 
 import constants from '../src/constants';
 import VueRequestStore from '../src';
@@ -13,24 +12,39 @@ let wrapper;
 const component = {
   template: `
     <div>
-      <div v-if="$requestIsDone('${identifier}')" class="done">Hello World</div>
-      <div v-if="$requestHasFailed('${identifier}')" class="failed">Hello World</div>
-      <div v-if="$requestIsPending('${identifier}')" class="pending">Hello World</div>
+      <v-request-done identifier="${identifier}">
+        <div class="done">Hello World</div>
+      </v-request-done>
+      <v-request-failed :identifier="['${identifier}', 'second']">
+        <div class="failed">Hello World</div>
+      </v-request-failed>
+      <v-request-pending :identifier="['${identifier}', 'third']">
+        <div class="pending">Hello World</div>
+      </v-request-pending>
     </div>
   `
 };
 
-beforeEach(() => {
-  localVue = createLocalVue();
-  localVue.use(Vuex);
-  store = new Vuex.Store();
-  localVue.use(VueRequestStore, { store });
-
-  wrapper = mount(component, { localVue, store });
-});
-
 describe('mixin.js', () => {
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(VueRequestStore);
+    wrapper = mount(component, { localVue });
+    store = wrapper.vm.$store;
+  });
   it('should return the correct request', () => {
+    store.commit('requests/start', { identifier, message });
+    const request = wrapper.vm.$request(identifier);
+
+    expect(request).toEqual(wrapper.vm.$requests.get(identifier));
+    expect(request).toHaveProperty('message', message);
+    expect(request).toHaveProperty('status', constants.PENDING);
+    expect(request).toHaveProperty('_started');
+    expect(request).toHaveProperty('_stopped');
+    expect(request).toHaveProperty('_duration');
+  });
+
+  it('should return the correct request [deprecated]', () => {
     store.commit('requests/start', { identifier, message });
     const request = wrapper.vm.$getRequest(identifier);
 
@@ -50,6 +64,15 @@ describe('mixin.js', () => {
 
     wrapper.vm.$failRequest(identifier);
     expect(wrapper.vm.$requestHasFailed(identifier)).toBe(true);
+
+    wrapper.vm.$requests.start(identifier);
+    expect(wrapper.vm.$requests.isPending(identifier)).toBe(true);
+
+    wrapper.vm.$requests.end(identifier);
+    expect(wrapper.vm.$requests.isDone(identifier)).toBe(true);
+
+    wrapper.vm.$requests.fail(identifier);
+    expect(wrapper.vm.$requests.hasFailed(identifier)).toBe(true);
   });
 
   it('should update components', async () => {

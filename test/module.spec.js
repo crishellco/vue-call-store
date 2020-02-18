@@ -27,23 +27,35 @@ describe('module.js', () => {
   });
 
   it('should start, end, and fail requests', () => {
+    const secondIdentifier = 'secondIdentifier';
+    const thirdIdentifier = 'thirdIdentifier';
+    const fourthIdentifier = 'fourthIdentifier';
+
     store.commit('requests/start', { identifier, message }, { root: true });
+    store.commit('requests/start', { identifier: secondIdentifier }, { root: true });
+    store.commit('requests/end', { identifier: thirdIdentifier }, { root: true });
+    store.commit('requests/fail', { identifier: fourthIdentifier }, { root: true });
+
     expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
     expect(store.state.requests.requests[identifier].message).toBe(message);
+    expect(store.getters['requests/pending']).toEqual([identifier, secondIdentifier]);
 
     store.commit('requests/end', { identifier, message }, { root: true });
     expect(store.state.requests.requests[identifier].status).toBe(constants.DONE);
+    expect(store.getters['requests/done']).toEqual([identifier, thirdIdentifier]);
 
     store.commit('requests/fail', { identifier, message }, { root: true });
     expect(store.state.requests.requests[identifier].status).toBe(constants.FAILED);
+    expect(store.getters['requests/failed']).toEqual([identifier, fourthIdentifier]);
   });
 
   it('should add meta data', () => {
-    const started = moment(); const
-      stopped = started.clone();
+    const started = moment();
+    const stopped = started.clone();
     stopped.add(200, 'ms');
 
-    Date.now = jest.fn()
+    Date.now = jest
+      .fn()
       .mockReturnValueOnce(started)
       .mockReturnValue(stopped);
 
@@ -53,7 +65,7 @@ describe('module.js', () => {
       _started: started,
       _stopped: null,
       message,
-      status: constants.PENDING,
+      status: constants.PENDING
     });
 
     store.commit('requests/end', { identifier, message }, { root: true });
@@ -62,7 +74,7 @@ describe('module.js', () => {
       _started: started,
       _stopped: stopped,
       message,
-      status: constants.DONE,
+      status: constants.DONE
     });
 
     store.commit('requests/fail', { identifier, message }, { root: true });
@@ -71,7 +83,7 @@ describe('module.js', () => {
       _started: started,
       _stopped: stopped,
       message,
-      status: constants.FAILED,
+      status: constants.FAILED
     });
 
     store.commit('requests/reset', { root: true });
@@ -82,7 +94,7 @@ describe('module.js', () => {
       _started: stopped,
       _stopped: stopped,
       message,
-      status: constants.FAILED,
+      status: constants.FAILED
     });
   });
 });

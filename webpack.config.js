@@ -4,7 +4,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: ['./src/index.js'],
   output: {
-    library: 'VueUnleash',
+    library: 'VueRequestStore',
     libraryTarget: 'umd',
     filename: 'index.js',
     globalObject: "typeof self !== 'undefined' ? self : this"

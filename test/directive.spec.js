@@ -1,11 +1,9 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import constants from '../src/constants';
 import VueRequestStore from '../src';
 
 const identifier = 'identifier';
-const message = 'message';
 let localVue;
 let store;
 let wrapper;
@@ -14,19 +12,17 @@ const component = {
   template: `
     <div>
       <div v-request:done="'${identifier}'" class="done">Hello World</div>
-      <div v-request:failed="'${identifier}'" class="failed">Hello World</div>
-      <div v-request:pending="'${identifier}'" class="pending">Hello World</div>
+      <div v-request:failed="['${identifier}', 'second']" class="failed">Hello World</div>
+      <div v-request:pending="['${identifier}', 'third']" class="pending">Hello World</div>
     </div>
   `
 };
 
 beforeEach(() => {
   localVue = createLocalVue();
-  localVue.use(Vuex);
-  store = new Vuex.Store();
-  localVue.use(VueRequestStore, { store });
-
-  wrapper = mount(component, { localVue, store });
+  localVue.use(VueRequestStore);
+  wrapper = mount(component, { localVue });
+  store = wrapper.vm.$store;
 });
 
 describe('directive.js', () => {
