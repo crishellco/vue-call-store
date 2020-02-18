@@ -19,7 +19,7 @@ export default {
 
   computed: {
     shouldRender() {
-      return this.once ? this.count === 1 && this.inState : this.inState;
+      return this.once ? this.count < 2 && this.inState : this.inState;
     }
   },
 

@@ -12,7 +12,7 @@ let wrapper;
 const component = {
   template: `
     <div>
-      <v-request-done identifier="${identifier}">
+      <v-request-done :once="true" identifier="${identifier}">
         <div class="done">Hello World</div>
       </v-request-done>
       <v-request-failed :identifier="['${identifier}', 'second']">
@@ -100,11 +100,35 @@ describe('mixin.js', () => {
     expect(wrapper.contains('.failed')).toBe(true);
     expect(wrapper.contains('.pending')).toBe(false);
 
+    wrapper.vm.$endRequest(identifier);
+
+    await wrapper.vm.$forceUpdate();
+
+    expect(wrapper.contains('.done')).toBe(true);
+    expect(wrapper.contains('.failed')).toBe(false);
+    expect(wrapper.contains('.pending')).toBe(false);
+
     wrapper.vm.$startRequest(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(false);
+    expect(wrapper.contains('.done')).toBe(true);
+    expect(wrapper.contains('.failed')).toBe(false);
+    expect(wrapper.contains('.pending')).toBe(false);
+
+    wrapper.vm.$endRequest(identifier);
+
+    await wrapper.vm.$forceUpdate();
+
+    expect(wrapper.contains('.done')).toBe(true);
+    expect(wrapper.contains('.failed')).toBe(false);
+    expect(wrapper.contains('.pending')).toBe(false);
+
+    wrapper.vm.$startRequest(identifier);
+
+    await wrapper.vm.$forceUpdate();
+
+    expect(wrapper.contains('.done')).toBe(true);
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(false);
   });
