@@ -15,7 +15,7 @@ export default {
   },
 
   render() {
-    return this.failed ? this.$slots.default : null;
+    return this.failed ? this.$slots.default : document.createComment(' ');
   }
 };
 </script>

@@ -14,9 +14,6 @@ const directive = (el, { arg, value }, vnode) => {
 
   if (!shouldShow(context, arg, value)) {
     const comment = document.createComment(' ');
-    Object.defineProperty(comment, 'setAttribute', {
-      value: () => undefined
-    });
     vnode.elm = comment;
     vnode.text = ' ';
     vnode.isComment = true;
@@ -24,6 +21,7 @@ const directive = (el, { arg, value }, vnode) => {
     vnode.tag = undefined;
     vnode.data.directives = undefined;
 
+    // istanbul ignore next
     if (vnode.componentInstance) {
       vnode.componentInstance.$el = comment;
     }

@@ -1,6 +1,6 @@
 import get from 'lodash.get';
 import merge from 'lodash.merge';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import reduce from 'lodash.reduce';
 import set from 'lodash.set';
 
@@ -10,15 +10,15 @@ function addMeta(oldRequest, request) {
   const pending = request.status === constants.PENDING;
 
   request = merge(oldRequest, request, {
-    _started: oldRequest._started || moment(),
-    _stopped: !pending ? moment() : oldRequest._stopped || null
+    _started: oldRequest._started || dayjs(),
+    _stopped: !pending ? dayjs() : oldRequest._stopped || null
   });
 
   return set(request, '_duration', duration(request));
 }
 
 function duration({ _started, _stopped }) {
-  return _stopped ? moment.duration(_stopped.diff(_started)).as('ms') : null;
+  return _stopped ? _stopped.diff(_started) : null;
 }
 
 function updateRequest(state, { identifier, message }, status) {

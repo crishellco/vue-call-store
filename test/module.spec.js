@@ -1,5 +1,6 @@
 import { createLocalVue } from '@vue/test-utils';
-import moment from 'moment';
+import mockdate from 'mockdate';
+import dayjs from 'dayjs';
 import Vuex from 'vuex';
 
 import constants from '../src/constants';
@@ -50,14 +51,10 @@ describe('module.js', () => {
   });
 
   it('should add meta data', () => {
-    const started = moment();
-    const stopped = started.clone();
-    stopped.add(200, 'ms');
+    const started = dayjs();
+    const stopped = started.clone().add(200, 'ms');
 
-    Date.now = jest
-      .fn()
-      .mockReturnValueOnce(started)
-      .mockReturnValue(stopped);
+    mockdate.set(started.toDate());
 
     store.commit('requests/start', { identifier, message }, { root: true });
     expect(store.state.requests.requests[identifier]).toEqual({
@@ -67,6 +64,8 @@ describe('module.js', () => {
       message,
       status: constants.PENDING
     });
+
+    mockdate.set(stopped.toDate());
 
     store.commit('requests/end', { identifier, message }, { root: true });
     expect(store.state.requests.requests[identifier]).toEqual({
