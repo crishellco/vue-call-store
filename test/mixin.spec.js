@@ -18,7 +18,7 @@ const component = {
       <v-request-failed :identifier="['${identifier}', 'second']">
         <div class="failed">Hello World</div>
       </v-request-failed>
-      <v-request-pending :identifier="['${identifier}', 'third']">
+      <v-request-pending :once="true" :identifier="['${identifier}', 'third']">
         <div class="pending">Hello World</div>
       </v-request-pending>
     </div>
@@ -98,6 +98,14 @@ describe('mixin.js', () => {
 
     expect(wrapper.contains('.done')).toBe(false);
     expect(wrapper.contains('.failed')).toBe(true);
+    expect(wrapper.contains('.pending')).toBe(false);
+
+    wrapper.vm.$startRequest(identifier);
+
+    await wrapper.vm.$forceUpdate();
+
+    expect(wrapper.contains('.done')).toBe(false);
+    expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(false);
   });
 });

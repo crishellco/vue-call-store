@@ -1,21 +1,13 @@
 <script>
+import mixin from './mixin';
+
 export default {
-  props: {
-    identifier: {
-      default: '',
-      required: true,
-      type: [Array, String]
-    }
-  },
+  mixins: [mixin],
 
   computed: {
-    loading() {
+    inState() {
       return this.$requestIsPending(this.identifier);
     }
-  },
-
-  render() {
-    return this.loading ? this.$slots.default : document.createComment(' ');
   }
 };
 </script>

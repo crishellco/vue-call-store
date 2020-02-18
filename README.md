@@ -125,10 +125,12 @@ Directives accept string or array of identifiers.
 
 #### Conditionally render with components
 
-Components' `identifier` props accept string or array of identifiers
+Components' `identifier` props accept string or array of identifiers.
+
+Components' `once` props accept a boolean. When `true`, the slot contents will only be hidden once.
 
 ```javascript
-  <v-request-pending identifier="fetchUsers">
+  <v-request-pending identifier="fetchUsers" :once="true">
     <loading-indicator />
   </v-request-pending>
 
