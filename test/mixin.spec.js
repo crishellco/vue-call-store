@@ -96,7 +96,7 @@ describe('mixin.js', () => {
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(false);
+    expect(wrapper.contains('.done')).toBe(true);
     expect(wrapper.contains('.failed')).toBe(true);
     expect(wrapper.contains('.pending')).toBe(false);
 

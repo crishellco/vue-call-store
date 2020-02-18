@@ -1,6 +1,6 @@
 {
   "name": "vue-request-store",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "author": "Chris Mitchell (@crishellco)",
   "description": "A Vuex module and Vue mixin to track the status of all API requests",
   "main": "dist/index.js",

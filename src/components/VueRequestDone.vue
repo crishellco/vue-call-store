@@ -10,7 +10,7 @@ export default {
     },
 
     shouldRender() {
-      return this.once ? this.count > 1 || this.inState : this.inState;
+      return this.once ? this.count > 0 : this.inState;
     }
   }
 };
