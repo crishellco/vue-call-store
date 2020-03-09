@@ -6,7 +6,7 @@ export default {
 
   computed: {
     inState() {
-      return this.$requestIsDone(this.identifier);
+      return this.$callIsDone(this.identifier);
     },
 
     shouldRender() {

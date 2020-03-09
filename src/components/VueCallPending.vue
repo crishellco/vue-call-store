@@ -6,7 +6,7 @@ export default {
 
   computed: {
     inState() {
-      return this.$requestHasFailed(this.identifier);
+      return this.$callIsPending(this.identifier);
     }
   }
 };

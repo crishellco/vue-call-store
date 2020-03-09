@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import constants from '../src/constants';
-import VueRequestStore from '../src';
+import VueCallStore from '../src';
 
 const identifier = 'identifier';
 const message = 'message';
@@ -12,15 +12,15 @@ let wrapper;
 const component = {
   template: `
     <div>
-      <v-request-done :once="true" identifier="${identifier}">
+      <v-call-done :once="true" identifier="${identifier}">
         <div class="done">Hello World</div>
-      </v-request-done>
-      <v-request-failed :identifier="['${identifier}', 'second']">
+      </v-call-done>
+      <v-call-failed :identifier="['${identifier}', 'second']">
         <div class="failed">Hello World</div>
-      </v-request-failed>
-      <v-request-pending :once="true" :identifier="['${identifier}', 'third']">
+      </v-call-failed>
+      <v-call-pending :once="true" :identifier="['${identifier}', 'third']">
         <div class="pending">Hello World</div>
-      </v-request-pending>
+      </v-call-pending>
     </div>
   `
 };
@@ -28,55 +28,55 @@ const component = {
 describe('mixin.js', () => {
   beforeEach(() => {
     localVue = createLocalVue();
-    localVue.use(VueRequestStore);
+    localVue.use(VueCallStore);
     wrapper = mount(component, { localVue });
     store = wrapper.vm.$store;
   });
-  it('should return the correct request', () => {
-    store.commit('requests/start', { identifier, message });
-    const request = wrapper.vm.$request(identifier);
+  it('should return the correct call', () => {
+    store.commit('calls/START', { identifier, message });
+    const call = wrapper.vm.$call(identifier);
 
-    expect(request).toEqual(wrapper.vm.$requests.get(identifier));
-    expect(request).toHaveProperty('message', message);
-    expect(request).toHaveProperty('status', constants.PENDING);
-    expect(request).toHaveProperty('_started');
-    expect(request).toHaveProperty('_stopped');
-    expect(request).toHaveProperty('_duration');
+    expect(call).toEqual(wrapper.vm.$calls.get(identifier));
+    expect(call).toHaveProperty('message', message);
+    expect(call).toHaveProperty('status', constants.PENDING);
+    expect(call).toHaveProperty('_started');
+    expect(call).toHaveProperty('_stopped');
+    expect(call).toHaveProperty('_duration');
   });
 
-  it('should return the correct request [deprecated]', () => {
-    store.commit('requests/start', { identifier, message });
-    const request = wrapper.vm.$getRequest(identifier);
+  it('should return the correct call [deprecated]', () => {
+    store.commit('calls/START', { identifier, message });
+    const call = wrapper.vm.$getCall(identifier);
 
-    expect(request).toHaveProperty('message', message);
-    expect(request).toHaveProperty('status', constants.PENDING);
-    expect(request).toHaveProperty('_started');
-    expect(request).toHaveProperty('_stopped');
-    expect(request).toHaveProperty('_duration');
+    expect(call).toHaveProperty('message', message);
+    expect(call).toHaveProperty('status', constants.PENDING);
+    expect(call).toHaveProperty('_started');
+    expect(call).toHaveProperty('_stopped');
+    expect(call).toHaveProperty('_duration');
   });
 
-  it('should update requests and return correct statuses', () => {
-    wrapper.vm.$startRequest(identifier);
-    expect(wrapper.vm.$requestIsPending(identifier)).toBe(true);
+  it('should update calls and return correct statuses', () => {
+    wrapper.vm.$startCall(identifier);
+    expect(wrapper.vm.$callIsPending(identifier)).toBe(true);
 
-    wrapper.vm.$endRequest(identifier);
-    expect(wrapper.vm.$requestIsDone(identifier)).toBe(true);
+    wrapper.vm.$endCall(identifier);
+    expect(wrapper.vm.$callIsDone(identifier)).toBe(true);
 
-    wrapper.vm.$failRequest(identifier);
-    expect(wrapper.vm.$requestHasFailed(identifier)).toBe(true);
+    wrapper.vm.$failCall(identifier);
+    expect(wrapper.vm.$callHasFailed(identifier)).toBe(true);
 
-    wrapper.vm.$requests.start(identifier);
-    expect(wrapper.vm.$requests.isPending(identifier)).toBe(true);
+    wrapper.vm.$calls.start(identifier);
+    expect(wrapper.vm.$calls.isPending(identifier)).toBe(true);
 
-    wrapper.vm.$requests.end(identifier);
-    expect(wrapper.vm.$requests.isDone(identifier)).toBe(true);
+    wrapper.vm.$calls.end(identifier);
+    expect(wrapper.vm.$calls.isDone(identifier)).toBe(true);
 
-    wrapper.vm.$requests.fail(identifier);
-    expect(wrapper.vm.$requests.hasFailed(identifier)).toBe(true);
+    wrapper.vm.$calls.fail(identifier);
+    expect(wrapper.vm.$calls.hasFailed(identifier)).toBe(true);
   });
 
   it('should update components', async () => {
-    wrapper.vm.$startRequest(identifier);
+    wrapper.vm.$startCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
@@ -84,7 +84,7 @@ describe('mixin.js', () => {
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(true);
 
-    wrapper.vm.$endRequest(identifier);
+    wrapper.vm.$endCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
@@ -92,7 +92,7 @@ describe('mixin.js', () => {
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(false);
 
-    wrapper.vm.$failRequest(identifier);
+    wrapper.vm.$failCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
@@ -100,7 +100,7 @@ describe('mixin.js', () => {
     expect(wrapper.contains('.failed')).toBe(true);
     expect(wrapper.contains('.pending')).toBe(false);
 
-    wrapper.vm.$endRequest(identifier);
+    wrapper.vm.$endCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
@@ -108,7 +108,7 @@ describe('mixin.js', () => {
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(false);
 
-    wrapper.vm.$startRequest(identifier);
+    wrapper.vm.$startCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
@@ -116,7 +116,7 @@ describe('mixin.js', () => {
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(false);
 
-    wrapper.vm.$endRequest(identifier);
+    wrapper.vm.$endCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
@@ -124,7 +124,7 @@ describe('mixin.js', () => {
     expect(wrapper.contains('.failed')).toBe(false);
     expect(wrapper.contains('.pending')).toBe(false);
 
-    wrapper.vm.$startRequest(identifier);
+    wrapper.vm.$startCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 

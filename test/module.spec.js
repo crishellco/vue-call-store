@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import Vuex from 'vuex';
 
 import constants from '../src/constants';
-import VueRequestStore from '../src';
+import VueCallStore from '../src';
 
 const identifier = 'identifier';
 const message = 'message';
@@ -15,39 +15,39 @@ beforeEach(() => {
   localVue = createLocalVue();
   localVue.use(Vuex);
   store = new Vuex.Store();
-  localVue.use(VueRequestStore, { store });
+  localVue.use(VueCallStore, { store });
 
-  store.commit('requests/reset', { root: true });
+  store.commit('calls/RESET', { root: true });
 });
 
 describe('module.js', () => {
   it('should correctly return data from getters', () => {
-    store.state.requests.requests = 'requests!';
+    store.state.calls.calls = 'calls!';
 
-    expect(store.getters['requests/requests']).toBe('requests!');
+    expect(store.getters['calls/calls']).toBe('calls!');
   });
 
-  it('should start, end, and fail requests', () => {
+  it('should start, end, and fail calls', () => {
     const secondIdentifier = 'secondIdentifier';
     const thirdIdentifier = 'thirdIdentifier';
     const fourthIdentifier = 'fourthIdentifier';
 
-    store.commit('requests/start', { identifier, message }, { root: true });
-    store.commit('requests/start', { identifier: secondIdentifier }, { root: true });
-    store.commit('requests/end', { identifier: thirdIdentifier }, { root: true });
-    store.commit('requests/fail', { identifier: fourthIdentifier }, { root: true });
+    store.commit('calls/START', { identifier, message }, { root: true });
+    store.commit('calls/START', { identifier: secondIdentifier }, { root: true });
+    store.commit('calls/END', { identifier: thirdIdentifier }, { root: true });
+    store.commit('calls/FAIL', { identifier: fourthIdentifier }, { root: true });
 
-    expect(store.state.requests.requests[identifier].status).toBe(constants.PENDING);
-    expect(store.state.requests.requests[identifier].message).toBe(message);
-    expect(store.getters['requests/pending']).toEqual([identifier, secondIdentifier]);
+    expect(store.state.calls.calls[identifier].status).toBe(constants.PENDING);
+    expect(store.state.calls.calls[identifier].message).toBe(message);
+    expect(store.getters['calls/pending']).toEqual([identifier, secondIdentifier]);
 
-    store.commit('requests/end', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier].status).toBe(constants.DONE);
-    expect(store.getters['requests/done']).toEqual([identifier, thirdIdentifier]);
+    store.commit('calls/END', { identifier, message }, { root: true });
+    expect(store.state.calls.calls[identifier].status).toBe(constants.DONE);
+    expect(store.getters['calls/done']).toEqual([identifier, thirdIdentifier]);
 
-    store.commit('requests/fail', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier].status).toBe(constants.FAILED);
-    expect(store.getters['requests/failed']).toEqual([identifier, fourthIdentifier]);
+    store.commit('calls/FAIL', { identifier, message }, { root: true });
+    expect(store.state.calls.calls[identifier].status).toBe(constants.FAILED);
+    expect(store.getters['calls/failed']).toEqual([identifier, fourthIdentifier]);
   });
 
   it('should add meta data', () => {
@@ -56,8 +56,8 @@ describe('module.js', () => {
 
     mockdate.set(started.toDate());
 
-    store.commit('requests/start', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
+    store.commit('calls/START', { identifier, message }, { root: true });
+    expect(store.state.calls.calls[identifier]).toEqual({
       _duration: null,
       _started: started,
       _stopped: null,
@@ -67,8 +67,8 @@ describe('module.js', () => {
 
     mockdate.set(stopped.toDate());
 
-    store.commit('requests/end', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
+    store.commit('calls/END', { identifier, message }, { root: true });
+    expect(store.state.calls.calls[identifier]).toEqual({
       _duration: 200,
       _started: started,
       _stopped: stopped,
@@ -76,8 +76,8 @@ describe('module.js', () => {
       status: constants.DONE
     });
 
-    store.commit('requests/fail', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
+    store.commit('calls/FAIL', { identifier, message }, { root: true });
+    expect(store.state.calls.calls[identifier]).toEqual({
       _duration: 200,
       _started: started,
       _stopped: stopped,
@@ -85,10 +85,10 @@ describe('module.js', () => {
       status: constants.FAILED
     });
 
-    store.commit('requests/reset', { root: true });
+    store.commit('calls/RESET', { root: true });
 
-    store.commit('requests/fail', { identifier, message }, { root: true });
-    expect(store.state.requests.requests[identifier]).toEqual({
+    store.commit('calls/FAIL', { identifier, message }, { root: true });
+    expect(store.state.calls.calls[identifier]).toEqual({
       _duration: 0,
       _started: stopped,
       _stopped: stopped,

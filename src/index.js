@@ -3,9 +3,9 @@ import Vuex from 'vuex';
 import directive from './directive';
 import mixin from './mixin';
 import module from './module';
-import VueRequestDone from './components/VueRequestDone.vue';
-import VueRequestFailed from './components/VueRequestFailed.vue';
-import VueRequestPending from './components/VueRequestPending.vue';
+import VueCallDone from './components/VueCallDone.vue';
+import VueCallFailed from './components/VueCallFailed.vue';
+import VueCallPending from './components/VueCallPending.vue';
 
 function install(Vue, { store } = {}) {
   if (!store) {
@@ -14,12 +14,12 @@ function install(Vue, { store } = {}) {
     Vue.prototype.$store = store;
   }
 
-  store.registerModule('requests', module, { preserveState: false });
+  store.registerModule('calls', module, { preserveState: false });
   Vue.mixin(mixin);
-  Vue.directive('request', directive);
-  Vue.component('v-request-done', VueRequestDone);
-  Vue.component('v-request-failed', VueRequestFailed);
-  Vue.component('v-request-pending', VueRequestPending);
+  Vue.directive('call', directive);
+  Vue.component('v-call-done', VueCallDone);
+  Vue.component('v-call-failed', VueCallFailed);
+  Vue.component('v-call-pending', VueCallPending);
 }
 
 export default install;

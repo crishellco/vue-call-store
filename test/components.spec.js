@@ -1,17 +1,26 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
 import VueCallStore from '../src';
+import VueCallDone from '../src/components/VueCallDone';
+import VueCallFailed from '../src/components/VueCallFailed';
+import VueCallPending from '../src/components/VueCallPending';
 
 const identifier = 'identifier';
 let localVue;
 let wrapper;
 
 const component = {
+  components: {
+    VueCallDone,
+    VueCallFailed,
+    VueCallPending
+  },
+
   template: `
     <div>
-      <div v-call:done="'${identifier}'" class="done">Hello World</div>
-      <div v-call:failed="['${identifier}', 'second']" class="failed">Hello World</div>
-      <div v-call:pending="['${identifier}', 'third']" class="pending">Hello World</div>
+      <vue-call-done identifier="${identifier}"><div class="done">Hello World</div></vue-call-done>
+      <vue-call-failed identifier="${identifier}"><div class="failed">Hello World</div></vue-call-failed>
+      <vue-call-pending identifier="${identifier}"><div class="pending">Hello World</div></vue-call-pending>
     </div>
   `
 };

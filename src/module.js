@@ -6,26 +6,40 @@ import set from 'lodash.set';
 
 import constants from './constants';
 
-function addMeta(oldRequest, request) {
-  const pending = request.status === constants.PENDING;
+function addMeta(oldCall, call) {
+  const pending = call.status === constants.PENDING;
 
-  request = merge(oldRequest, request, {
-    _started: oldRequest._started || dayjs(),
-    _stopped: !pending ? dayjs() : oldRequest._stopped || null
+  call = merge(oldCall, call, {
+    _started: oldCall._started || dayjs(),
+    _stopped: !pending ? dayjs() : oldCall._stopped || null
   });
 
-  return set(request, '_duration', duration(request));
+  return set(call, '_duration', duration(call));
 }
 
 function duration({ _started, _stopped }) {
   return _stopped ? _stopped.diff(_started) : null;
 }
 
-function updateRequest(state, { identifier, message }, status) {
-  const oldRequest = get(state.requests, identifier, {});
-  const newRequest = set({}, identifier, addMeta(oldRequest, { status, message }));
+function updateCall(state, { identifier, message }, status) {
+  const oldCall = get(state.calls, identifier, {});
+  const newCall = set({}, identifier, addMeta(oldCall, { status, message }));
 
-  return Object.assign({}, state.requests, newRequest);
+  return Object.assign({}, state.calls, newCall);
+}
+
+function getByStatus(state, status) {
+  return reduce(
+    state.calls,
+    (result, call, identifier) => {
+      if (call.status === status) {
+        result.push(identifier);
+      }
+
+      return result;
+    },
+    []
+  );
 }
 
 export default {
@@ -33,69 +47,39 @@ export default {
 
   getters: {
     done(state) {
-      return reduce(
-        state.requests,
-        (result, request, identifier) => {
-          if (request.status === constants.DONE) {
-            result.push(identifier);
-          }
-
-          return result;
-        },
-        []
-      );
+      return getByStatus(state, constants.DONE);
     },
 
     failed(state) {
-      return reduce(
-        state.requests,
-        (result, request, identifier) => {
-          if (request.status === constants.FAILED) {
-            result.push(identifier);
-          }
-
-          return result;
-        },
-        []
-      );
+      return getByStatus(state, constants.FAILED);
     },
 
     pending(state) {
-      return reduce(
-        state.requests,
-        (result, request, identifier) => {
-          if (request.status === constants.PENDING) {
-            result.push(identifier);
-          }
-
-          return result;
-        },
-        []
-      );
+      return getByStatus(state, constants.PENDING);
     },
 
-    requests: state => state.requests
+    calls: state => state.calls
   },
 
   mutations: {
-    end(state, payload) {
-      state.requests = updateRequest(state, payload, constants.DONE);
+    END(state, payload) {
+      state.calls = updateCall(state, payload, constants.DONE);
     },
 
-    fail(state, payload) {
-      state.requests = updateRequest(state, payload, constants.FAILED);
+    FAIL(state, payload) {
+      state.calls = updateCall(state, payload, constants.FAILED);
     },
 
-    reset(state) {
-      state.requests = {};
+    RESET(state) {
+      state.calls = {};
     },
 
-    start(state, payload) {
-      state.requests = updateRequest(state, payload, constants.PENDING);
+    START(state, payload) {
+      state.calls = updateCall(state, payload, constants.PENDING);
     }
   },
 
   state: {
-    requests: {}
+    calls: {}
   }
 };

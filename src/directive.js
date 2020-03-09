@@ -1,11 +1,11 @@
 function shouldShow(context, arg, value) {
   switch (arg) {
     case 'pending':
-      return context.$requestIsPending(value);
+      return context.$callIsPending(value);
     case 'done':
-      return context.$requestIsDone(value);
+      return context.$callIsDone(value);
     case 'failed':
-      return context.$requestHasFailed(value);
+      return context.$callHasFailed(value);
   }
 }
 
