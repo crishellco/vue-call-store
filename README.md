@@ -5,7 +5,7 @@
 ![](badges/badge-functionss.svg)
 ![](badges/badge-lines.svg)
 ![](badges/badge-statements.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/3978dc60cb9c462541c5/maintainability)](https://codeclimate.com/github/crishellco/vue-call-store/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ad1b10ad23c04fab766b/maintainability)](https://codeclimate.com/github/crishellco/vue-call-store/maintainability)
 
 A Vue & Vuex plugin to simplify tracking API call statuses.
 
