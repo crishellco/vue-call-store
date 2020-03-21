@@ -1,6 +1,6 @@
 # Vue Call Store
 
-[![Codeship Status for crishellco/vue-call-store](https://app.codeship.com/projects/6fc2e700-35f9-0137-5a4a-56926ea83142/status?branch=master)](https://app.codeship.com/projects/332904)
+![Build](https://github.com/crishellco/vue-call-store/workflows/Build/badge.svg)
 ![](badges/badge-branches.svg)
 ![](badges/badge-functionss.svg)
 ![](badges/badge-lines.svg)
