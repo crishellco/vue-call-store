@@ -43,35 +43,31 @@ export default {
   beforeMount() {
     this.$calls = {
       end: (identifier, message = null) => {
-        this.$store.commit('calls/END', { identifier, message }, { root: true });
+        return this.$endCall(identifier, message);
       },
 
       fail: (identifier, message = null) => {
-        this.$store.commit('calls/FAIL', { identifier, message }, { root: true });
+        return this.$failCall(identifier, message);
       },
 
       get: (identifier, defaultValue = null) => {
-        return get(this.$store.state.calls.calls, [identifier], defaultValue);
+        return this.$getCall(identifier, defaultValue);
       },
 
       hasFailed: identifier => {
-        return !!intersection(this.$store.getters['calls/failed'], [].concat(identifier)).length;
+        return this.$callHasFailed(identifier);
       },
 
       isDone: identifier => {
-        const identifiers = [].concat(identifier);
-
-        return (
-          intersection(this.$store.getters['calls/done'], identifiers).length == identifiers.length
-        );
+        return this.$callIsDone(identifier);
       },
 
       isPending: identifier => {
-        return !!intersection(this.$store.getters['calls/pending'], [].concat(identifier)).length;
+        return this.$callIsPending(identifier);
       },
 
       start: (identifier, message = null) => {
-        this.$store.commit('calls/START', { identifier, message }, { root: true });
+        return this.$startCall(identifier, message);
       }
     };
   }
