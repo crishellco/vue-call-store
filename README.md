@@ -23,8 +23,10 @@ Vue Call Store provides a Vuex module and component methods to make it easy to u
 - [Api](#api)
 - [Development](#development)
   - [Lint](#lint)
-  - [Test](#test) \* [Build](#build)
-- [How to contribute](#how-to-contribute) \* [Pull calls](#pull-calls)
+  - [Test](#test)
+  - [Build](#build)
+- [How to contribute](#how-to-contribute)
+  - [Pull calls](#pull-calls)
 - [License](#license)
 
 ## Install
