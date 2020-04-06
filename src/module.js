@@ -11,7 +11,7 @@ function addMeta(oldCall, call) {
 
   call = merge(oldCall, call, {
     _started: oldCall._started || dayjs(),
-    _stopped: !pending ? dayjs() : oldCall._stopped || null
+    _stopped: pending ? null : oldCall._stopped || dayjs()
   });
 
   return set(call, '_duration', duration(call));

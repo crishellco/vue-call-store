@@ -11,6 +11,8 @@ A Vue & Vuex plugin to simplify tracking API call statuses.
 
 Vue Call Store provides a Vuex module and component methods to make it easy to update API call statuses and keep track of them.
 
+Check out the [demo](https://vue-call-store.netlify.com/)
+
 - [Install](#install)
 - [Examples](#examples)
   - [Update the status of a call](#update-the-status-of-a-call)
