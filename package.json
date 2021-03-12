@@ -1,6 +1,6 @@
 {
   "name": "@crishellco/vue-call-store",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "author": "Chris Mitchell (@crishellco)",
   "description": "A Vuex module and Vue mixin to track the status of all API calls",
   "main": "dist/index.js",
