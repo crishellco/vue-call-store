@@ -16,7 +16,7 @@
           class="px-4 py-3 rounded w-48 text-white text-sm"
           :disabled="$calls.isPending(call.identifier)"
         >
-          {{ `${call.identifier} [${call.action} in ${(call.delay / 1000).toFixed(1)}s]` }}
+          {{ `${call.identifier} [${call.action} in ${(call.remaining / 1000).toFixed(1)}s]` }}
         </button>
       </div>
       <div class="flex flex-none justify-between w-48 h-6">
@@ -47,13 +47,17 @@
 import { random, times, uniqueId } from 'lodash';
 import constants from '../../src/constants';
 
+const INTERVAL = 100;
+
 function randomCall() {
   const action = ['end', 'fail'][random()];
+  const delay = Math.ceil(random(500, 5000) / INTERVAL) * INTERVAL;
 
   return {
     action,
-    delay: random(500, 5000),
-    identifier: uniqueId('call')
+    delay,
+    identifier: uniqueId('call'),
+    remaining: delay
   };
 }
 
@@ -83,10 +87,20 @@ export default {
   },
 
   methods: {
-    go({ action, delay, identifier }) {
+    go(call) {
+      const { action, delay, identifier } = call;
+      const index = this.calls.findIndex(c => c === call);
+
       this.$calls.start(identifier, `this.$calls.start('${identifier}')`);
 
+      const interval = setInterval(() => {
+        this.calls[index].remaining -= INTERVAL;
+
+        console.log(this.calls[index].remaining);
+      }, INTERVAL);
+
       setTimeout(() => {
+        clearTimeout(interval);
         this.$calls[action](identifier, `this.$calls.${action}('${identifier}')`);
       }, delay);
     },
