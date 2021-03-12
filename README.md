@@ -34,16 +34,16 @@ Check out the [demo](https://vue-call-store.netlify.com/)
 ## Install
 
 ```bash
-yarn add -D vue-call-store
+yarn add -D @crishellco/vue-call-store
 yarn add -D vuex
 # or
-npm i -D vue-call-store
+npm i -D @crishellco/vue-call-store
 npm i -D vuex
 ```
 
 ```javascript
 import Vuex from 'vuex';
-import VueCallStore from 'vue-call-store';
+import VueCallStore from '@crishellco/vue-call-store';
 
 /**
  * If Vuex isn't installed,
@@ -158,7 +158,7 @@ Components' `once` props accept a boolean. When `true`, the slot contents will o
 #### Multiple identifer logic
 
 | State   | Method                              | to be `true`                     |
-| ------- | ----------------------------------- | -------------------------------- |
+|---------|-------------------------------------|----------------------------------|
 | pending | `$callIsPending | $calls.isPending` | at least one of many is pendsing |
 | done    | `$callIsDone | $calls.isDone`       | all are done                     |
 | failed  | `$callHasFailed | $calls.hasFailed` | has least one has failed         |
