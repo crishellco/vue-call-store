@@ -8,6 +8,6 @@
 import Demo from './Demo';
 
 export default {
-  components: { Demo }
+  components: { Demo },
 };
 </script>

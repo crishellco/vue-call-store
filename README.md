@@ -159,7 +159,7 @@ Components' `once` props accept a boolean. When `true`, the slot contents will o
 
 | State   | Method                              | to be `true`                     |
 |---------|-------------------------------------|----------------------------------|
-| pending | `$callIsPending | $calls.isPending` | at least one of many is pendsing |
+| pending | `$callIsPending | $calls.isPending` | at least one of many is pending |
 | done    | `$callIsDone | $calls.isDone`       | all are done                     |
 | failed  | `$callHasFailed | $calls.hasFailed` | has least one has failed         |
 
