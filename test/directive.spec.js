@@ -28,24 +28,24 @@ describe('directive.js', () => {
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.find('.done').exists()).toBe(false);
-    expect(wrapper.find('.failed').exists()).toBe(false);
-    expect(wrapper.find('.pending').exists()).toBe(true);
+    expect(wrapper.find('.done').exists()).toBeFalsy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeTruthy();
 
     wrapper.vm.$endCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.find('.done').exists()).toBe(true);
-    expect(wrapper.find('.failed').exists()).toBe(false);
-    expect(wrapper.find('.pending').exists()).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeTruthy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
 
     wrapper.vm.$failCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.find('.done').exists()).toBe(false);
-    expect(wrapper.find('.failed').exists()).toBe(true);
-    expect(wrapper.find('.pending').exists()).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeFalsy();
+    expect(wrapper.find('.failed').exists()).toBeTruthy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
   });
 });

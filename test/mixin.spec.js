@@ -55,24 +55,24 @@ describe('mixin.js', () => {
     expect(call).toHaveProperty('_duration');
   });
 
-  it('should update calls and return correct statuses', () => {
+  it('should update calls and return correct statuses', async () => {
     wrapper.vm.$startCall(identifier);
-    expect(wrapper.vm.$callIsPending(identifier)).toBe(true);
+    expect(wrapper.vm.$callIsPending(identifier)).toBeTruthy();
 
     wrapper.vm.$endCall(identifier);
-    expect(wrapper.vm.$callIsDone(identifier)).toBe(true);
+    expect(wrapper.vm.$callIsDone(identifier)).toBeTruthy();
 
     wrapper.vm.$failCall(identifier);
-    expect(wrapper.vm.$callHasFailed(identifier)).toBe(true);
+    expect(wrapper.vm.$callHasFailed(identifier)).toBeTruthy();
 
     wrapper.vm.$calls.start(identifier);
-    expect(wrapper.vm.$calls.isPending(identifier)).toBe(true);
+    expect(wrapper.vm.$calls.isPending(identifier)).toBeTruthy();
 
     wrapper.vm.$calls.end(identifier);
-    expect(wrapper.vm.$calls.isDone(identifier)).toBe(true);
+    expect(wrapper.vm.$calls.isDone(identifier)).toBeTruthy();
 
     wrapper.vm.$calls.fail(identifier);
-    expect(wrapper.vm.$calls.hasFailed(identifier)).toBe(true);
+    expect(wrapper.vm.$calls.hasFailed(identifier)).toBeTruthy();
   });
 
   it('should update components', async () => {
@@ -80,56 +80,56 @@ describe('mixin.js', () => {
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(false);
-    expect(wrapper.contains('.failed')).toBe(false);
-    expect(wrapper.contains('.pending')).toBe(true);
+    expect(wrapper.find('.done').exists()).toBeFalsy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeTruthy();
 
     wrapper.vm.$endCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(true);
-    expect(wrapper.contains('.failed')).toBe(false);
-    expect(wrapper.contains('.pending')).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeTruthy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
 
     wrapper.vm.$failCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(true);
-    expect(wrapper.contains('.failed')).toBe(true);
-    expect(wrapper.contains('.pending')).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeTruthy();
+    expect(wrapper.find('.failed').exists()).toBeTruthy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
 
     wrapper.vm.$endCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(true);
-    expect(wrapper.contains('.failed')).toBe(false);
-    expect(wrapper.contains('.pending')).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeTruthy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
 
     wrapper.vm.$startCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(true);
-    expect(wrapper.contains('.failed')).toBe(false);
-    expect(wrapper.contains('.pending')).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeTruthy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
 
     wrapper.vm.$endCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(true);
-    expect(wrapper.contains('.failed')).toBe(false);
-    expect(wrapper.contains('.pending')).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeTruthy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
 
     wrapper.vm.$startCall(identifier);
 
     await wrapper.vm.$forceUpdate();
 
-    expect(wrapper.contains('.done')).toBe(true);
-    expect(wrapper.contains('.failed')).toBe(false);
-    expect(wrapper.contains('.pending')).toBe(false);
+    expect(wrapper.find('.done').exists()).toBeTruthy();
+    expect(wrapper.find('.failed').exists()).toBeFalsy();
+    expect(wrapper.find('.pending').exists()).toBeFalsy();
   });
 });
