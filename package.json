@@ -24,6 +24,9 @@
     "url": "https://github.com/crishellco/vue-call-store/issues"
   },
   "homepage": "https://crishellco.github.io/vue-call-store/",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
