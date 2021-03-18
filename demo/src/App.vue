@@ -1,5 +1,8 @@
 <template>
-  <div id="app" class="h-full">
+  <div
+    id="app"
+    class="h-full"
+  >
     <demo />
   </div>
 </template>

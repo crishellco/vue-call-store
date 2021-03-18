@@ -1,7 +1,11 @@
 <template>
   <div class="flex h-full overflow-hidden">
     <div class="flex-1 flex flex-col items-center justify-center">
-      <div v-for="(call, index) in calls" :key="index" class="mb-4 relative">
+      <div
+        v-for="(call, index) in calls"
+        :key="index"
+        class="mb-4 relative"
+      >
         <button
           :class="[
             call.action,
@@ -26,11 +30,12 @@
             href=""
             class="flex-none text-xs text-blue-600 hover:underline"
             @click.prevent="refresh"
-            >Refresh</a
-          >
-          <a href="" class="flex-none text-xs text-blue-600 hover:underline" @click.prevent="runAll"
-            >Run All</a
-          >
+          >Refresh</a>
+          <a
+            href=""
+            class="flex-none text-xs text-blue-600 hover:underline"
+            @click.prevent="runAll"
+          >Run All</a>
         </template>
       </div>
     </div>
