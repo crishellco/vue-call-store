@@ -9,7 +9,7 @@
     "src"
   ],
   "scripts": {
-    "test": "jest && jest-coverage-badges output badges",
+    "test": "jest",
     "lint": "eslint --ext .js,.vue src/",
     "lint:fix": "yarn lint --fix",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack --config webpack.config.js",
@@ -50,7 +50,6 @@
     "eslint-plugin-vue": "^6.0.1",
     "husky": "^4.2.3",
     "jest": "^26.0.0",
-    "jest-coverage-badges": "^1.1.2",
     "lodash": "^4.17.15",
     "lodash.get": "^4.4.2",
     "lodash.intersection": "^4.4.0",
