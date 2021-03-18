@@ -1,10 +1,7 @@
 # Vue Call Store
 
 ![Build](https://github.com/crishellco/vue-call-store/workflows/Build/badge.svg)
-![](badges/badge-branches.svg)
-![](badges/badge-functionss.svg)
-![](badges/badge-lines.svg)
-![](badges/badge-statements.svg)
+[![codecov](https://codecov.io/gh/crishellco/vue-call-store/branch/master/graph/badge.svg?token=0BCLYvSqRd)](https://codecov.io/gh/crishellco/vue-call-store)
 [![Maintainability](https://api.codeclimate.com/v1/badges/ad1b10ad23c04fab766b/maintainability)](https://codeclimate.com/github/crishellco/vue-call-store/maintainability)
 
 A Vue & Vuex plugin to simplify tracking API call statuses.
@@ -157,11 +154,11 @@ Components' `once` props accept a boolean. When `true`, the slot contents will o
 
 #### Multiple identifer logic
 
-| State   | Method                              | to be `true`                     |
-|---------|-------------------------------------|----------------------------------|
+| State   | Method                              | to be `true`                    |
+|---------|-------------------------------------|---------------------------------|
 | pending | `$callIsPending | $calls.isPending` | at least one of many is pending |
-| done    | `$callIsDone | $calls.isDone`       | all are done                     |
-| failed  | `$callHasFailed | $calls.hasFailed` | has least one has failed         |
+| done    | `$callIsDone | $calls.isDone`       | all are done                    |
+| failed  | `$callHasFailed | $calls.hasFailed` | has least one has failed        |
 
 _[See Source](src/mixin.js)_
 
