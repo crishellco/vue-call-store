@@ -23,7 +23,7 @@ function duration({ _started, _stopped }) {
 
 async function updateCall(state, { identifier, message }, status) {
   const oldCall = get(state.calls, identifier, {});
-  const newCall = set({}, identifier, addMeta(oldCall, { status, 
+  const newCall = set({}, identifier, addMeta(oldCall, { status, message }));
 
   if(status !== constants.PENDING) {
     const promise = new Promise((resolve) => {
