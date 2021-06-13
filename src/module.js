@@ -25,7 +25,7 @@ async function updateCall(state, { identifier, message }, status) {
   const oldCall = get(state.calls, identifier, {});
   const newCall = set({}, identifier, addMeta(oldCall, { status, message }));
   const promise = new Promise((resolve) => {
-    setTimeout(resolve, Math.max(0, 3000-newCall._duration));
+    setTimeout(resolve, Math.max(0, 0 - newCall._duration));
   })
   await promise;
   
