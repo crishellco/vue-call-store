@@ -21,10 +21,14 @@ function duration({ _started, _stopped }) {
   return _stopped ? _stopped.diff(_started) : null;
 }
 
-function updateCall(state, { identifier, message }, status) {
+function async updateCall(state, { identifier, message }, status) {
   const oldCall = get(state.calls, identifier, {});
   const newCall = set({}, identifier, addMeta(oldCall, { status, message }));
-
+  const promise = new Promise((resolve) => {
+    setTimeout(resolve, Math.max(0, 3000-newCall._duration));
+  })
+  await promise;
+  
   return Object.assign({}, state.calls, newCall);
 }
 
