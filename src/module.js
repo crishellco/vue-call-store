@@ -23,12 +23,15 @@ function duration({ _started, _stopped }) {
 
 async function updateCall(state, { identifier, message }, status) {
   const oldCall = get(state.calls, identifier, {});
-  const newCall = set({}, identifier, addMeta(oldCall, { status, message }));
-  const promise = new Promise((resolve) => {
-    setTimeout(resolve, Math.max(0, 0 - newCall._duration));
-  })
-  await promise;
-  
+  const newCall = set({}, identifier, addMeta(oldCall, { status, 
+
+  if(status !== constants.PENDING) {
+    const promise = new Promise((resolve) => {
+      setTimeout(resolve, Math.max(0, 0 - newCall._duration));
+    });
+    await promise;
+  }
+
   return Object.assign({}, state.calls, newCall);
 }
 
