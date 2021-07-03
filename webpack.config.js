@@ -4,9 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: {
-    index: './src/index.js'
-  },
+  entry: { index: './src/index.js' },
   output: {
     library: 'VueRequestStore',
     libraryTarget: 'umd',
@@ -24,9 +22,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
+        use: { loader: 'babel-loader' }
       }
     ]
   },

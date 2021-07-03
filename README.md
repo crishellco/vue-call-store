@@ -53,8 +53,12 @@ const store = new Vuex.Store({});
 /**
  * If a store isn't passed,
  * one will be created.
+ * 
+ * minDuration is an option value in milliseconds which
+ * ensures all requests take at least
+ * that amount of time.
  */
-Vue.use(VueCallStore, { store });
+Vue.use(VueCallStore, { store, minDuration: 2000 });
 ```
 
 ## Examples
@@ -73,19 +77,19 @@ vm.$calls.fail('fetchUsers', error);
 // Example usage in a Vuex action
 new Vuex.Store({
   actions: {
-    fetchUsers({ commit }) {
+    fetchUsers({ commit, dispatch }) {
       const identifier = 'fetchUsers';
 
-      commit('calls/START', { identifier });
+      dispatch('calls/start', { identifier });
 
       axios
         .get('/api/users')
         .then(({data} => {
           commit('users/set', data);
-          commit('calls/END', { identifier });
+          dispatch('calls/end', { identifier });
         })
         .catch(({response}) => {
-          commit('calls/FAIL', { identifier, message: response.data.errors });
+          dispatch('calls/fail', { identifier, message: response.data.errors });
         });
     },
   },
@@ -183,15 +187,13 @@ const call = vm.$calls.get('fetchUsers', notFoundValue);
 }
 ```
 
-#### Available mutations
-
-_these mutations are useful in Vuex actions_
+#### Available actions & mutations
 
 ```javascript
-vm.$store.commit('calls/START', { identifier, message });
-vm.$store.commit('calls/END', { identifier, message });
-vm.$store.commit('calls/FAIL', { identifier, message });
-vm.$store.commit('calls/RESET'); // Removes all call objects
+dispatch('calls/start', { identifier, message });
+dispatch('calls/end', { identifier, message });
+dispatch('calls/fail', { identifier, message });
+commit('calls/RESET'); // Removes all call objects
 ```
 
 ## Api

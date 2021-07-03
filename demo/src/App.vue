@@ -10,7 +10,7 @@
 <script>
 import Demo from './Demo';
 
-export default {
+export default {  
   components: { Demo },
 };
 </script>

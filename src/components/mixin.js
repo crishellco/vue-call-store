@@ -12,9 +12,7 @@ export default {
   },
 
   data() {
-    return {
-      count: 0
-    };
+    return { count: 0 };
   },
 
   computed: {

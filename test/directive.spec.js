@@ -24,24 +24,21 @@ beforeEach(() => {
 
 describe('directive.js', () => {
   it('should update components', async () => {
-    wrapper.vm.$startCall(identifier);
-
+    await wrapper.vm.$startCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeFalsy();
     expect(wrapper.find('.failed').exists()).toBeFalsy();
     expect(wrapper.find('.pending').exists()).toBeTruthy();
 
-    wrapper.vm.$endCall(identifier);
-
+    await wrapper.vm.$endCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeTruthy();
     expect(wrapper.find('.failed').exists()).toBeFalsy();
     expect(wrapper.find('.pending').exists()).toBeFalsy();
 
-    wrapper.vm.$failCall(identifier);
-
+    await wrapper.vm.$failCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeFalsy();

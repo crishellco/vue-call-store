@@ -32,8 +32,9 @@ describe('mixin.js', () => {
     wrapper = mount(component, { localVue });
     store = wrapper.vm.$store;
   });
-  it('should return the correct call', () => {
-    store.commit('calls/START', { identifier, message });
+
+  it('should return the correct call', async () => {
+    await store.dispatch('calls/start', { identifier, message });
     const call = wrapper.vm.$call(identifier);
 
     expect(call).toEqual(wrapper.vm.$calls.get(identifier));
@@ -44,8 +45,8 @@ describe('mixin.js', () => {
     expect(call).toHaveProperty('_duration');
   });
 
-  it('should return the correct call [deprecated]', () => {
-    store.commit('calls/START', { identifier, message });
+  it('should return the correct call [deprecated]', async () => {
+    await store.dispatch('calls/start', { identifier, message });
     const call = wrapper.vm.$getCall(identifier);
 
     expect(call).toHaveProperty('message', message);
@@ -56,76 +57,69 @@ describe('mixin.js', () => {
   });
 
   it('should update calls and return correct statuses', async () => {
-    wrapper.vm.$startCall(identifier);
+    await wrapper.vm.$startCall(identifier);
     expect(wrapper.vm.$callIsPending(identifier)).toBeTruthy();
 
-    wrapper.vm.$endCall(identifier);
+    await wrapper.vm.$endCall(identifier);
     expect(wrapper.vm.$callIsDone(identifier)).toBeTruthy();
 
-    wrapper.vm.$failCall(identifier);
+    await wrapper.vm.$failCall(identifier);
     expect(wrapper.vm.$callHasFailed(identifier)).toBeTruthy();
 
-    wrapper.vm.$calls.start(identifier);
+    await wrapper.vm.$calls.start(identifier);
     expect(wrapper.vm.$calls.isPending(identifier)).toBeTruthy();
 
-    wrapper.vm.$calls.end(identifier);
+    await wrapper.vm.$calls.end(identifier);
     expect(wrapper.vm.$calls.isDone(identifier)).toBeTruthy();
 
-    wrapper.vm.$calls.fail(identifier);
+    await wrapper.vm.$calls.fail(identifier);
     expect(wrapper.vm.$calls.hasFailed(identifier)).toBeTruthy();
   });
 
   it('should update components', async () => {
-    wrapper.vm.$startCall(identifier);
-
+    await wrapper.vm.$startCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeFalsy();
     expect(wrapper.find('.failed').exists()).toBeFalsy();
     expect(wrapper.find('.pending').exists()).toBeTruthy();
 
-    wrapper.vm.$endCall(identifier);
-
+    await wrapper.vm.$endCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeTruthy();
     expect(wrapper.find('.failed').exists()).toBeFalsy();
     expect(wrapper.find('.pending').exists()).toBeFalsy();
 
-    wrapper.vm.$failCall(identifier);
-
+    await wrapper.vm.$failCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeTruthy();
     expect(wrapper.find('.failed').exists()).toBeTruthy();
     expect(wrapper.find('.pending').exists()).toBeFalsy();
 
-    wrapper.vm.$endCall(identifier);
-
+    await wrapper.vm.$endCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeTruthy();
     expect(wrapper.find('.failed').exists()).toBeFalsy();
     expect(wrapper.find('.pending').exists()).toBeFalsy();
 
-    wrapper.vm.$startCall(identifier);
-
+    await wrapper.vm.$startCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeTruthy();
     expect(wrapper.find('.failed').exists()).toBeFalsy();
     expect(wrapper.find('.pending').exists()).toBeFalsy();
 
-    wrapper.vm.$endCall(identifier);
-
+    await wrapper.vm.$endCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeTruthy();
     expect(wrapper.find('.failed').exists()).toBeFalsy();
     expect(wrapper.find('.pending').exists()).toBeFalsy();
 
-    wrapper.vm.$startCall(identifier);
-
+    await wrapper.vm.$startCall(identifier);
     await wrapper.vm.$forceUpdate();
 
     expect(wrapper.find('.done').exists()).toBeTruthy();

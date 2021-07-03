@@ -1,11 +1,10 @@
 import { createLocalVue } from '@vue/test-utils';
-import mockdate from 'mockdate';
-import dayjs from 'dayjs';
 import Vuex from 'vuex';
 
 import constants from '../src/constants';
 import VueCallStore from '../src';
 
+const minDuration = 2000;
 const identifier = 'identifier';
 const message = 'message';
 let localVue;
@@ -15,7 +14,7 @@ beforeEach(() => {
   localVue = createLocalVue();
   localVue.use(Vuex);
   store = new Vuex.Store();
-  localVue.use(VueCallStore, { store });
+  localVue.use(VueCallStore, { minDuration, store });
 
   store.commit('calls/RESET', { root: true });
 });
@@ -27,73 +26,27 @@ describe('module.js', () => {
     expect(store.getters['calls/calls']).toBe('calls!');
   });
 
-  it('should start, end, and fail calls', () => {
+  it('should start, end, and fail calls', async () => {
     const secondIdentifier = 'secondIdentifier';
     const thirdIdentifier = 'thirdIdentifier';
     const fourthIdentifier = 'fourthIdentifier';
 
-    store.commit('calls/START', { identifier, message }, { root: true });
-    store.commit('calls/START', { identifier: secondIdentifier }, { root: true });
-    store.commit('calls/END', { identifier: thirdIdentifier }, { root: true });
-    store.commit('calls/FAIL', { identifier: fourthIdentifier }, { root: true });
+    await store.dispatch('calls/end', { identifier: thirdIdentifier }, { root: true });
+    await store.dispatch('calls/start', { identifier: secondIdentifier }, { root: true });
+    await store.dispatch('calls/start', { identifier, message }, { root: true });
+    await store.dispatch('calls/fail', { identifier: fourthIdentifier }, { root: true });
 
     expect(store.state.calls.calls[identifier].status).toBe(constants.PENDING);
     expect(store.state.calls.calls[identifier].message).toBe(message);
-    expect(store.getters['calls/pending']).toEqual([identifier, secondIdentifier]);
+    expect(store.getters['calls/pending'].sort()).toEqual([identifier, secondIdentifier].sort());
 
-    store.commit('calls/END', { identifier, message }, { root: true });
+    await store.dispatch('calls/end', { identifier, message }, { root: true });
     expect(store.state.calls.calls[identifier].status).toBe(constants.DONE);
-    expect(store.getters['calls/done']).toEqual([identifier, thirdIdentifier]);
+    expect(store.state.calls.calls[identifier]._duration).toBeGreaterThanOrEqual(minDuration);
+    expect(store.getters['calls/done'].sort()).toEqual([identifier, thirdIdentifier].sort());
 
-    store.commit('calls/FAIL', { identifier, message }, { root: true });
+    await store.dispatch('calls/fail', { identifier, message }, { root: true });
     expect(store.state.calls.calls[identifier].status).toBe(constants.FAILED);
-    expect(store.getters['calls/failed']).toEqual([identifier, fourthIdentifier]);
-  });
-
-  it('should add meta data', () => {
-    const started = dayjs();
-    const stopped = started.clone().add(200, 'ms');
-
-    mockdate.set(started.toDate());
-
-    store.commit('calls/START', { identifier, message }, { root: true });
-    expect(store.state.calls.calls[identifier]).toEqual({
-      _duration: null,
-      _started: started,
-      _stopped: null,
-      message,
-      status: constants.PENDING
-    });
-
-    mockdate.set(stopped.toDate());
-
-    store.commit('calls/END', { identifier, message }, { root: true });
-    expect(store.state.calls.calls[identifier]).toEqual({
-      _duration: 200,
-      _started: started,
-      _stopped: stopped,
-      message,
-      status: constants.DONE
-    });
-
-    store.commit('calls/FAIL', { identifier, message }, { root: true });
-    expect(store.state.calls.calls[identifier]).toEqual({
-      _duration: 200,
-      _started: started,
-      _stopped: stopped,
-      message,
-      status: constants.FAILED
-    });
-
-    store.commit('calls/RESET', { root: true });
-
-    store.commit('calls/FAIL', { identifier, message }, { root: true });
-    expect(store.state.calls.calls[identifier]).toEqual({
-      _duration: 0,
-      _started: stopped,
-      _stopped: stopped,
-      message,
-      status: constants.FAILED
-    });
+    expect(store.getters['calls/failed'].sort()).toEqual([identifier, fourthIdentifier].sort());
   });
 });

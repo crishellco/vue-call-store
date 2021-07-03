@@ -100,9 +100,9 @@ export default {
       this.$calls.start(identifier, `this.$calls.start('${identifier}')`);
 
       const interval = setInterval(() => {
-        this.calls[index].remaining -= INTERVAL;
 
-        console.log(this.calls[index].remaining);
+        
+        this.calls[index].remaining -= INTERVAL;
       }, INTERVAL);
 
       setTimeout(() => {
