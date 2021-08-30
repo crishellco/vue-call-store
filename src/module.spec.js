@@ -49,4 +49,31 @@ describe('module.js', () => {
     expect(store.state.calls.calls[identifier].status).toBe(constants.FAILED);
     expect(store.getters['calls/failed'].sort()).toEqual([identifier, fourthIdentifier].sort());
   });
+
+  it('should respect global minDuration when not using async/await', () => {
+    store.dispatch('calls/start', { identifier }, { root: true });
+    store.dispatch('calls/end', { identifier }, { root: true });
+
+    expect(store.getters['calls/done']).toEqual([]);
+  });
+
+  it('should respect global minDuration when using async/await', async () => {
+    await store.dispatch('calls/start', { identifier }, { root: true });
+    await store.dispatch('calls/end', { identifier }, { root: true });
+
+    expect(store.getters['calls/done']).toEqual([identifier]);
+  });
+
+  it('should respect override minDuration when using async/await', async () => {
+    const override = 4000;
+    const startDate = new Date();
+
+    await store.dispatch('calls/start', { identifier }, { root: true });
+    await store.dispatch('calls/end', { identifier, minDuration: override }, { root: true });
+
+    const endDate = new Date();
+
+    expect(store.getters['calls/done']).toEqual([identifier]);
+    expect(Math.abs(startDate - endDate)).toBeGreaterThanOrEqual(override);
+  });
 });

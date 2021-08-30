@@ -206,8 +206,8 @@ const call = vm.$calls.get('fetchUsers', notFoundValue);
 
 ```javascript
 dispatch('calls/start', { identifier, message });
-dispatch('calls/end', { identifier, message });
-dispatch('calls/fail', { identifier, message });
+dispatch('calls/end', { identifier, message, minDuration });
+dispatch('calls/fail', { identifier, message, minDuration });
 commit('calls/RESET'); // Removes all call objects
 ```
 

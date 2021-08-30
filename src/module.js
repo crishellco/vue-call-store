@@ -19,14 +19,21 @@ export default ({ minDuration }) => {
     return _stopped ? _stopped.diff(_started) : null;
   }
 
-  async function updateCall(state, { identifier, message }, status) {
+  async function updateCall(
+    state,
+    { identifier, message, minDuration: overrideMinDuration },
+    status
+  ) {
     return new Promise(resolve => {
       const oldCall = get(state.calls, identifier, {});
       const newCall = addMeta({ ...oldCall }, { status, message });
 
       if ([constants.DONE, constants.FAILED].includes(status)) {
         new Promise(resolve => {
-          setTimeout(resolve, Math.max(0, parseInt(minDuration) - newCall._duration));
+          setTimeout(
+            resolve,
+            Math.max(0, parseInt(overrideMinDuration ?? minDuration) - newCall._duration)
+          );
         }).then(() => {
           resolve(addMeta({ ...oldCall }, { status, message }));
         });
