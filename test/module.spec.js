@@ -3,8 +3,8 @@ import mockdate from 'mockdate';
 import dayjs from 'dayjs';
 import Vuex from 'vuex';
 
-import constants from '../src/constants';
 import VueCallStore from '../src';
+import constants from '../src/constants';
 
 const identifier = 'identifier';
 const message = 'message';

@@ -2,6 +2,8 @@
 import mixin from './mixin';
 
 export default {
+  name: 'VCallPending',
+
   mixins: [mixin],
 
   computed: {

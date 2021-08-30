@@ -1,7 +1,7 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
-import constants from '../src/constants';
 import VueCallStore from '../src';
+import constants from '../src/constants';
 
 const identifier = 'identifier';
 const message = 'message';
