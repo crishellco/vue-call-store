@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vite",
-    "build": "vite build--mode prod",
+    "build": "vite build --mode prod",
     "build:preprod": "vite build --mode preprod",
     "lint": "eslint",
     "lint:fix": "yarn lint --fix"
