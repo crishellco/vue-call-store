@@ -3,11 +3,11 @@ import { get, intersection } from 'lodash';
 export default {
   methods: {
     $endCall(identifier, message = null) {
-      this.$store.commit('calls/END', { identifier, message }, { root: true });
+      return this.$store.dispatch('calls/end', { identifier, message }, { root: true });
     },
 
     $failCall(identifier, message = null) {
-      this.$store.commit('calls/FAIL', { identifier, message }, { root: true });
+      return this.$store.dispatch('calls/fail', { identifier, message }, { root: true });
     },
 
     $getCall(identifier, defaultValue = null) {
@@ -35,7 +35,7 @@ export default {
     },
 
     $startCall(identifier, message = null) {
-      this.$store.commit('calls/START', { identifier, message }, { root: true });
+      return this.$store.dispatch('calls/start', { identifier, message }, { root: true });
     }
   },
 
