@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Demo from './Demo';
+import Demo from './Demo.vue';
 
 export default {  
   components: { Demo },
