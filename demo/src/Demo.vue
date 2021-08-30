@@ -32,6 +32,7 @@
             @click.prevent="refresh"
           >Refresh</a>
           <a
+            v-if="noneHaveRun"
             href=""
             class="flex-none text-xs text-blue-600 hover:underline"
             @click.prevent="runAll"
@@ -85,6 +86,10 @@ export default {
       return !!Object.values(this.$store.state.calls.calls).filter(
         ({ status }) => status === constants.PENDING
       ).length;
+    },
+
+    noneHaveRun() {
+      return this.$store.getters['calls/done'].length + this.$store.getters['calls/failed'].length === 0
     },
   },
 
