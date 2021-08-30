@@ -26,7 +26,7 @@ export default ({ minDuration }) => {
 
       if ([constants.DONE, constants.FAILED].includes(status)) {
         new Promise(resolve => {
-          setTimeout(resolve, Math.max(0, minDuration - newCall._duration));
+          setTimeout(resolve, Math.max(0, parseInt(minDuration) - newCall._duration));
         }).then(() => {
           resolve(addMeta({ ...oldCall }, { status, message }));
         });
