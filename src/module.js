@@ -1,8 +1,5 @@
-import get from 'lodash.get';
-import merge from 'lodash.merge';
 import dayjs from 'dayjs';
-import reduce from 'lodash.reduce';
-import set from 'lodash.set';
+import { get, merge, reduce, set } from 'lodash';
 
 import constants from './constants';
 

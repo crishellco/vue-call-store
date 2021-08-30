@@ -1,5 +1,4 @@
-import get from 'lodash.get';
-import intersection from 'lodash.intersection';
+import { get, intersection } from 'lodash';
 
 export default {
   methods: {

@@ -8,6 +8,8 @@ import VueCallDone from './components/VueCallDone.vue';
 import VueCallFailed from './components/VueCallFailed.vue';
 import VueCallPending from './components/VueCallPending.vue';
 
+export { VueCallDone, VueCallFailed, VueCallPending };
+
 function install(Vue, { minDuration, store } = { minDuration: constants.MIN_DURATION }) {
   if (!store) {
     Vue.use(Vuex);
@@ -18,9 +20,9 @@ function install(Vue, { minDuration, store } = { minDuration: constants.MIN_DURA
   store.registerModule('calls', moduleFactory({ minDuration }), { preserveState: false });
   Vue.mixin(mixin);
   Vue.directive('call', directive);
-  Vue.component('v-call-done', VueCallDone);
-  Vue.component('v-call-failed', VueCallFailed);
-  Vue.component('v-call-pending', VueCallPending);
+  Vue.component(VueCallDone.name, VueCallDone);
+  Vue.component(VueCallFailed.name, VueCallFailed);
+  Vue.component(VueCallPending.name, VueCallPending);
 }
 
 export default install;
