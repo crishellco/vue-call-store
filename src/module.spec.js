@@ -1,8 +1,8 @@
 import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import VueCallStore from '../src';
-import constants from '../src/constants';
+import VueCallStore from '.';
+import constants from './constants';
 
 const minDuration = 2000;
 const identifier = 'identifier';

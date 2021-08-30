@@ -1,6 +1,6 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 
-import { default as VueCallStore, VueCallDone, VueCallFailed, VueCallPending } from '../src';
+import { default as VueCallStore, VueCallDone, VueCallFailed, VueCallPending } from '..';
 
 const identifier = 'identifier';
 let localVue;
