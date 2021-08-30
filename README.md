@@ -10,7 +10,10 @@ Vue Call Store provides a Vuex module and component methods to make it easy to u
 
 Check out the [demo](https://vue-call-store.netlify.com/)
 
+# Table of contents
+
 - [Install](#install)
+  - [Install Options](#install-options)
 - [Examples](#examples)
   - [Update the status of a call](#update-the-status-of-a-call)
   - [Check the status of a call in a component](#check-the-status-of-a-call-in-a-component)
@@ -18,8 +21,22 @@ Check out the [demo](https://vue-call-store.netlify.com/)
   - [Conditionally render with components](#conditionally-render-with-components)
   - [Multiple identifer logic](#multiple-identifer-logic)
   - [Get the raw call object](#get-the-raw-call-object)
-  - [Available mutations](#available-mutations)
+  - [Available actions & mutations](#available-actions--mutations)
 - [Api](#api)
+  - [vm.\$calls.end(identifier, message)](#vmcallsendidentifier-message)
+  - [vm.\$endCall(identifier, message)](#vmendcallidentifier-message)
+  - [vm.\$calls.fail(identifier, message)](#vmcallsfailidentifier-message)
+  - [vm.\$failCall(identifier, message)](#vmfailcallidentifier-message)
+  - [vm.\$calls.start(identifier, message)](#vmcallsstartidentifier-message)
+  - [vm.\$startCall(identifier, message)](#vmstartcallidentifier-message)
+  - [vm.\$getCall(identifier, defaultValue)](#vmgetcallidentifier-defaultvalue)
+  - [vm.\$calls.get(identifier, defaultValue)](#vmcallsgetidentifier-defaultvalue)
+  - [vm.\$calls.hasFailed(identifier)](#vmcallshasfailedidentifier)
+  - [vm.\$callHasFailed(identifier)](#vmcallhasfailedidentifier)
+  - [vm.\$calls.isDone(identifier)](#vmcallsisdoneidentifier)
+  - [vm.\$callIsDone(identifier)](#vmcallisdoneidentifier)
+  - [vm.\$calls.isPending(identifier)](#vmcallsispendingidentifier)
+  - [vm.\$callIsPending(identifier)](#vmcallispendingidentifier)
 - [Development](#development)
   - [Lint](#lint)
   - [Test](#test)
@@ -27,7 +44,6 @@ Check out the [demo](https://vue-call-store.netlify.com/)
 - [How to contribute](#how-to-contribute)
   - [Pull calls](#pull-calls)
 - [License](#license)
-
 ## Install
 
 ```bash
@@ -50,20 +66,19 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({});
 
-/**
- * If a store isn't passed,
- * one will be created.
- * 
- * minDuration is an option value in milliseconds which
- * ensures all requests take at least
- * that amount of time.
- */
 Vue.use(VueCallStore, { store, minDuration: 2000 });
 ```
 
+### Install Options
+
+| Name          | Type     | Default              | Description                                                                    |
+|---------------|----------|----------------------|--------------------------------------------------------------------------------|
+| `minDuration` | `Number` | `0`                  | The minimum time in milliseconds that all requests must take before finishing. |
+| `store`       | `Vuex`   | `new Vuex.Store({})` | A Vuex store to store request data.                                            |
+
 ## Examples
 
-#### Update the status of a call
+### Update the status of a call
 
 ```javascript
 /**
@@ -97,7 +112,7 @@ new Vuex.Store({
 
 ```
 
-#### Check the status of a call in a component
+### Check the status of a call in a component
 
 ```javascript
 /**
@@ -110,7 +125,7 @@ const isDone = vm.$calls.isDone('fetchUsers');
 const hasFailed = vm.$calls.hasFailed(['fetchUsers', 'second']);
 ```
 
-#### Conditionally render with directives
+### Conditionally render with directives
 
 Directives accept string or array of identifiers.
 
@@ -129,7 +144,7 @@ Directives accept string or array of identifiers.
   </div>
 ```
 
-#### Conditionally render with components
+### Conditionally render with components
 
 Components' `identifier` props accept string or array of identifiers.
 
@@ -156,7 +171,7 @@ Components' `once` props accept a boolean. When `true`, the slot contents will o
 </template>
 ```
 
-#### Multiple identifer logic
+### Multiple identifer logic
 
 | State   | Method                              | to be `true`                    |
 |---------|-------------------------------------|---------------------------------|
@@ -166,7 +181,7 @@ Components' `once` props accept a boolean. When `true`, the slot contents will o
 
 _[See Source](src/mixin.js)_
 
-#### Get the raw call object
+### Get the raw call object
 
 ```javascript
 /**
@@ -187,7 +202,7 @@ const call = vm.$calls.get('fetchUsers', notFoundValue);
 }
 ```
 
-#### Available actions & mutations
+### Available actions & mutations
 
 ```javascript
 dispatch('calls/start', { identifier, message });
@@ -198,9 +213,9 @@ commit('calls/RESET'); // Removes all call objects
 
 ## Api
 
-#### vm.\$calls.end(identifier[, message])
+### vm.\$calls.end(identifier, message)
 
-#### vm.\$endCall(identifier[, message])
+### vm.\$endCall(identifier, message)
 
 Ends a call.
 
@@ -209,9 +224,9 @@ Ends a call.
   - `{*} message` optional
 - Returns `{void}`
 
-#### vm.\$calls.fail(identifier[, message])
+### vm.\$calls.fail(identifier, message)
 
-#### vm.\$failCall(identifier[, message])
+### vm.\$failCall(identifier, message)
 
 Fails a call.
 
@@ -220,9 +235,9 @@ Fails a call.
   - `{*} message` optional
 - Returns `{void}`
 
-#### vm.\$calls.start(identifier[, message])
+### vm.\$calls.start(identifier, message)
 
-#### vm.\$startCall(identifier[, message])
+### vm.\$startCall(identifier, message)
 
 Starts a call.
 
@@ -231,11 +246,9 @@ Starts a call.
   - `{*} message` optional
 - Returns `{void}`
 
-#### vm.\$calls.call(identifier[, defaultValue])
+### vm.\$getCall(identifier, defaultValue)
 
-#### vm.\$getCall(identifier[, defaultValue])
-
-#### vm.\$calls.get(identifier[, defaultValue])
+### vm.\$calls.get(identifier, defaultValue)
 
 Gets raw call.
 
@@ -244,9 +257,9 @@ Gets raw call.
   - `{*} defaultValue (default: null)` optional
 - Returns `{object}`
 
-#### vm.\$calls.hasFailed(identifier)
+### vm.\$calls.hasFailed(identifier)
 
-#### vm.\$callHasFailed(identifier)
+### vm.\$callHasFailed(identifier)
 
 Gets if one or at least one of many calls has failed.
 
@@ -254,9 +267,9 @@ Gets if one or at least one of many calls has failed.
   - `{string | array} identifier`
 - Returns `{boolean}`
 
-#### vm.\$calls.isDone(identifier)
+### vm.\$calls.isDone(identifier)
 
-#### vm.\$callIsDone(identifier)
+### vm.\$callIsDone(identifier)
 
 Gets if one or all calls are done.
 
@@ -264,9 +277,9 @@ Gets if one or all calls are done.
   - `{string} identifier`
 - Returns `{boolean}`
 
-#### vm.\$calls.isPending(identifier)
+### vm.\$calls.isPending(identifier)
 
-#### vm.\$callIsPending(identifier)
+### vm.\$callIsPending(identifier)
 
 Gets if one or at least one of many calls is pending.
 
@@ -276,19 +289,19 @@ Gets if one or at least one of many calls is pending.
 
 ## Development
 
-#### Lint
+### Lint
 
 ```bash
 yarn lint
 ```
 
-#### Test
+### Test
 
 ```bash
 yarn test
 ```
 
-#### Build
+### Build
 
 ```bash
 yarn build
@@ -296,7 +309,7 @@ yarn build
 
 ## How to contribute
 
-#### Pull calls
+### Pull calls
 
 1. Fork the repository
 2. Create a new branch for each feature or improvement
