@@ -289,12 +289,6 @@ Gets if one or at least one of many calls is pending.
 
 ## Development
 
-### Lint
-
-```bash
-yarn lint
-```
-
 ### Test
 
 ```bash
