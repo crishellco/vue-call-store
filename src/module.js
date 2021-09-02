@@ -3,7 +3,7 @@ import { get, merge, reduce, set } from 'lodash';
 
 import constants from './constants';
 
-export default ({ minDuration }) => {
+export default ({ disablePromises, minDuration }) => {
   function addMeta(oldCall, call) {
     const pending = call.status === constants.PENDING;
 
@@ -24,10 +24,12 @@ export default ({ minDuration }) => {
     { identifier, message, minDuration: overrideMinDuration },
     status
   ) {
-    return new Promise(resolve => {
-      const oldCall = get(state.calls, identifier, {});
-      const newCall = addMeta({ ...oldCall }, { status, message });
+    const oldCall = get(state.calls, identifier, {});
+    const newCall = addMeta({ ...oldCall }, { status, message });
 
+    if (disablePromises) return newCall;
+
+    return new Promise(resolve => {
       if ([constants.DONE, constants.FAILED].includes(status)) {
         new Promise(resolve => {
           setTimeout(

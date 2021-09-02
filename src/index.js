@@ -10,14 +10,22 @@ import VueCallPending from './components/VueCallPending.vue';
 
 export { VueCallDone, VueCallFailed, VueCallPending };
 
-function install(Vue, { minDuration, store } = { minDuration: constants.MIN_DURATION }) {
+function install(
+  Vue,
+  { disablePromises, minDuration, store } = {
+    disablePromises: false,
+    minDuration: constants.MIN_DURATION
+  }
+) {
   if (!store) {
     Vue.use(Vuex);
     store = new Vuex.Store();
     Vue.prototype.$store = store;
   }
 
-  store.registerModule('calls', moduleFactory({ minDuration }), { preserveState: false });
+  const options = { disablePromises, minDuration };
+
+  store.registerModule('calls', moduleFactory(options), { preserveState: false });
   Vue.mixin(mixin);
   Vue.directive('call', directive);
   Vue.component(VueCallDone.name, VueCallDone);
