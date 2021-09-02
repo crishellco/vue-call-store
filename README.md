@@ -71,10 +71,11 @@ Vue.use(VueCallStore, { store, minDuration: 2000 });
 
 ### Install Options
 
-| Name          | Type     | Default              | Description                                                                    |
-|---------------|----------|----------------------|--------------------------------------------------------------------------------|
-| `minDuration` | `Number` | `0`                  | The minimum time in milliseconds that all requests must take before finishing. |
-| `store`       | `Vuex`   | `new Vuex.Store({})` | A Vuex store to store request data.                                            |
+| Name              | Type      | Default              | Description                                                                    |
+|-------------------|-----------|----------------------|--------------------------------------------------------------------------------|
+| `disablePromises` | `Boolean` | `false`              | Disables promises when updating a call. Useful for tests.                      |
+| `minDuration`     | `Number`  | `0`                  | The minimum time in milliseconds that all requests must take before finishing. |
+| `store`           | `Vuex`    | `new Vuex.Store({})` | A Vuex store to store request data.                                            |
 
 ## Examples
 
