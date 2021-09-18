@@ -1,12 +1,12 @@
 import Vuex from 'vuex';
 
+import VueCallDone from './components/VueCallDone.vue';
+import VueCallFailed from './components/VueCallFailed.vue';
+import VueCallPending from './components/VueCallPending.vue';
 import constants from './constants';
 import directive from './directive';
 import mixin from './mixin';
 import moduleFactory from './module';
-import VueCallDone from './components/VueCallDone.vue';
-import VueCallFailed from './components/VueCallFailed.vue';
-import VueCallPending from './components/VueCallPending.vue';
 
 export { VueCallDone, VueCallFailed, VueCallPending };
 

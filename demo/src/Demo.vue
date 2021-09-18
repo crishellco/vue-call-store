@@ -1,11 +1,7 @@
 <template>
   <div class="flex h-full overflow-hidden">
     <div class="flex-1 flex flex-col items-center justify-center">
-      <div
-        v-for="(call, index) in calls"
-        :key="index"
-        class="mb-4 relative"
-      >
+      <div v-for="(call, index) in calls" :key="index" class="mb-4 relative">
         <button
           :class="[
             call.action,
@@ -13,8 +9,8 @@
               'bg-blue-500': !$store.state.calls.calls[call.identifier],
               'bg-gray-500 opacity-50 cursor-not-allowed': $calls.isPending(call.identifier),
               'bg-red-500': $calls.hasFailed(call.identifier),
-              'bg-green-500': $calls.isDone(call.identifier),
-            },
+              'bg-green-500': $calls.isDone(call.identifier)
+            }
           ]"
           class="px-4 py-3 rounded w-48 text-white text-sm"
           :disabled="$calls.isPending(call.identifier)"
@@ -30,13 +26,15 @@
             href=""
             class="flex-none text-xs text-blue-600 hover:underline"
             @click.prevent="refresh"
-          >Refresh</a>
+            >Refresh</a
+          >
           <a
             v-if="noneHaveRun"
             href=""
             class="flex-none text-xs text-blue-600 hover:underline"
             @click.prevent="runAll"
-          >Run All</a>
+            >Run All</a
+          >
         </template>
       </div>
     </div>
@@ -52,6 +50,7 @@
 
 <script>
 import { random, times, uniqueId } from 'lodash';
+
 import constants from '../../src/constants';
 
 const INTERVAL = 100;
@@ -64,21 +63,19 @@ function randomCall() {
     action,
     delay,
     identifier: uniqueId('call'),
-    remaining: delay,
+    remaining: delay
   };
 }
 
 export default {
   filters: {
-    pretty: function (value) {
+    pretty: function(value) {
       return JSON.stringify(value, null, 2);
-    },
+    }
   },
 
   data() {
-    return {
-      calls: [],
-    };
+    return { calls: [] };
   },
 
   computed: {
@@ -89,8 +86,10 @@ export default {
     },
 
     noneHaveRun() {
-      return this.$store.getters['calls/done'].length + this.$store.getters['calls/failed'].length === 0
-    },
+      return (
+        this.$store.getters['calls/done'].length + this.$store.getters['calls/failed'].length === 0
+      );
+    }
   },
 
   beforeMount() {
@@ -100,13 +99,11 @@ export default {
   methods: {
     go(call) {
       const { action, delay, identifier } = call;
-      const index = this.calls.findIndex((c) => c === call);
+      const index = this.calls.findIndex(c => c === call);
 
       this.$calls.start(identifier, `this.$calls.start('${identifier}')`);
 
       const interval = setInterval(() => {
-
-        
         this.calls[index].remaining -= INTERVAL;
       }, INTERVAL);
 
@@ -123,8 +120,8 @@ export default {
 
     runAll() {
       this.calls.map(this.go);
-    },
-  },
+    }
+  }
 };
 </script>
 
