@@ -24,8 +24,7 @@ export default ({ disablePromises, minDuration }) => {
     { identifier, message, minDuration: overrideMinDuration },
     status
   ) {
-    const oldCall = get(state.calls, identifier, {});
-    const newCall = addMeta({ ...oldCall }, { status, message });
+    const { oldCall, newCall } = getUpdatedCall(state, { identifier, message }, status);
 
     if (disablePromises) return newCall;
 
@@ -59,6 +58,13 @@ export default ({ disablePromises, minDuration }) => {
     );
   }
 
+  function getUpdatedCall(state, { identifier, message }, status) {
+    const oldCall = get(state.calls, identifier, {});
+    const newCall = addMeta({ ...oldCall }, { status, message });
+
+    return { oldCall, newCall };
+  }
+
   return {
     namespaced: true,
 
@@ -75,10 +81,11 @@ export default ({ disablePromises, minDuration }) => {
         commit('UPDATE', { identifier: payload.identifier, call });
       },
 
-      async start({ commit, state }, payload) {
-        const call = await updateCall(state, payload, constants.PENDING);
+      start({ commit, state }, payload) {
+        const { identifier } = payload;
+        const { newCall } = getUpdatedCall(state, payload, constants.PENDING);
 
-        commit('UPDATE', { identifier: payload.identifier, call });
+        commit('UPDATE', { identifier, call: newCall });
       }
     },
 
