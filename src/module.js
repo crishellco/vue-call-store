@@ -29,18 +29,14 @@ export default ({ disablePromises, minDuration }) => {
     if (disablePromises) return newCall;
 
     return new Promise(resolve => {
-      if ([constants.DONE, constants.FAILED].includes(status)) {
-        new Promise(resolve => {
-          setTimeout(
-            resolve,
-            Math.max(0, parseInt(overrideMinDuration ?? minDuration) - newCall._duration)
-          );
-        }).then(() => {
-          resolve(addMeta({ ...oldCall }, { status, message }));
-        });
-      } else {
-        return resolve(newCall);
-      }
+      new Promise(resolve => {
+        setTimeout(
+          resolve,
+          Math.max(0, parseInt(overrideMinDuration ?? minDuration) - newCall._duration)
+        );
+      }).then(() => {
+        resolve(addMeta({ ...oldCall }, { status, message }));
+      });
     });
   }
 
