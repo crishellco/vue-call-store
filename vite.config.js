@@ -8,9 +8,10 @@ export default defineConfig({
     sourcemap: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.js'),
-      name: 'MyLib',
+      name: 'VueCallStore',
       fileName: format => `vue-call-store.${format}.js`
     },
+    minify: false,
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
