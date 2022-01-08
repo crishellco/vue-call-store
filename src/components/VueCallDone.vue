@@ -13,7 +13,7 @@ export default {
 
     shouldRender() {
       return this.once ? this.count > 0 : this.inState;
-    }
-  }
+    },
+  },
 };
 </script>

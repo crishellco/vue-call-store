@@ -8,9 +8,9 @@ export default defineConfig({
     alias: [
       {
         find: '~',
-        replacement: path.resolve(__dirname, 'src')
-      }
-    ]
+        replacement: path.resolve(__dirname, 'src'),
+      },
+    ],
   },
-  server: { port: 8080 }
+  server: { port: 8080 },
 });

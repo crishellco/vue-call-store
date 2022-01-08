@@ -9,8 +9,8 @@
               'bg-blue-500': !$store.state.calls.calls[call.identifier],
               'bg-gray-500 opacity-50 cursor-not-allowed': $calls.isPending(call.identifier),
               'bg-red-500': $calls.hasFailed(call.identifier),
-              'bg-green-500': $calls.isDone(call.identifier)
-            }
+              'bg-green-500': $calls.isDone(call.identifier),
+            },
           ]"
           class="px-4 py-3 rounded w-48 text-white text-sm"
           :disabled="$calls.isPending(call.identifier)"
@@ -63,15 +63,15 @@ function randomCall() {
     action,
     delay,
     identifier: uniqueId('call'),
-    remaining: delay
+    remaining: delay,
   };
 }
 
 export default {
   filters: {
-    pretty: function(value) {
+    pretty: function (value) {
       return JSON.stringify(value, null, 2);
-    }
+    },
   },
 
   data() {
@@ -89,7 +89,7 @@ export default {
       return (
         this.$store.getters['calls/done'].length + this.$store.getters['calls/failed'].length === 0
       );
-    }
+    },
   },
 
   beforeMount() {
@@ -99,7 +99,7 @@ export default {
   methods: {
     go(call) {
       const { action, delay, identifier } = call;
-      const index = this.calls.findIndex(c => c === call);
+      const index = this.calls.findIndex((c) => c === call);
 
       this.$calls.start(identifier, `this.$calls.start('${identifier}')`);
 
@@ -120,8 +120,8 @@ export default {
 
     runAll() {
       this.calls.map(this.go);
-    }
-  }
+    },
+  },
 };
 </script>
 

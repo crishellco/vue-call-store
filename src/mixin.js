@@ -36,7 +36,7 @@ export default {
 
     $startCall(identifier, message = null) {
       return this.$store.dispatch('calls/start', { identifier, message }, { root: true });
-    }
+    },
   },
 
   beforeMount() {
@@ -53,21 +53,21 @@ export default {
         return this.$getCall(identifier, defaultValue);
       },
 
-      hasFailed: identifier => {
+      hasFailed: (identifier) => {
         return this.$callHasFailed(identifier);
       },
 
-      isDone: identifier => {
+      isDone: (identifier) => {
         return this.$callIsDone(identifier);
       },
 
-      isPending: identifier => {
+      isPending: (identifier) => {
         return this.$callIsPending(identifier);
       },
 
       start: (identifier, message = null) => {
         return this.$startCall(identifier, message);
-      }
+      },
     };
-  }
+  },
 };
