@@ -14,7 +14,7 @@ function install(
   Vue,
   { disablePromises, minDuration, store } = {
     disablePromises: false,
-    minDuration: constants.MIN_DURATION
+    minDuration: constants.MIN_DURATION,
   }
 ) {
   if (!store) {

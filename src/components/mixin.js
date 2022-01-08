@@ -3,12 +3,12 @@ export default {
     identifier: {
       default: '',
       required: true,
-      type: [Array, String]
+      type: [Array, String],
     },
     once: {
       default: false,
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
 
   data() {
@@ -18,7 +18,7 @@ export default {
   computed: {
     shouldRender() {
       return this.once ? this.count < 2 && this.inState : this.inState;
-    }
+    },
   },
 
   watch: {
@@ -26,10 +26,10 @@ export default {
       if (newVal && !oldVal) {
         this.count++;
       }
-    }
+    },
   },
 
   render() {
     return this.shouldRender ? this.$slots.default : document.createComment(' ');
-  }
+  },
 };

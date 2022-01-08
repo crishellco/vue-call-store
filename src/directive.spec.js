@@ -13,7 +13,7 @@ const component = {
       <div v-call:failed="['${identifier}', 'second']" class="failed">Hello World</div>
       <div v-call:pending="['${identifier}', 'third']" class="pending">Hello World</div>
     </div>
-  `
+  `,
 };
 
 beforeEach(() => {

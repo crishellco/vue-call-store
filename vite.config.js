@@ -9,7 +9,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/index.js'),
       name: 'VueCallStore',
-      fileName: format => `vue-call-store.${format}.js`
+      fileName: (format) => `vue-call-store.${format}.js`,
     },
     minify: false,
     rollupOptions: {
@@ -19,8 +19,8 @@ export default defineConfig({
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps
-        globals: { vue: 'Vue', dayjs: 'dayjs', vuex: 'Vuex' }
-      }
-    }
-  }
+        globals: { vue: 'Vue', dayjs: 'dayjs', vuex: 'Vuex' },
+      },
+    },
+  },
 });

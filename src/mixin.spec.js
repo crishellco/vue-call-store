@@ -22,7 +22,7 @@ const component = {
         <div class="pending">Hello World</div>
       </v-call-pending>
     </div>
-  `
+  `,
 };
 
 describe('mixin.js', () => {

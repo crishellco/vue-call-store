@@ -9,7 +9,7 @@ export default ({ disablePromises, minDuration }) => {
 
     call = merge(oldCall, call, {
       _started: oldCall._started || dayjs(),
-      _stopped: pending ? null : oldCall._stopped || dayjs()
+      _stopped: pending ? null : oldCall._stopped || dayjs(),
     });
 
     return set(call, '_duration', duration(call));
@@ -28,8 +28,8 @@ export default ({ disablePromises, minDuration }) => {
 
     if (disablePromises) return newCall;
 
-    return new Promise(resolve => {
-      new Promise(resolve => {
+    return new Promise((resolve) => {
+      new Promise((resolve) => {
         setTimeout(
           resolve,
           Math.max(0, parseInt(overrideMinDuration ?? minDuration) - newCall._duration)
@@ -82,7 +82,7 @@ export default ({ disablePromises, minDuration }) => {
         const { newCall } = getUpdatedCall(state, payload, constants.PENDING);
 
         commit('UPDATE', { identifier, call: newCall });
-      }
+      },
     },
 
     getters: {
@@ -98,7 +98,7 @@ export default ({ disablePromises, minDuration }) => {
         return getByStatus(state, constants.PENDING);
       },
 
-      calls: state => state.calls
+      calls: (state) => state.calls,
     },
 
     mutations: {
@@ -108,9 +108,9 @@ export default ({ disablePromises, minDuration }) => {
 
       UPDATE(state, { identifier, call }) {
         state.calls = Object.assign({}, state.calls, set({}, identifier, call));
-      }
+      },
     },
 
-    state: { calls: {} }
+    state: { calls: {} },
   };
 };

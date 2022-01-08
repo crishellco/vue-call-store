@@ -10,7 +10,7 @@ const component = {
   components: {
     VueCallDone,
     VueCallFailed,
-    VueCallPending
+    VueCallPending,
   },
 
   template: `
@@ -19,7 +19,7 @@ const component = {
       <vue-call-failed identifier="${identifier}"><div class="failed">Hello World</div></vue-call-failed>
       <vue-call-pending identifier="${identifier}"><div class="pending">Hello World</div></vue-call-pending>
     </div>
-  `
+  `,
 };
 
 beforeEach(() => {

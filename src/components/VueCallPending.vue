@@ -9,7 +9,7 @@ export default {
   computed: {
     inState() {
       return this.$callIsPending(this.identifier);
-    }
-  }
+    },
+  },
 };
 </script>
