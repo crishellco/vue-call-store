@@ -41,7 +41,7 @@
     "@babel/plugin-proposal-class-properties": "7.16.7",
     "@babel/plugin-transform-runtime": "7.17.0",
     "@babel/preset-env": "7.16.11",
-    "@commitlint/cli": "16.2.1",
+    "@commitlint/cli": "16.2.3",
     "@form8ion/commitlint-config": "1.0.29",
     "@vue/compiler-sfc": "3.2.31",
     "@vue/eslint-config-prettier": "7.0.0",
