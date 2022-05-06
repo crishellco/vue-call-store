@@ -86,7 +86,7 @@
     "vuex": "^3.6.2"
   },
   "dependencies": {
-    "dayjs": "^1.10.8"
+    "dayjs": "^1.11.1"
   },
   "config": {
     "commitizen": {
