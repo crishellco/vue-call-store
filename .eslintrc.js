@@ -5,7 +5,7 @@ module.exports = {
     'plugin:jest/recommended',
     'plugin:jest-formatting/recommended',
     'plugin:vue/recommended',
-    'prettier'
+    'prettier',
   ],
   plugins: ['jest-formatting', 'import'],
   parserOptions: { parser: 'babel-eslint' },
@@ -19,7 +19,7 @@ module.exports = {
       'error',
       {
         alphabetize: {
-          order: 'asc'
+          order: 'asc',
         },
         groups: [['builtin', 'external', 'unknown'], ['internal'], ['parent', 'sibling', 'index']],
         'newlines-between': 'always',
@@ -27,17 +27,18 @@ module.exports = {
           {
             group: 'internal',
             pattern: '{@,~}/*/**',
-            position: 'after'
-          }
+            position: 'after',
+          },
         ],
-        pathGroupsExcludedImportTypes: ['builtin']
-      }
-    ]
+        pathGroupsExcludedImportTypes: ['builtin'],
+      },
+    ],
+    'vue/multi-word-component-names': 'off',
   },
   overrides: [
     {
       files: ['**/*.spec.{j,t}s?(x)'],
-      env: { jest: true }
-    }
-  ]
+      env: { jest: true },
+    },
+  ],
 };
