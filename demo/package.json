@@ -10,8 +10,8 @@
   "dependencies": {
     "core-js": "3.24.1",
     "lodash": "4.17.21",
-    "vue": "2.7.8",
-    "vuex": "3.6.2"
+    "vue": "3.2.37",
+    "vuex": "4.0.2"
   },
   "devDependencies": {
     "vite": "3.0.9",
