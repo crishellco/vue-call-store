@@ -10,7 +10,7 @@
   "dependencies": {
     "core-js": "3.25.5",
     "lodash": "4.17.21",
-    "vue": "2.7.13",
+    "vue": "3.2.45",
     "vuex": "3.6.2"
   },
   "devDependencies": {
