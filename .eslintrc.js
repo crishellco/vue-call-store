@@ -8,7 +8,14 @@ module.exports = {
     'prettier',
   ],
   plugins: ['jest-formatting', 'import'],
-  parserOptions: { parser: 'babel-eslint' },
+  parserOptions: {
+    requireConfigFile: false,
+    babelOptions: {
+      babelrc: false,
+      configFile: false,
+      presets: ['babel-eslint'],
+    },
+  },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -18,9 +25,7 @@ module.exports = {
     'import/order': [
       'error',
       {
-        alphabetize: {
-          order: 'asc',
-        },
+        alphabetize: {order: 'asc',},
         groups: [['builtin', 'external', 'unknown'], ['internal'], ['parent', 'sibling', 'index']],
         'newlines-between': 'always',
         pathGroups: [
