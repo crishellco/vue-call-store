@@ -1,8 +1,8 @@
 import Vue from 'vue';
 
-import VueCallStore from '../../src';
 import App from './App.vue';
 import store from './store';
+import VueCallStore from '../../src';
 
 Vue.use(VueCallStore, { minDuration: 2000, store });
 
