@@ -130,7 +130,7 @@ const hasFailed = vm.$calls.hasFailed(['fetchUsers', 'second']);
 
 Directives accept string or array of identifiers.
 
-```javascript
+```vue
 <template>
   <loading-indicator v-call:pending="'fetchUsers'" />
 
@@ -151,7 +151,7 @@ Components' `identifier` props accept string or array of identifiers.
 
 Components' `once` props accept a boolean. When `true`, the slot contents will only be hidden once.
 
-```javascript
+```vue
   <v-call-pending identifier="fetchUsers" :once="true">
     <loading-indicator />
   </v-call-pending>
