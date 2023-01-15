@@ -8,7 +8,7 @@
     "build:preprod": "vite build --mode preprod"
   },
   "dependencies": {
-    "core-js": "3.26.1",
+    "core-js": "3.27.1",
     "lodash": "4.17.21",
     "vue": "2.7.14",
     "vuex": "3.6.2"
