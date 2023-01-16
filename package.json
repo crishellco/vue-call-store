@@ -69,7 +69,7 @@
     "poi": "12.10.3",
     "prettier": "2.8.3",
     "regenerator-runtime": "0.13.11",
-    "rimraf": "4.0.5",
+    "rimraf": "4.0.7",
     "semantic-release": "20.0.2",
     "vite": "4.0.4",
     "vite-plugin-vue2": "2.0.3",
