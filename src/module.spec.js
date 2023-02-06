@@ -3,6 +3,10 @@ import Vuex from 'vuex';
 
 import VueCallStore from '.';
 import constants from './constants';
+import { decorateStore } from './utils';
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const waitErr = (ms) => new Promise((resolve, reject) => setTimeout(reject, ms));
 
 const minDuration = 2000;
 const identifier = 'identifier';
@@ -14,12 +18,23 @@ beforeEach(() => {
   localVue = createLocalVue();
   localVue.use(Vuex);
   store = new Vuex.Store();
+  decorateStore(store);
   localVue.use(VueCallStore, { minDuration, store });
 
   store.commit('calls/RESET', { root: true });
 });
 
 describe('module.js', () => {
+  test('trackRequest', async () => {
+    await store.trackRequest({ identifier: 'wait' }, wait(200));
+    expect(store.getters['calls/calls'].wait.status).toBe(constants.DONE);
+
+    try {
+      await store.trackRequest({ identifier: 'waitErr' }, waitErr(200));
+    } catch (error) {}
+    expect(store.getters['calls/calls'].wait.status).toBe(constants.DONE);
+  });
+
   it('should correctly return data from getters', () => {
     store.state.calls.calls = 'calls!';
 
@@ -65,7 +80,7 @@ describe('module.js', () => {
   });
 
   it('should respect override minDuration when using async/await', async () => {
-    const override = 4000;
+    const override = 1000;
     const startDate = new Date();
 
     await store.dispatch('calls/start', { identifier }, { root: true });

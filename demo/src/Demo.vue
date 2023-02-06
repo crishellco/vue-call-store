@@ -1,32 +1,36 @@
 <template>
   <div class="flex h-full overflow-hidden">
-    <div class="flex-1 flex flex-col items-center justify-center">
-      <div v-for="(call, index) in calls" :key="index" class="mb-4 relative">
+    <div class="flex-1 flex flex-col items-center justify-center space-y-4">
+      <div v-for="(call, index) in calls" :key="index" class="relative">
         <button
           :class="[
             call.action,
             {
-              'bg-blue-500': !$store.state.calls.calls[call.identifier],
-              'bg-gray-500 opacity-50 cursor-not-allowed': $calls.isPending(call.identifier),
-              'bg-red-500': $calls.hasFailed(call.identifier),
-              'bg-green-500': $calls.isDone(call.identifier),
+              'bg-blue-500 text-white': !$store.state.calls.calls[call.identifier],
+              'bg-gray-300 cursor-not-allowed text-gray-900': $calls.isPending(call.identifier),
+              'bg-red-500 cursor-not-allowed text-white': $calls.hasFailed(call.identifier),
+              'bg-green-500 cursor-not-allowed text-white': $calls.isDone(call.identifier),
             },
           ]"
-          class="px-4 py-3 rounded w-48 text-white text-sm"
+          class="px-4 py-3 rounded w-64 text-sm relative overflow-hidden drop-shadow-md"
           :disabled="$calls.isPending(call.identifier)"
           @click="go(call)"
         >
-          {{ `${call.identifier} [${call.action} in ${(call.remaining / 1000).toFixed(1)}s]` }}
+          <div class="z-10 relative">
+            {{ `${call.identifier} [${call.action} in ${(call.remaining / 1000).toFixed(1)}s]` }}
+          </div>
+          <div
+            v-if="$calls.isPending(call.identifier)"
+            class="absolute top-0 left-0 h-full bg-gray-400 transition duration-100 transition-all"
+            :style="{ width: `${(call.remaining / call.duration) * 100}%` }"
+          ></div>
         </button>
         <div />
       </div>
-      <div class="flex flex-none justify-between w-48 h-6">
+      <div class="flex flex-none justify-between w-64 h-6">
         <template v-if="!anyPending">
-          <a
-            href=""
-            class="flex-none text-xs text-blue-600 hover:underline"
-            @click.prevent="refresh"
-            >Refresh</a
+          <a href="" class="flex-none text-xs text-blue-600 hover:underline" @click.prevent="reset"
+            >Reset</a
           >
           <a
             v-if="noneHaveRun"
@@ -50,6 +54,7 @@
 
 <script>
 import { random, times, uniqueId } from 'lodash';
+import generate from 'project-name-generator';
 
 import constants from '../../src/constants';
 
@@ -62,8 +67,9 @@ function randomCall() {
   return {
     action,
     delay,
-    identifier: uniqueId('call'),
+    identifier: generate({ alliterative: true }).dashed,
     remaining: delay,
+    duration: delay,
   };
 }
 
@@ -93,27 +99,33 @@ export default {
   },
 
   beforeMount() {
-    this.refresh();
+    this.reset();
   },
 
   methods: {
     go(call) {
-      const { action, delay, identifier } = call;
-      const index = this.calls.findIndex((c) => c === call);
+      if (!call.remaining) return;
 
-      this.$calls.start(identifier, `this.$calls.start('${identifier}')`);
-
-      const interval = setInterval(() => {
-        this.calls[index].remaining -= INTERVAL;
-      }, INTERVAL);
-
-      setTimeout(() => {
-        clearTimeout(interval);
-        this.$calls[action](identifier, `this.$calls.${action}('${identifier}')`);
-      }, delay);
+      this.$calls.trackRequest(call, this.getPromise(call));
     },
 
-    refresh() {
+    getPromise(call) {
+      const { action, delay } = call;
+      const index = this.calls.findIndex((c) => c === call);
+
+      return new Promise((resolve, reject) => {
+        const interval = setInterval(() => {
+          this.calls[index].remaining -= INTERVAL;
+        }, INTERVAL);
+
+        setTimeout(() => {
+          clearTimeout(interval);
+          action === 'end' ? resolve() : reject();
+        }, delay);
+      });
+    },
+
+    reset() {
       this.$store.commit('calls/RESET');
       this.$set(this, 'calls', times(5, randomCall));
     },

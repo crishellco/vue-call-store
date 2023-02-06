@@ -4,7 +4,7 @@ import App from './App.vue';
 import store from './store';
 import VueCallStore from '../../src';
 
-Vue.use(VueCallStore, { minDuration: 2000, store });
+Vue.use(VueCallStore, { store });
 
 Vue.config.productionTip = false;
 

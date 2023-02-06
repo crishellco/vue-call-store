@@ -7,6 +7,7 @@ import constants from './constants';
 import directive from './directive';
 import mixin from './mixin';
 import moduleFactory from './module';
+import { decorateStore } from './utils';
 
 export { VueCallDone, VueCallFailed, VueCallPending };
 
@@ -22,6 +23,8 @@ function install(
     store = new Vuex.Store();
     Vue.prototype.$store = store;
   }
+
+  decorateStore(store);
 
   const options = { disablePromises, minDuration };
 

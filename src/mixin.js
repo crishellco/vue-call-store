@@ -68,6 +68,10 @@ export default {
       start: (identifier, message = null) => {
         return this.$startCall(identifier, message);
       },
+
+      trackRequest: (payload, promise) => {
+        return this.$store.trackRequest(payload, promise);
+      },
     };
   },
 };
