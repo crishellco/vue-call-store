@@ -1,8 +1,8 @@
-# Vue Call Store
-
 ![Build](https://github.com/crishellco/vue-call-store/workflows/Build/badge.svg)
 [![codecov](https://codecov.io/gh/crishellco/vue-call-store/branch/master/graph/badge.svg?token=0BCLYvSqRd)](https://codecov.io/gh/crishellco/vue-call-store)
 [![Maintainability](https://api.codeclimate.com/v1/badges/ad1b10ad23c04fab766b/maintainability)](https://codeclimate.com/github/crishellco/vue-call-store/maintainability)
+
+# Vue Call Store
 
 A Vue & Vuex plugin to simplify tracking API call statuses.
 
