@@ -14,7 +14,7 @@
     "vuex": "3.6.2"
   },
   "devDependencies": {
-    "vite": "4.3.8",
+    "vite": "4.3.9",
     "vite-plugin-vue2": "2.0.3",
     "vue-template-compiler": "2.7.14"
   }
