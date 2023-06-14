@@ -70,7 +70,7 @@
     "prettier": "2.8.8",
     "regenerator-runtime": "0.13.11",
     "rimraf": "5.0.1",
-    "semantic-release": "21.0.3",
+    "semantic-release": "21.0.5",
     "vite": "4.3.9",
     "vite-plugin-vue2": "2.0.3",
     "vue": "2.7.14",
