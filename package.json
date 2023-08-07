@@ -71,7 +71,7 @@
     "regenerator-runtime": "0.13.11",
     "rimraf": "5.0.1",
     "semantic-release": "21.0.7",
-    "vite": "4.4.8",
+    "vite": "4.4.9",
     "vite-plugin-vue2": "2.0.3",
     "vue": "2.7.14",
     "vue-html-loader": "1.2.4",
