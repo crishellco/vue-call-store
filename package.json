@@ -68,7 +68,7 @@
     "npm-run-all": "4.1.5",
     "poi": "12.10.3",
     "prettier": "3.1.1",
-    "regenerator-runtime": "0.14.0",
+    "regenerator-runtime": "0.14.1",
     "rimraf": "5.0.5",
     "semantic-release": "22.0.12",
     "vite": "5.0.10",
