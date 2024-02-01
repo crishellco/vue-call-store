@@ -65,7 +65,7 @@
     "jest": "27.5.1",
     "lodash": "4.17.21",
     "mockdate": "3.0.5",
-    "npm-run-all2": "6.1.1",
+    "npm-run-all2": "6.1.2",
     "poi": "12.10.3",
     "prettier": "3.2.4",
     "regenerator-runtime": "0.14.1",
