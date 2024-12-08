@@ -73,7 +73,7 @@
     "semantic-release": "22.0.12",
     "vite": "5.4.11",
     "vite-plugin-vue2": "2.0.3",
-    "vue": "2.7.14",
+    "vue": "3.0.0",
     "vue-html-loader": "1.2.4",
     "vue-jest": "3.0.7",
     "vue-loader": "17.4.2",
@@ -82,7 +82,7 @@
     "vuex": "3.6.2"
   },
   "peerDependencies": {
-    "vue": "^2.6.10",
+    "vue": "^3.0.0",
     "vuex": "^3.6.2"
   },
   "dependencies": {
