@@ -67,7 +67,7 @@
     "mockdate": "3.0.5",
     "npm-run-all2": "7.0.2",
     "poi": "12.10.3",
-    "prettier": "3.6.2",
+    "prettier": "3.7.4",
     "regenerator-runtime": "0.14.1",
     "rimraf": "5.0.10",
     "semantic-release": "22.0.12",
